@@ -24,10 +24,15 @@
 
 ## Software Requirement
 - [x] Readme.md
-- [ ] 
-- [ ] 
-- [ ] 
-    - [ ] 
-    - [ ] 
+- [ ] Backend Requirement
+    - [ ] มีอะไรบ้าง
+- [ ] Frontend Requirement
+    - [ ] มีอะไรบ้าง
+- [ ] Data Requirement
+    - [ ] มีอะไรบ้าง
+- [ ] AI Requirement
+    - [ ] มีอะไรบ้าง
+- [ ] Presentation Requirement
+    - [ ] มีอะไรบ้าง
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
