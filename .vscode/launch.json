@@ -1,0 +1,72 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "customersApp",
+            "request": "launch",
+            "mainClass": "th.mfu.App",
+            "projectName": "microservice-customers"
+        },
+        {
+            "type": "java",
+            "name": "movieApp",
+            "request": "launch",
+            "mainClass": "th.mfu.App",
+            "projectName": "microservice-movie"
+        },
+        {
+            "type": "java",
+            "name": "RoundApp",
+            "request": "launch",
+            "vmArgs": ["-Dserver.port=8400"],
+            "mainClass": "th.mfu.RoundMicroserviceApp",
+            "projectName": "microservice-round"
+        },
+        {
+            "type": "java",
+            "name": "RoundAppLoadBalancer",
+            "request": "launch",
+            "vmArgs": ["-Dserver.port=8401"],
+            "mainClass": "th.mfu.RoundMicroserviceApp",
+            "projectName": "microservice-round"
+        },
+        {
+            "type": "java",
+            "name": "theatreApp",
+            "request": "launch",
+            "mainClass": "th.mfu.App",
+            "projectName": "microservice-theatre"
+        },
+        {
+            "type": "java",
+            "name": "ticketApp",
+            "request": "launch",
+            "mainClass": "th.mfu.App",
+            "projectName": "microservice-ticket"
+        },
+        {
+            "type": "java",
+            "name": "CustomerMicroserviceApp",
+            "request": "launch",
+            "mainClass": "th.mfu.CustomerMicroserviceApp",
+            "projectName": "microservice-ticket"
+        },
+        {
+            "type": "java",
+            "name": "SpringBootMicroserviceEurekaNamingServerApplication",
+            "request": "launch",
+            "mainClass": "lab.microservice.namingserver.SpringBootMicroserviceEurekaNamingServerApplication",
+            "projectName": "sample-microservice-eureka-naming-server"
+        }
+    ]
+}
