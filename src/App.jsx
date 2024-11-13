@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import Navber from "./components/Navber/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Footer from './components/Footer/footer';
 
 export default function App(){
-  return <><Navber />
+  return <><Navbar />
 <div className="app-container">
       {/* Main Quest Section */}
       <div className="section quest-section">
