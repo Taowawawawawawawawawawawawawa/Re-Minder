@@ -1,0 +1,59 @@
+package reminder.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import reminder.domain.Ads;
+import reminder.dto.AdsDTO;
+import reminder.dto.mapper.AdsMapper;
+import reminder.repository.AdsRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/ads")
+public class AdsController {
+
+    @Autowired
+    private AdsRepository adsRepository;
+
+    @Autowired
+    private AdsMapper adsMapper;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AdsDTO> getAdById(@PathVariable Long id) {
+        Optional<Ads> ad = adsRepository.findById(id);
+        if (ad.isPresent()) {
+            AdsDTO adsDTO = new AdsDTO();
+            adsMapper.updateAdsFromEntity(ad.get(), adsDTO);
+            return new ResponseEntity<>(adsDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<AdsDTO>> getAllAds() {
+        List<Ads> ads = adsRepository.findAll();
+        List<AdsDTO> adsDTOs = ads.stream().map(ad -> {
+            AdsDTO dto = new AdsDTO();
+            adsMapper.updateAdsFromEntity(ad, dto);
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(adsDTOs, HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createAd(@RequestBody AdsDTO adsDTO) {
+        try {
+            Ads ad = new Ads();
+            adsMapper.updateAdsFromDto(adsDTO, ad);
+            adsRepository.save(ad);
+            return new ResponseEntity<>("Ad created successfully!", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while creating the ad.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+}
