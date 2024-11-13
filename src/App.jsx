@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Navber from "./Compounents/Navber/Navbar";
-import Footer from './Compounents/Footer/footer';
+import Navber from "./components/Navber/Navbar";
+import Footer from './components/Footer/footer';
 
 export default function App(){
   return <><Navber />
