@@ -1,5 +1,7 @@
-// Setting.js
 import React, { useState } from 'react';
+import './Setting.css';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/footer';
 
 function Setting() {
     const [soundLevel, setSoundLevel] = useState(50);
@@ -8,7 +10,7 @@ function Setting() {
         setSoundLevel(event.target.value);
     };
 
-    return (
+    return <><Navbar />
         <div>
             <button className="setting-button">Change Theme</button>
             <button className="setting-button">Action Button</button>
@@ -25,7 +27,7 @@ function Setting() {
             />
             <span className="sound-level">{soundLevel}</span>
         </div>
-    );
+        <Footer /></>
 }
 
 export default Setting;
