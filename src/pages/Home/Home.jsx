@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/footer';
-import QuestBoard from './pages/Questboard/Questboard'; // Import QuestBoard component
-import './pages/Home/Home.css';
+import Navbar from '../../components/Navbar/Navbar'; 
+import Footer from '../../components/Footer/footer'; 
+
+import QuestBoard from '../Questboard/Questboard'; 
+import './Home.css'; 
 
 export default function Home() {
   return (
@@ -40,9 +41,7 @@ export default function Home() {
             }
           />
 
-          {/* QuestBoard Page */}
-          <Route path="/questboard" element={<QuestBoard />} />
-          <Route path="/profile" element={<Profile />} />
+
         </Routes>
       </div>
       <Footer />
