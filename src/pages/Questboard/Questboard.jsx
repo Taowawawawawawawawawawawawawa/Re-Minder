@@ -1,12 +1,9 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar'; 
-import Footer from '../../components/Footer/footer'; 
 import './Questboard.css';
 
-function QuestBoard() {
+function Questboard() {
   return (
     <div className="quest-board">
-
 
       <div className="quest-board-container">
         <div className="quest-content">
@@ -56,4 +53,4 @@ function QuestBoard() {
   );
 }
 
-export default QuestBoard;
+export default Questboard;
