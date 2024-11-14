@@ -1,0 +1,72 @@
+/* Background and layout */
+.game-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('path-to-background-image.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Character styling */
+  .character {
+    position: absolute;
+    bottom: 20%;
+    left: 45%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #cceeff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .character-eye {
+    width: 20px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 0 5px;
+  }
+  
+  /* Thought bubble styling */
+  .thought-bubble {
+    position: absolute;
+    width: 150px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .thought-bubble-left {
+    bottom: 50%;
+    left: 30%;
+  }
+  
+  .thought-bubble-right {
+    bottom: 50%;
+    right: 30%;
+  }
+  
+  .bubble-icon {
+    width: 100px;
+  }
+  
+  /* Wardrobe button styling */
+  .wardrobe-button {
+    position: absolute;
+    bottom: 30%;
+    right: 20%;
+    padding: 10px 20px;
+    background-color: brown;
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+  }
+  
