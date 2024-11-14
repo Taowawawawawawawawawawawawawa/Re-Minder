@@ -10,3 +10,5 @@
 !src/admin/
 !src/images/
 !src/assets/
+package-lock.json
+package.json

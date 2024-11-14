@@ -5,6 +5,7 @@ import Loading from "./components/Loading/Loading";
 import Navbar from './components/Navbar/Navbar';
 import NavbarWithoutUser from "./components/Header/NavbarWithoutUser";
 
+const Zetting = lazy(() => import("./pages/Zetting/Zetting"));
 const Home = lazy(() => import("./pages/Home/Home"));
 const Beryle = lazy(() => import("./pages/Beryle/Beryle"));
 const Myroom = lazy(() => import("./pages/Myroom/Myroom"));
@@ -14,7 +15,7 @@ const SignUp = lazy(() => import("./pages/SignUp/SignUp"));
 const Welcome = lazy(() => import("./pages/Welcome/Welcome"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 const Questboard = lazy(() => import("./pages/Questboard/Questboard"));
-const Zetting = lazy(() => import("./pages/Zetting/Zetting"));
+
 const Userlist = lazy(() => import("./admin/Userlist"));
 const AdminHome = lazy(() => import("./admin/AdminHome"));
 const AdminSignIn = lazy(() => import("./admin/AdminSignIn"));
@@ -56,6 +57,7 @@ function App() {
           <Route path="/myroom" element={<Myroom />} />
           <Route path="/point" element={<Point />} />
           <Route path="/questboard" element={<Questboard />} />
+          <Route path="welcome" element={<Welcome />} />
           <Route path="/admincreatequest" element={<AdminCreateQuest />} />
           <Route path="/Zetting" element={<Zetting />} />
           <Route path="/adminhome" element={<AdminHome />} />

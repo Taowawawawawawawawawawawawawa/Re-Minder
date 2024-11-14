@@ -11,7 +11,7 @@ function Navbar() {
   };
 
   const handleZettingsClick = () => {
-    navigate("/Zetting"); // Navigate to Zetting page
+    navigate("/zetting"); // Navigate to Zetting page
   };
 
   return (
