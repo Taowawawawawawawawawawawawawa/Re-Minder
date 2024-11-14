@@ -1,5 +1,8 @@
 # Ignore everything
 *
 
-# Except the src directory
-!/Re-Minder/src/
+# Allow the src directory
+!/src/
+
+# Allow everything within the src directory
+/src/*

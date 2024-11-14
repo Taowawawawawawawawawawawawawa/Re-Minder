@@ -23,7 +23,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./Context/UserContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Loading from "./componets/Loading/Loading";
-import Navbar from "./componets/Header/Navbar";
+import Navbar from './components/Navbar/Navbar';
 import NavbarWithoutUser from "./componets/Header/NavbarWithoutUser";
 
 function App() {
