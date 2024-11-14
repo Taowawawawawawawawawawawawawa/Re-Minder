@@ -10,6 +10,7 @@
     height: 100vh;
     font-family: Arial, sans-serif;
     color: #000; /* Set all text to black */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
   
   .quest-board {
@@ -17,15 +18,16 @@
     flex-direction: column;
     height: 100vh;
     background-color: #1e1e1e;
+    padding: 0; /* Remove padding to make it fit perfectly */
   }
   
   .quest-board-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%; /* Increase width to make the container wider */
-    max-width: 1400px; /* Set a max width for very large screens */
-    height: calc(100vh - 140px); /* Leave space for Navbar and Footer */
+    width: 100%;
+    max-width: 1600px; /* Increased max-width to make the layout wider */
+    height: 100%; /* Make sure it takes full available height */
     padding: 40px;
     background-color: #2a2a2a;
     border-radius: 10px;
@@ -33,7 +35,6 @@
     overflow: auto;
   }
   
-  /* Content layout */
   .quest-content {
     display: flex;
     flex: 1;
@@ -52,6 +53,7 @@
     border-radius: 8px;
     max-height: 60vh;
     overflow-y: auto;
+    min-width: 320px; /* Ensure the columns don't shrink too much */
   }
   
   h3 {
@@ -145,19 +147,57 @@
   }
   
   /* Responsive Design */
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    .quest-board-container {
+      padding: 30px; /* Reduce padding for medium screens */
+    }
+  
     .quest-content {
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
     }
   
-    .quest-board-header {
-      flex-direction: column;
-      align-items: center;
+    .quest-list,
+    .quest-detail {
+      min-width: 100%; /* Make the quest list and detail take full width on small screens */
     }
+  }
   
+  @media (max-width: 768px) {
     .quest-board-container {
-      padding: 20px; /* Reduce padding for smaller screens */
+      padding: 20px; /* Further reduce padding for smaller screens */
+    }
+  
+    .quest-content {
+      flex-direction: column;
+      gap: 15px; /* Reduce gap between quest list and detail */
+    }
+  
+    .quest-list,
+    .quest-detail {
+      min-width: 100%;
+      max-height: 50vh; /* Reduce height of the quest sections on smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .quest-board-container {
+      padding: 10px; /* Further reduce padding for very small screens */
+    }
+  
+    .quest-list,
+    .quest-detail {
+      min-width: 100%; /* Full-width layout for quest list and detail */
+      max-height: 45vh; /* Reduce height even more */
+    }
+  
+    .tab-button {
+      font-size: 0.9em; /* Slightly reduce font size on smaller screens */
+    }
+  
+    .send-button,
+    .cancel-button {
+      font-size: 0.8em; /* Adjust button size for small screens */
     }
   }
   
