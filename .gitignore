@@ -1,2 +1,5 @@
-node_modules
-.vscode
+# Ignore everything
+*
+
+# Except the src directory
+!/Re-Minder/src/
