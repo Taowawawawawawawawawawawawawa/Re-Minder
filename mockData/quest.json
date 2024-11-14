@@ -1,0 +1,9 @@
+{
+    "questName": "Treasure Hunt",
+    "difficulty": 2,
+    "availableTime": [1, 3],
+    "questDescription": "Find hidden treasures in the forest.",
+    "questSubmitMethod": "picture",
+    "berylReward": 100,
+    "pointReward": 50
+}

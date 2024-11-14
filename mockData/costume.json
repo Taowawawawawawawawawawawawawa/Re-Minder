@@ -1,0 +1,8 @@
+{
+    "costumeType": "HAT",
+    "costumeName": "Pirate Hat",
+    "costumeDescription": "A pirate-style hat.",
+    "costumeFiles": "/images/costumes/pirate_hat.png",
+    "price": 150
+}
+
