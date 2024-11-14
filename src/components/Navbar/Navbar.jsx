@@ -10,14 +10,13 @@ function Navbar() {
     navigate("/"); // Navigate to home
   };
 
-  const handleSettingsClick = () => {
-    navigate("/Setting"); // Navigate to Setting page
+  const handleZettingsClick = () => {
+    navigate("/Zetting"); // Navigate to Zetting page
   };
 
   return (
     <div className="navbar">
       <div className="navbar-left">
-        {/* Add the onClick event to navigate to home on profile icon click */}
         <img
           src="profile-icon.png"  // Replace with actual path to profile icon
           alt="Profile Icon"
@@ -37,8 +36,8 @@ function Navbar() {
           <span>99999</span>
           <button className="add-button">+</button>
         </div>
-        <button className="Settings-button" onClick={handleSettingsClick}>
-          <img src="Settings-icon.png" alt="Settings" />
+        <button className="Zettings-button" onClick={handleZettingsClick}>
+          <img src="Zettings-icon.png" alt="Zettings" />
         </button>
       </div>
     </div>
