@@ -4,7 +4,6 @@ import "./App.css";
 const Home = lazy(() => import("./pages/Home/Home"));
 const Beryle = lazy(() => import("./pages/Beryle/Beryle"));
 const Myroom = lazy(() => import("./pages/Myroom/Myroom"));
-/* const Profile = lazy(() => import("./pages/Profile")); */
 const Point = lazy(() => import("./pages/Point/Point"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -19,14 +18,15 @@ const Admincontact = lazy(() => import("./admin/Admincontact"));
 const AdminQuestboard = lazy(() => import("./admin/AdminQuestboard"));
 const AdminCreateQuest = lazy(() => import("./admin/AdminCreateQuest"));
 
-
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Loading from "./componets/Loading/Loading";
 import Navbar from './components/Navbar/Navbar';
 import NavbarWithoutUser from "./componets/Header/NavbarWithoutUser";
+import { AuthContext } from './context/AuthContext'; // Assuming you have an AuthContext
 
 function App() {
   const { User, setUser } = useContext(AuthContext);
+
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -37,8 +37,8 @@ function App() {
 
   return (
     <div>
-      {User ? <Navbar></Navbar> : <NavbarWithoutUser></NavbarWithoutUser>}
-      <Suspense replace fallback={<Loading />}>
+      {User ? <Navbar /> : <NavbarWithoutUser />}
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route index path="/" element={User ? <Home /> : <Welcome />} />
           {User ? (
@@ -50,9 +50,7 @@ function App() {
               <Route path="/Questboard" element={<Questboard />} />
               <Route path="/AdminCreateQuest" element={<AdminCreateQuest />} />
               <Route path="/Setting" element={<Setting />} />
-
               <Route path="/AdminHome" element={<AdminHome />} />
-
             </>
           ) : null}
 

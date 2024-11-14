@@ -19,7 +19,7 @@ export default function Home() {
               <>
                 {/* Main Quest Section */}
                 <div className="section quest-section">
-                  <Link to="/questboard" className="quest-link">
+                  <Link to="/Questboard" className="quest-link">
                     <h1>เควสต์</h1>
                     <p>Quest</p>
                     <p className="refresh-timer">รีเฟรชในอีก 5.55.55 ชั่วโมง</p>
@@ -40,7 +40,6 @@ export default function Home() {
               </>
             }
           />
-
 
         </Routes>
       </div>

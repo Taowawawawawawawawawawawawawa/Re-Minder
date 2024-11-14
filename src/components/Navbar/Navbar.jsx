@@ -5,10 +5,6 @@ import { useNavigate } from 'react-router-dom';
 function Navbar() {
   const navigate = useNavigate();
 
-  const handleProfileClick = () => {
-    navigate('/'); // Navigate to the Profile page (or any component you'd like)
-  };
-
   return (
     <div className="navbar">
       <div className="navbar-left">
