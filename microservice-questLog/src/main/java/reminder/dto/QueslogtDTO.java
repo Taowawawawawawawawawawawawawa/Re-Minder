@@ -1,19 +1,14 @@
 package reminder.dto;
 
-import java.util.List;
-
-public class QuestDTO {
-
+public class QueslogtDTO {
     private Long questId;
     private String questName;
     private String questDescription;
     private int difficulty;
     private int berylReward;
     private int pointReward;
-    private String questSubmitMethod;
-    private List<Integer> availableTime;
 
-    // Getter and Setter methods
+    // Getters and Setters
     public Long getQuestId() {
         return questId;
     }
@@ -60,21 +55,5 @@ public class QuestDTO {
 
     public void setPointReward(int pointReward) {
         this.pointReward = pointReward;
-    }
-
-    public String getQuestSubmitMethod() {
-        return questSubmitMethod;
-    }
-
-    public void setQuestSubmitMethod(String questSubmitMethod) {
-        this.questSubmitMethod = questSubmitMethod;
-    }
-
-    public List<Integer> getAvailableTime() {
-        return availableTime;
-    }
-
-    public void setAvailableTime(List<Integer> availableTime) {
-        this.availableTime = availableTime;
     }
 }

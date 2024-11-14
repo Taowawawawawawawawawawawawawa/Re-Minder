@@ -5,39 +5,26 @@ import java.util.List;
 
 @Entity
 public class Quest {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)  // เปลี่ยนเป็น GenerationType.IDENTITY
     private Long questId;
 
     private String questName;
-
+    private String questDescription;
     private int difficulty;
+    private int berylReward;
+    private int pointReward;
+    private String questSubmitMethod; // เช่น text หรือ image
 
     @ElementCollection
     @CollectionTable(name = "quest_available_times", joinColumns = @JoinColumn(name = "quest_id"))
     @Column(name = "available_time")
-    private List<Integer> availableTime;
+    private List<Integer> availableTime; // เวลาในการทำเควส
 
-    private String questDescription;
-
-    private String questSubmitMethod;
-
-    private int berylReward;
-
-    private int pointReward;
-
+    // Default constructor required for Hibernate
     public Quest() {}
 
-    public Quest(String questName, int difficulty, List<Integer> availableTime, String questDescription, String questSubmitMethod, int berylReward, int pointReward) {
-        this.questName = questName;
-        this.difficulty = difficulty;
-        this.availableTime = availableTime;
-        this.questDescription = questDescription;
-        this.questSubmitMethod = questSubmitMethod;
-        this.berylReward = berylReward;
-        this.pointReward = pointReward;
-    }
+    // Constructor และ Getter/Setter ทั้งหมด
 
     public Long getQuestId() {
         return questId;
@@ -55,22 +42,6 @@ public class Quest {
         this.questName = questName;
     }
 
-    public int getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public List<Integer> getAvailableTime() {
-        return availableTime;
-    }
-
-    public void setAvailableTime(List<Integer> availableTime) {
-        this.availableTime = availableTime;
-    }
-
     public String getQuestDescription() {
         return questDescription;
     }
@@ -79,12 +50,12 @@ public class Quest {
         this.questDescription = questDescription;
     }
 
-    public String getQuestSubmitMethod() {
-        return questSubmitMethod;
+    public int getDifficulty() {
+        return difficulty;
     }
 
-    public void setQuestSubmitMethod(String questSubmitMethod) {
-        this.questSubmitMethod = questSubmitMethod;
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 
     public int getBerylReward() {
@@ -101,5 +72,21 @@ public class Quest {
 
     public void setPointReward(int pointReward) {
         this.pointReward = pointReward;
+    }
+
+    public String getQuestSubmitMethod() {
+        return questSubmitMethod;
+    }
+
+    public void setQuestSubmitMethod(String questSubmitMethod) {
+        this.questSubmitMethod = questSubmitMethod;
+    }
+
+    public List<Integer> getAvailableTime() {
+        return availableTime;
+    }
+
+    public void setAvailableTime(List<Integer> availableTime) {
+        this.availableTime = availableTime;
     }
 }

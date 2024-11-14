@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "QuestApp",
+            "request": "launch",
+            "mainClass": "reminder.QuestApp",
+            "projectName": "microservice-quests"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -28,7 +35,9 @@
             "type": "java",
             "name": "RoundApp",
             "request": "launch",
-            "vmArgs": ["-Dserver.port=8400"],
+            "vmArgs": [
+                "-Dserver.port=8400"
+            ],
             "mainClass": "th.mfu.RoundMicroserviceApp",
             "projectName": "microservice-round"
         },
@@ -36,7 +45,9 @@
             "type": "java",
             "name": "RoundAppLoadBalancer",
             "request": "launch",
-            "vmArgs": ["-Dserver.port=8401"],
+            "vmArgs": [
+                "-Dserver.port=8401"
+            ],
             "mainClass": "th.mfu.RoundMicroserviceApp",
             "projectName": "microservice-round"
         },
