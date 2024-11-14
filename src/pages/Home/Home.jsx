@@ -22,12 +22,16 @@ export default function Home() {
       {/* Shop and Room Section */}
       <div className="shop-room-container">
         <div className="section shop-section">
+        <Link to="/Shop" className="quest-link">
           <h2>ร้านค้า</h2>
           <p>Shop</p>
+          </Link>
         </div>
         <div className="section room-section">
+        <Link to="/Myroom" className="quest-link">
           <h2>ห้องพักใจ</h2>
           <p>My room</p>
+          </Link>
         </div>
       </div>
     </div>

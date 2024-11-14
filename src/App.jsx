@@ -19,12 +19,12 @@ const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 const Questboard = lazy(() => import("./pages/Questboard/Questboard"));
 
 // Admin components
-const Userlist = lazy(() => import("./admin/Userlist"));
-const AdminHome = lazy(() => import("./admin/AdminHome"));
+const Userlist = lazy(() => import("./admin/Slimelist/Userlist"));
+const AdminHome = lazy(() => import("./admin/Home/AdminHome"));
 const AdminSignIn = lazy(() => import("./admin/AdminSignIn"));
-const Admincontact = lazy(() => import("./admin/Admincontact"));
-const AdminQuestboard = lazy(() => import("./admin/AdminQuestboard"));
-const AdminCreateQuest = lazy(() => import("./admin/AdminCreateQuest"));
+const Admincontact = lazy(() => import("./admin/Contact/Admincontact"));
+const AdminQuestboard = lazy(() => import("./admin/Quest/AdminQuestBoard"));
+const AdminCreateQuest = lazy(() => import("./admin/CreateQuest/AdminCreateQuest"));
 
 function App() {
   return (
