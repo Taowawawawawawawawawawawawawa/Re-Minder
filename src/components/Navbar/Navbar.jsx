@@ -2,16 +2,17 @@ import React from 'react';
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 
+
 function Navbar() {
   const navigate = useNavigate();
 
   // Function to handle profile icon click
   const handleProfileClick = () => {
-    navigate("/"); // Navigate to home
+    navigate("/home "); // Navigate to home
   };
 
-  const handleZettingsClick = () => {
-    navigate("/zetting"); // Navigate to Zetting page
+  const handlesettingsClick = () => {
+    navigate("/setting"); // Navigate to setting page
   };
 
   return (
@@ -36,8 +37,8 @@ function Navbar() {
           <span>99999</span>
           <button className="add-button">+</button>
         </div>
-        <button className="Zettings-button" onClick={handleZettingsClick}>
-          <img src="Zettings-icon.png" alt="Zettings" />
+        <button className="settings-button" onClick={handlesettingsClick}>
+          <img src="settings-icon.png" alt="settings" />
         </button>
       </div>
     </div>

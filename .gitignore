@@ -10,5 +10,7 @@
 !src/admin/
 !src/images/
 !src/assets/
+*.json
+*.json
+*.json
 package-lock.json
-package.json

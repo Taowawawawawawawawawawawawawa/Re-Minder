@@ -1,7 +1,7 @@
+// Setting.js
 import React, { useState } from 'react';
-import './Zetting.css';
 
-const Zetting = () => {
+function Setting() {
     const [soundLevel, setSoundLevel] = useState(50);
 
     const handleSoundChange = (event) => {
@@ -10,9 +10,9 @@ const Zetting = () => {
 
     return (
         <div>
-            <button className="Zetting-button">Change Theme</button>
-            <button className="Zetting-button">Action Button</button>
-            <button className="Zetting-button">Edit Profile</button>
+            <button className="setting-button">Change Theme</button>
+            <button className="setting-button">Action Button</button>
+            <button className="setting-button">Edit Profile</button>
             <button className="logout-button">Logout</button>
             <label htmlFor="sound">Sound Level</label>
             <input
@@ -26,6 +26,6 @@ const Zetting = () => {
             <span className="sound-level">{soundLevel}</span>
         </div>
     );
-};
+}
 
-export default Zetting;
+export default Setting;

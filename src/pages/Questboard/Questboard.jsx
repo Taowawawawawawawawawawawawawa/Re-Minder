@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar'; 
-import Footer from '../../components/Footer/footer'; 
 import './Questboard.css';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/footer';
 
 function Questboard() {
   // State to keep track of the selected difficulty
@@ -12,7 +12,7 @@ function Questboard() {
     setSelectedDifficulty(difficulty);
   };
 
-  return (
+  return <><Navbar />
     <div className="quest-board">
       <div className="quest-board-container">
         <div className="quest-content">
@@ -77,7 +77,7 @@ function Questboard() {
       </div>
 
     </div>
-  );
+    <Footer /></>
 }
 
 export default Questboard;
