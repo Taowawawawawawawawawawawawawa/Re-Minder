@@ -8,6 +8,7 @@ import reminder.domain.Themes;
 import reminder.dto.ThemesDTO;
 import reminder.dto.mapper.ThemesMapper;
 import reminder.repository.ThemesRepository;
+import reminder.service.ThemesService;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,9 @@ public class ThemesController {
 
     @Autowired
     private ThemesMapper themesMapper;
+
+     @Autowired
+    private ThemesService themesService;
 
     @GetMapping("/{id}")
     public ResponseEntity<ThemesDTO> getThemesById(@PathVariable Long id) {
@@ -53,4 +57,16 @@ public class ThemesController {
         themesRepository.save(themes);
         return new ResponseEntity<>("Themes created successfully!", HttpStatus.CREATED);
     }
+
+    @PostMapping("/purchase/{themeId}")
+    public ResponseEntity<String> purchaseTheme(
+            @PathVariable Long themeId, @RequestParam Long userId) {
+        try {
+            String message = themesService.purchaseTheme(themeId, userId);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

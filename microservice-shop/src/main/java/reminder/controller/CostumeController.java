@@ -8,6 +8,7 @@ import reminder.domain.Costume;
 import reminder.dto.CostumeDTO;
 import reminder.dto.mapper.CostumeMapper;
 import reminder.repository.CostumeRepository;
+import reminder.service.CostumeService;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,9 @@ public class CostumeController {
 
     @Autowired
     private CostumeMapper costumeMapper;
+
+     @Autowired
+    private CostumeService costumeService;
 
     @GetMapping("/{id}")
     public ResponseEntity<CostumeDTO> getCostumeById(@PathVariable Long id) {
@@ -52,5 +56,16 @@ public class CostumeController {
         costumeMapper.updateCostumeFromDto(costumeDTO, costume);
         costumeRepository.save(costume);
         return new ResponseEntity<>("Costume created successfully!", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/purchase/{costumeId}")
+    public ResponseEntity<String> purchaseCostume(
+        @PathVariable Long costumeId, @RequestParam Long userId) {
+        try {
+            String message = costumeService.purchaseCostume(costumeId, userId);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

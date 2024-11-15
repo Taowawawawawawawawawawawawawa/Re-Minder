@@ -8,6 +8,7 @@ import reminder.domain.Rewards;
 import reminder.dto.RewardsDTO;
 import reminder.dto.mapper.RewardsMapper;
 import reminder.repository.RewardsRepository;
+import reminder.service.RewardsService;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,9 @@ public class RewardController {
 
     @Autowired
     private RewardsMapper rewardsMapper;
+
+     @Autowired
+    private RewardsService rewardsService;
 
     @GetMapping("/{id}")
     public ResponseEntity<RewardsDTO> getRewardsById(@PathVariable Long id) {
@@ -52,5 +56,16 @@ public class RewardController {
         rewardsMapper.updateRewardsFromDto(rewardsDTO, rewards);
         rewardsRepository.save(rewards);
         return new ResponseEntity<>("Rewards created successfully!", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/purchase/{rewardId}")
+    public ResponseEntity<String> purchaseReward(
+            @PathVariable Long rewardId, @RequestParam Long userId) {
+        try {
+            String message = rewardsService.purchaseReward(rewardId, userId);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
