@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 
-const QuestForm = ({ onCreate }) => {
-  const [questName, setQuestName] = useState('');
+const CreateQuestForm = () => {
+  const [questName, setQuestName] = useState("");
+  const [questDescription, setQuestDescription] = useState("");
   const [difficulty, setDifficulty] = useState(1);
-  const [questDescription, setQuestDescription] = useState('');
-  const [questSubmitMethod, setQuestSubmitMethod] = useState('Text');
   const [berylReward, setBerylReward] = useState(0);
   const [pointReward, setPointReward] = useState(0);
+  const [questSubmitMethod, setQuestSubmitMethod] = useState("");
+  const [availableTime, setAvailableTime] = useState(["09:00", "12:00"]); // ตัวอย่างค่าของเวลา
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     const newQuest = {
       questName,
-      difficulty,
       questDescription,
-      questSubmitMethod,
+      difficulty,
       berylReward,
       pointReward,
+      questSubmitMethod,
+      availableTime,
     };
 
-    onCreate(newQuest);
+    try {
+      const response = await axios.post("http://localhost:8202/quests/create", newQuest);
+      console.log(response.data);  // แสดงข้อความตอบกลับจาก server
+    } catch (error) {
+      console.error("There was an error creating the quest!", error);
+    }
   };
 
   return (
     <div>
-      <h2>Create New Quest</h2>
+      <h2>Create a New Quest</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Quest Name</label>
+          <label>Quest Name:</label>
           <input
             type="text"
             value={questName}
@@ -36,56 +43,72 @@ const QuestForm = ({ onCreate }) => {
             required
           />
         </div>
+
         <div>
-          <label>Difficulty</label>
-          <input
-            type="number"
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Quest Description</label>
+          <label>Quest Description:</label>
           <textarea
             value={questDescription}
             onChange={(e) => setQuestDescription(e.target.value)}
             required
-          ></textarea>
+          />
         </div>
+
         <div>
-          <label>Quest Submit Method</label>
-          <select
-            value={questSubmitMethod}
-            onChange={(e) => setQuestSubmitMethod(e.target.value)}
+          <label>Difficulty:</label>
+          <input
+            type="number"
+            value={difficulty}
+            onChange={(e) => setDifficulty(Number(e.target.value))}
+            min="1"
+            max="5"
             required
-          >
-            <option value="Text">Text</option>
-            <option value="Image">Image</option>
-          </select>
+          />
         </div>
+
         <div>
-          <label>Beryl Reward</label>
+          <label>Beryl Reward:</label>
           <input
             type="number"
             value={berylReward}
-            onChange={(e) => setBerylReward(e.target.value)}
+            onChange={(e) => setBerylReward(Number(e.target.value))}
             required
           />
         </div>
+
         <div>
-          <label>Point Reward</label>
+          <label>Point Reward:</label>
           <input
             type="number"
             value={pointReward}
-            onChange={(e) => setPointReward(e.target.value)}
+            onChange={(e) => setPointReward(Number(e.target.value))}
             required
           />
         </div>
+
+        <div>
+          <label>Quest Submit Method:</label>
+          <input
+            type="text"
+            value={questSubmitMethod}
+            onChange={(e) => setQuestSubmitMethod(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Available Time (Comma separated, e.g., "09:00, 12:00"):</label>
+          <input
+            type="text"
+            value={availableTime.join(", ")}
+            onChange={(e) => setAvailableTime(e.target.value.split(", ").map(time => time.trim()))}
+            required
+          />
+        </div>
+
         <button type="submit">Create Quest</button>
       </form>
     </div>
   );
 };
 
-export default QuestForm;
+export default CreateQuestForm;

@@ -1,12 +1,15 @@
 package reminder.domain;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Quest {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)  // เปลี่ยนเป็น GenerationType.IDENTITY
+    @GeneratedValue(strategy = GenerationType.AUTO)  // ใช้ AUTO_INCREMENT หรือ IDENTITY
     private Long questId;
 
     private String questName;
@@ -14,18 +17,20 @@ public class Quest {
     private int difficulty;
     private int berylReward;
     private int pointReward;
-    private String questSubmitMethod; // เช่น text หรือ image
+    private String questSubmitMethod;
 
     @ElementCollection
-    @CollectionTable(name = "quest_available_times", joinColumns = @JoinColumn(name = "quest_id"))
-    @Column(name = "available_time")
-    private List<Integer> availableTime; // เวลาในการทำเควส
+    private List<String> availableTime;
 
-    // Default constructor required for Hibernate
-    public Quest() {}
+    @PrePersist
+    public void prePersist() {
+        if (availableTime == null) {
+            availableTime = new ArrayList<>();
+        }
+    }
 
-    // Constructor และ Getter/Setter ทั้งหมด
 
+    // Getter and Setter methods
     public Long getQuestId() {
         return questId;
     }
@@ -82,11 +87,11 @@ public class Quest {
         this.questSubmitMethod = questSubmitMethod;
     }
 
-    public List<Integer> getAvailableTime() {
+    public List<String> getAvailableTime() {
         return availableTime;
     }
 
-    public void setAvailableTime(List<Integer> availableTime) {
+    public void setAvailableTime(List<String> availableTime) {
         this.availableTime = availableTime;
     }
 }

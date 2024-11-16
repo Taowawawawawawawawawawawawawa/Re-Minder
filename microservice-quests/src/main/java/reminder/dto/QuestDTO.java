@@ -11,7 +11,7 @@ public class QuestDTO {
     private int berylReward;
     private int pointReward;
     private String questSubmitMethod;
-    private List<Integer> availableTime;
+    private List<String> availableTime;
 
     // Getter and Setter methods
     public Long getQuestId() {
@@ -70,11 +70,11 @@ public class QuestDTO {
         this.questSubmitMethod = questSubmitMethod;
     }
 
-    public List<Integer> getAvailableTime() {
+    public List<String> getAvailableTime() {
         return availableTime;
     }
 
-    public void setAvailableTime(List<Integer> availableTime) {
+    public void setAvailableTime(List<String> availableTime) {
         this.availableTime = availableTime;
     }
 }

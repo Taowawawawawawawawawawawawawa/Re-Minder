@@ -4,5 +4,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import reminder.domain.Quest;
 
 public interface QuestRepository extends JpaRepository<Quest, Long> {
-    // สามารถเพิ่ม method การค้นหาแบบกำหนดเองได้ที่นี่
 }

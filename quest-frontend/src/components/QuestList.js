@@ -1,39 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { axiosInstance8202, axiosInstance8203 } from '../api/quests';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const QuestList = () => {
-    const [quests, setQuests] = useState([]);
+  const [quests, setQuests] = useState([]);
 
-    useEffect(() => {
-        // เรียก API จาก backend ที่รันบน port 8202
-        axiosInstance8202.get('/quests/all')
-            .then((response) => {
-                setQuests(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching quests from 8202", error);
-            });
+  // ฟังก์ชันดึงข้อมูลเควสทั้งหมดจาก backend
+  const fetchQuests = async () => {
+    try {
+      const response = await axios.get("http://localhost:8202/quests/all");
+      setQuests(response.data);  // เก็บข้อมูลเควสใน state
+    } catch (error) {
+      console.error("Error fetching quests:", error);
+    }
+  };
 
-        // ถ้าต้องการเรียกจาก backend อีกตัวที่รันบน port 8203
-        axiosInstance8203.get('/quests/all')
-            .then((response) => {
-                setQuests(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching quests from 8203", error);
-            });
-    }, []);
+  // เมื่อ component ถูกโหลดขึ้นมาครั้งแรก จะดึงข้อมูลเควสทั้งหมด
+  useEffect(() => {
+    fetchQuests();
+  }, []);  // array ว่างจะทำให้ useEffect รันแค่ครั้งเดียว
 
-    return (
-        <div>
-            <h1>Quest List</h1>
-            <ul>
-                {quests.map((quest) => (
-                    <li key={quest.questId}>{quest.questName}</li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <div>
+      <h2>All Quests</h2>
+      {quests.length > 0 ? (
+        <ul>
+          {quests.map((quest) => (
+            <li key={quest.questId}>
+              <h3>{quest.questName}</h3>
+              <p>{quest.questDescription}</p>
+              <p>Difficulty: {quest.difficulty}</p>
+              <p>Beryl Reward: {quest.berylReward}</p>
+              <p>Point Reward: {quest.pointReward}</p>
+              <p>Quest Submit Method: {quest.questSubmitMethod}</p>
+              <p>Available Time: {quest.availableTime.join(", ")}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No quests available</p>
+      )}
+    </div>
+  );
 };
 
 export default QuestList;
