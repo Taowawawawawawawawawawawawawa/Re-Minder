@@ -1,0 +1,64 @@
+.beryl-shop {
+    font-family: "Arial", sans-serif;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: url("") center/cover no-repeat;
+    color: #fff;
+  }
+  
+  .free-section {
+    text-align: center;
+    background-color: #8b0000;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .free-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .free-section .free-beryl img {
+    width: 80px;
+    height: auto;
+  }
+  
+  .free-section button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #228b22;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .offers-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  .offer-card {
+    text-align: center;
+    background: #2e2e2e;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+  }
+  
+  .offer-card img {
+    width: 50px;
+    height: auto;
+  }
+  
+  .offer-card.promo {
+    border-color: gold;
+  }
+  
+  .offer-card p {
+    margin: 5px 0;
+  }
+  

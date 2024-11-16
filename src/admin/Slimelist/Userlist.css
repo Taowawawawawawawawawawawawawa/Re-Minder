@@ -1,0 +1,123 @@
+/* Main Container */
+.user-list {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f3ead7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.user-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.user-list-header h2 {
+    font-size: 1.8em;
+    color: #5b4636;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-container input {
+    padding: 5px;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+    outline: none;
+}
+
+.search-button {
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+/* Filter Input */
+.filter-input input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+}
+
+/* User Item List */
+.user-items {
+    list-style: none;
+    padding: 0;
+}
+
+.user-item {
+    background-color: #fdeacc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 12px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* User Summary */
+.user-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1em;
+    color: #5b4636;
+    cursor: pointer;
+}
+
+.action-buttons button {
+    margin-left: 8px;
+    padding: 5px 10px;
+    background-color: #8b5e3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-buttons button:hover {
+    background-color: #a06e4c;
+}
+
+/* User Details (Collapsible Section) */
+.user-detail {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #faebd7;
+    border: 1px solid #d2b48c;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1em;
+    color: #5a5a5a;
+}
+
+.information, .item {
+    width: 48%;
+}
+
+.information h3, .item h3 {
+    font-size: 1.2em;
+    color: #5b4636;
+    margin-bottom: 5px;
+}
+
+.item-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.item-icons img {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+}
