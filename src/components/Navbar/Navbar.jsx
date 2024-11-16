@@ -6,13 +6,20 @@ import { useNavigate } from 'react-router-dom';
 function Navbar() {
   const navigate = useNavigate();
 
-  // Function to handle profile icon click
   const handleProfileClick = () => {
-    navigate("/home "); // Navigate to home
+    navigate("/home "); 
   };
 
   const handlesettingsClick = () => {
-    navigate("/setting"); // Navigate to setting page
+    navigate("/setting"); 
+  };
+
+  const handlePointClick = () => {
+    navigate("/Point"); 
+  };
+
+  const handleBeryleClick = () => {
+    navigate("/Beryle"); 
   };
 
   return (
@@ -30,12 +37,12 @@ function Navbar() {
         <div className="currency">
           <img src="green-gem.png" alt="Green Gem" className="icon" />
           <span>100 p</span>
-          <button className="add-button">+</button>
+          <button className="add-button" onClick={handlePointClick}>+</button>
         </div>
         <div className="currency">
           <img src="blue-gem.png" alt="Blue Gem" className="icon" />
           <span>99999</span>
-          <button className="add-button">+</button>
+          <button className="add-button" onClick={handleBeryleClick} >+</button>
         </div>
         <button className="settings-button" onClick={handlesettingsClick}>
           <img src="settings-icon.png" alt="settings" />

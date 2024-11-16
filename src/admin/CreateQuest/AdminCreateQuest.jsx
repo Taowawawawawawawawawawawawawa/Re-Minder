@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AdminCreateQuest.css';
+import { Link } from 'react-router-dom'; // Import Link
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 
@@ -18,28 +19,28 @@ const AdminCreateQuest = () => {
     <div className="admin-create-quest">
       <div className="quest-detail">
         <h2>Quest Detail</h2>
-        <input 
-          type="text" 
-          placeholder="ชื่อเควส" 
-          value={questName} 
-          onChange={(e) => setQuestName(e.target.value)} 
+        <input
+          type="text"
+          placeholder="ชื่อเควส"
+          value={questName}
+          onChange={(e) => setQuestName(e.target.value)}
         />
-        <select 
-          value={questDetails} 
+        <select
+          value={questDetails}
           onChange={(e) => setQuestDetails(e.target.value)}
         >
           <option value="">ช่องใส่รายละเอียดเควส</option>
           <option value="detail1">Detail 1</option>
           <option value="detail2">Detail 2</option>
         </select>
-        <input 
-          type="text" 
-          placeholder="วิธีส่งงาน" 
-          value={questMethod} 
-          onChange={(e) => setQuestMethod(e.target.value)} 
+        <input
+          type="text"
+          placeholder="วิธีส่งงาน"
+          value={questMethod}
+          onChange={(e) => setQuestMethod(e.target.value)}
         />
-        <select 
-          value={difficultyLevel} 
+        <select
+          value={difficultyLevel}
           onChange={(e) => setDifficultyLevel(e.target.value)}
         >
           <option value="">ระดับความยาก (ที่คาดใช้)</option>
@@ -48,6 +49,7 @@ const AdminCreateQuest = () => {
           <option value="hard">ยาก</option>
         </select>
         <button onClick={handleCreateQuest}>สร้างเควส</button>
+        {/* <button onClick={handleCreateQuest}>สร้างเควส</button> */}
       </div>
 
       <div className="quest-list">
@@ -63,8 +65,14 @@ const AdminCreateQuest = () => {
           <div className="quest-item">ลองนอนเฉยๆ <span>สร้างแล้ว</span></div>
           <div className="quest-item">ขอกำลังใจหน่อย <span>สร้างแล้ว</span></div>
         </div>
+        <div className="section quest-section"></div>
+        <Link to="/AdminQuestBoard" className="quest-link">
+          <p>ดูเควสบอร์ด</p>
+        </Link>
+        
       </div>
     </div>
+
     <Footer /></>
 };
 

@@ -50,7 +50,7 @@ const Admincontact = () => {
         </div>
       )}
     </div>
-    <Footer /></>
+  <Footer /></>
 };
 
 export default Admincontact;

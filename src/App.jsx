@@ -11,6 +11,7 @@ const Setting = lazy(() => import("./pages/Setting/Setting"));
 const Home = lazy(() => import("./pages/Home/Home"));
 const Beryle = lazy(() => import("./pages/Beryle/Beryle"));
 const Myroom = lazy(() => import("./pages/Myroom/Myroom"));
+const Shop = lazy(() => import("./pages/Shop/Shop"));
 const Point = lazy(() => import("./pages/Point/Point"));
 const SignIn = lazy(() => import("./pages/SignIn/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp/SignUp"));
@@ -25,6 +26,7 @@ const AdminSignIn = lazy(() => import("./admin/AdminSignIn"));
 const Admincontact = lazy(() => import("./admin/Contact/Admincontact"));
 const AdminQuestboard = lazy(() => import("./admin/Quest/AdminQuestBoard"));
 const AdminCreateQuest = lazy(() => import("./admin/CreateQuest/AdminCreateQuest"));
+const AdminShop = lazy(() => import("./admin/Shop/AdminShop"));
 
 function App() {
   return (
@@ -38,11 +40,13 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/beryle" element={<Beryle />} />
           <Route path="/myroom" element={<Myroom />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="/point" element={<Point />} />
           <Route path="/questboard" element={<Questboard />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/admincreatequest" element={<AdminCreateQuest />} />
           <Route path="/setting" element={<Setting />} />
+          <Route path="/AdminShop" element={<AdminShop />} />
           <Route path="/adminhome" element={<AdminHome />} />
           <Route path="/adminsignin" element={<AdminSignIn />} />
           <Route path="/admincontact" element={<Admincontact />} />
