@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Questboard.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
@@ -11,6 +11,21 @@ function Questboard() {
   const handleTabClick = (difficulty) => {
     setSelectedDifficulty(difficulty);
   };
+
+  const [quests,setQuest] = useState([]);
+
+  useEffect(()=>{
+    const fetchquest = async() => {
+      const data = await fetch("http://localhost:3000/");
+      const json = await data.json();
+      setQuest(json);
+    };
+    fetchquest();
+
+
+
+  },[]);
+
 
   return <><Navbar />
     <div className="quest-board">
@@ -38,25 +53,30 @@ function Questboard() {
                 ยาก
               </button>
             </div>
-            <ul className="quest-items">
-              {/* Example quest items */}
-              <li className="quest-item">
-                <p>อรุณสวัสดิ!</p>
-                <div className="reward">💎 x2</div>
-              </li>
-              <li className="quest-item">
-                <p>อากาศในวันนี้</p>
-                <div className="reward">💎 x2</div>
-              </li>
-              <li className="quest-item">
-                <p>กินอะไรหรือยัง?</p>
-                <div className="reward">💎 x2</div>
-              </li>
-              <li className="quest-item">
-                <p>ขอกำลังใจหน่อย!</p>
-                <div className="status">สำเร็จ!</div>
-              </li>
-            </ul>
+            {quests.map((quest)=>{
+                console.log(quest);
+            })}
+            <div className='quest-list'>
+              <ul className="quest-items">
+                {/* Example quest items */}
+                <li className="quest-item">
+                  <p>อรุณสวัสดิ!</p>
+                  <div className="reward">💎 x2</div>
+                </li>
+                <li className="quest-item">
+                  <p>อากาศในวันนี้</p>
+                  <div className="reward">💎 x2</div>
+                </li>
+                <li className="quest-item">
+                  <p>กินอะไรหรือยัง?</p>
+                  <div className="reward">💎 x2</div>
+                </li>
+                <li className="quest-item">
+                  <p>ขอกำลังใจหน่อย!</p>
+                  <div className="status">สำเร็จ!</div>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div className="quest-detail">
