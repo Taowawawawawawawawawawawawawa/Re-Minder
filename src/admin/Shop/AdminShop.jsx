@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./AdminShop.css";
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/footer';
 
 const AdminShop = () => {
   const [formData, setFormData] = useState({
@@ -34,7 +36,7 @@ const AdminShop = () => {
     { name: "ปีก", price: "580pt", icon: "path_to_icon8" },
   ];
 
-  return (
+  return <><Navbar />
     <div className="admin-shop">
       <div className="form-section">
         <h2>New Item</h2>
@@ -104,7 +106,7 @@ const AdminShop = () => {
         </div>
       </div>
     </div>
-  );
+    <Footer /></>
 };
 
 export default AdminShop;

@@ -11,6 +11,9 @@ const Setting = lazy(() => import("./pages/Setting/Setting"));
 const Home = lazy(() => import("./pages/Home/Home"));
 const Beryle = lazy(() => import("./pages/Beryle/Beryle"));
 const Myroom = lazy(() => import("./pages/Myroom/Myroom"));
+const Questlog = lazy(() => import("./pages/Myroom/Questlog"));
+const Diary = lazy(() => import("./pages/Myroom/Diary"));
+const Wardrobe = lazy(() => import("./pages/Myroom/Wardrobe"));
 const Shop = lazy(() => import("./pages/Shop/Shop"));
 const Point = lazy(() => import("./pages/Point/Point"));
 const SignIn = lazy(() => import("./pages/SignIn/SignIn"));
@@ -40,6 +43,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/beryle" element={<Beryle />} />
           <Route path="/myroom" element={<Myroom />} />
+          <Route path="/Questlog" element={<Questlog />} />
+          <Route path="/Diary" element={<Diary />} />
+          <Route path="/Wardrobe" element={<Wardrobe />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/point" element={<Point />} />
           <Route path="/questboard" element={<Questboard />} />

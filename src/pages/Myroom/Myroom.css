@@ -70,3 +70,163 @@
     font-size: 16px;
   }
   
+  .quest-list {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+  }
+  
+  .quest-item {
+    list-style: none;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .quest-item:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .quest-details {
+    margin-top: 20px;
+    width: 400px;
+  }
+  
+  .quest-detail {
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .quest-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .status.success {
+    color: green;
+    font-weight: bold;
+  }
+
+  .wardrobe {
+    position: absolute;
+    left: 10%;
+    width: 150px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+  }
+  
+  .wardrobe h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .wardrobe-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .wardrobe-item {
+    margin: 10px 0;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-radius: 8px;
+  }
+  
+  .wardrobe-item.selected {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .wardrobe-icon {
+    width: 50px;
+    height: auto;
+  }
+  
+  .character-item {
+    position: absolute;
+    top: -20px;
+    width: 80px;
+    animation: float 2s infinite ease-in-out;
+  }
+  
+  .controls {
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .control-button {
+    padding: 10px 20px;
+    background-color: brown;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .control-button:hover {
+    background-color: darkred;
+  }
+
+  .diary {
+    display: flex;
+    flex-direction: row;
+    height: 70%;
+    width: 90%;
+  }
+  
+  .diary-sidebar {
+    width: 25%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+  }
+  
+  .diary-entry-button {
+    background-color: #d8b894;
+    border: none;
+    margin: 5px;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .diary-main {
+    flex-grow: 1;
+    margin-left: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  textarea {
+    border-radius: 10px;
+    font-size: 15px;
+    border: 1px solid gray;
+  }
+  
+  button {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  
+  .upload-button {
+    background-color: #ffd700;
+    color: black;
+    font-size: 14px;
+  }
+  
+  
