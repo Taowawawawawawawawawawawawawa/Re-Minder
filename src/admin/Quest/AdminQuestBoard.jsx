@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useEffect, useState } from 'react';
 import "./AdminQuestBoard.css";
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
