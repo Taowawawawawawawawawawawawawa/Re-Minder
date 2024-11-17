@@ -234,6 +234,9 @@ const Shop = () => {
 
         {error && <div className="error">Error: {error}</div>}
 
+
+
+
         <div className="shop-shelf">
           {/* Render costumes if the selected section is costume */}
           {selectedSection === 'costume' &&
