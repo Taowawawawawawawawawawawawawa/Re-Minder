@@ -4,6 +4,24 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 
 const AdminQuestBoard = () => {
+
+  const [questsAM,setQuestAM] = useState([]);
+
+  useEffect(()=>{
+    const fetchquestAM = async() => {
+      const dataAM = await fetch("http://API/");
+      const json = await dataAM.json();
+      setQuestAM(json);
+    };
+    fetchquestAM();
+
+
+
+  },[]);
+
+
+
+
     return <><Navbar />
     <div className="admin-quest-board">
       <div className="quest-container">
