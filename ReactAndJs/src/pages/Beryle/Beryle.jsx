@@ -31,6 +31,11 @@ const Beryle = () => {
     }
   };
 
+  useEffect(() => {
+    // Fetch both costumes and themes on component load
+    fetchberyle();
+  }, []);
+
 
   return <><Navbar />
     <div className="beryl-shop">
