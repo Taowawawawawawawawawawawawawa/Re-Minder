@@ -1,14 +1,15 @@
 package reminder.controller;
 
-import reminder.domain.QuestLog;
-import reminder.dto.QueslogtDTO;
-import reminder.dto.mapper.QuestLogMapper;
-import reminder.repository.QuestLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.client.RestTemplate;
+import reminder.domain.QuestLog;
+import reminder.dto.QuestLogDTO;
+import reminder.dto.mapper.QuestLogMapper;
+import reminder.repository.QuestLogRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questlogs")
-@CrossOrigin(origins = "http://localhost:3000") // ควบคุม CORS ให้ถูกต้อง
 public class QuestLogController {
 
     @Autowired
@@ -24,57 +24,81 @@ public class QuestLogController {
 
     @Autowired
     private QuestLogMapper questLogMapper;
+    @Autowired
+    private RestTemplate restTemplate;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createQuestLog(@RequestBody QueslogtDTO questLogDTO) {
-        if (questLogDTO == null) {
-            return new ResponseEntity<>("Request body is empty.", HttpStatus.BAD_REQUEST);
-        }
+    @Value("http://localhost:8202") // URL for Quests microservice
+    private String questsServiceUrl;
 
-        try {
-            QuestLog questLog = questLogMapper.questLogDTOToQuest(questLogDTO);
-            questLogRepository.save(questLog);
-            return new ResponseEntity<>("Quest Log created successfully!", HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace(); // log the exception
-            return new ResponseEntity<>("An error occurred while creating the Quest Log.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<QueslogtDTO>> getAllQuestLogs() {
-        List<QuestLog> questLogs = questLogRepository.findAll();
-        if (questLogs.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        List<QueslogtDTO> questLogDTOs = questLogs.stream()
-                .map(questLog -> questLogMapper.questToQuestLogDTO(questLog))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(questLogDTOs, HttpStatus.OK);
-    }
-
+    // Get QuestLog by ID
     @GetMapping("/{id}")
-    public ResponseEntity<QueslogtDTO> getQuestLogById(@PathVariable Long id) {
+    public ResponseEntity<QuestLogDTO> getQuestLogById(@PathVariable Long id) {
         Optional<QuestLog> questLog = questLogRepository.findById(id);
         if (questLog.isPresent()) {
-            QueslogtDTO questLogDTO = questLogMapper.questToQuestLogDTO(questLog.get());
+            QuestLogDTO questLogDTO = new QuestLogDTO();
+            questLogMapper.updateQuestLogFromEntity(questLog.get(), questLogDTO);
             return new ResponseEntity<>(questLogDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // เพิ่มฟังก์ชันในการอัปเดตสถานะของ QuestLog
+    // Get All QuestLogs
+    @GetMapping("/all")
+    public ResponseEntity<List<QuestLogDTO>> getAllQuestLogs() {
+        List<QuestLog> questLogs = questLogRepository.findAll();
+        List<QuestLogDTO> questLogDTOs = questLogs.stream().map(questLog -> {
+            QuestLogDTO dto = new QuestLogDTO();
+            questLogMapper.updateQuestLogFromEntity(questLog, dto);
+            return dto;
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(questLogDTOs, HttpStatus.OK);
+    }
+    @PostMapping("/create")
+    public ResponseEntity<String> createQuestLog(@RequestBody QuestLogDTO questLogDTO) {
+        try {
+            QuestLog questLog = questLogMapper.toEntity(questLogDTO);
+            questLogRepository.save(questLog);  // บันทึกข้อมูลลงในฐานข้อมูล
+            return new ResponseEntity<>("QuestLog created successfully!", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error creating QuestLog: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // Update QuestLog Status
     @PutMapping("/{id}/status")
-    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestBody String status) {
+    public ResponseEntity<String> updateQuestLogStatus(@PathVariable Long id, @RequestParam String status) {
         Optional<QuestLog> questLog = questLogRepository.findById(id);
         if (questLog.isPresent()) {
-            QuestLog updatedQuestLog = questLog.get();
-            updatedQuestLog.setStatus(status);
-            questLogRepository.save(updatedQuestLog);
-            return new ResponseEntity<>("Quest Log status updated successfully.", HttpStatus.OK);
+            QuestLog updatedLog = questLog.get();
+            updatedLog.setStatus(status);
+            questLogRepository.save(updatedLog);
+            return new ResponseEntity<>("QuestLog status updated successfully!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Quest Log not found.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("QuestLog not found.", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Fetch Quest Details from Quests Service
+    @GetMapping("/quest/{questId}")
+    public ResponseEntity<Object> getQuestDetails(@PathVariable Long questId) {
+        try {
+            String url = questsServiceUrl + "/quests/" + questId;
+            ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+            return new ResponseEntity<>(response.getBody(), response.getStatusCode());
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to fetch quest details: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Delete QuestLog
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<String> deleteQuestLog(@PathVariable Long id) {
+        try {
+            questLogRepository.deleteById(id);
+            return new ResponseEntity<>("QuestLog deleted successfully.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to delete QuestLog: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

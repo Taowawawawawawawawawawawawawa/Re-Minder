@@ -7,7 +7,7 @@ const QuestList = () => {
   // ฟังก์ชันดึงข้อมูลเควสทั้งหมดจาก backend
   const fetchQuests = async () => {
     try {
-      const response = await axios.get("http://localhost:8202/quests/all");
+      const response = await axios.get("http://localhost:8202/quests/all"); 
       setQuests(response.data);  // เก็บข้อมูลเควสใน state
     } catch (error) {
       console.error("Error fetching quests:", error);

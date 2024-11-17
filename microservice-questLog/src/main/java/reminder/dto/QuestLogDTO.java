@@ -1,37 +1,18 @@
-package reminder.domain;
+package reminder.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class QuestLogDTO {
 
-@Entity
-public class QuestLog {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private Long questId;
     private Long userId;
     private String imageUrl;
-    private String status; // Pending, Approved, Rejected
-
-    // ฟิลด์ที่เพิ่มเข้าไปใน QuestLog
+    private String status;
     private String questName;
     private String questDescription;
-    private int berylReward;
-    private int difficulty; // เปลี่ยนเป็น int
-    private int pointReward;
+    private Integer berylReward;
+    private int difficulty;  // เปลี่ยนเป็น int เพื่อให้ตรงกับ Entity
+    private Integer pointReward;
 
-    // Getter/Setter methods สำหรับฟิลด์ใหม่
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // Getter และ Setter สำหรับส่วนต่าง ๆ
     public Long getQuestId() {
         return questId;
     }
@@ -80,11 +61,11 @@ public class QuestLog {
         this.questDescription = questDescription;
     }
 
-    public int getBerylReward() {
+    public Integer getBerylReward() {
         return berylReward;
     }
 
-    public void setBerylReward(int berylReward) {
+    public void setBerylReward(Integer berylReward) {
         this.berylReward = berylReward;
     }
 
@@ -96,11 +77,11 @@ public class QuestLog {
         this.difficulty = difficulty;
     }
 
-    public int getPointReward() {
+    public Integer getPointReward() {
         return pointReward;
     }
 
-    public void setPointReward(int pointReward) {
+    public void setPointReward(Integer pointReward) {
         this.pointReward = pointReward;
     }
 }

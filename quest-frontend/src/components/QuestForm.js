@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { axiosInstance8202 } from "../api/quests"; // นำเข้า axiosInstance8202
 
 const CreateQuestForm = () => {
   const [questName, setQuestName] = useState("");
@@ -8,7 +8,7 @@ const CreateQuestForm = () => {
   const [berylReward, setBerylReward] = useState(0);
   const [pointReward, setPointReward] = useState(0);
   const [questSubmitMethod, setQuestSubmitMethod] = useState("");
-  const [availableTime, setAvailableTime] = useState(["09:00", "12:00"]); // ตัวอย่างค่าของเวลา
+  const [availableTime, setAvailableTime] = useState(["09:00", "12:00"]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,12 +23,13 @@ const CreateQuestForm = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:8202/quests/create", newQuest);
-      console.log(response.data);  // แสดงข้อความตอบกลับจาก server
+      const response = await axiosInstance8202.post("/quests/create", newQuest); // ใช้ axiosInstance8202 สำหรับ service quest
+      console.log(response.data);
     } catch (error) {
       console.error("There was an error creating the quest!", error);
     }
   };
+
 
   return (
     <div>

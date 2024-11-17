@@ -1,10 +1,8 @@
 package reminder.repository;
 
-import reminder.domain.QuestLog;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
+import reminder.domain.QuestLog;
 
 public interface QuestLogRepository extends JpaRepository<QuestLog, Long> {
-    List<QuestLog> findByQuestId(Long questId);
+    // กำหนดเมธอดค้นหาหรือประมวลผลต่างๆ ได้ที่นี่
 }
