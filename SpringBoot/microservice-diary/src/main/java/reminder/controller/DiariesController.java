@@ -47,6 +47,18 @@ public class DiariesController {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<DiaryDTO> getDiaryByUserId(@PathVariable Long userId) {
+        Optional<Diary> diary = diaryRepository.findByUserId(userId);
+        if (diary.isPresent()) {
+            DiaryDTO diaryDTO = new DiaryDTO();
+            diaryMapper.updateDiaryFromEntity(diary.get(), diaryDTO);
+            return new ResponseEntity<>(diaryDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     // Get all diaries
     @GetMapping("/all")
     public ResponseEntity<List<DiaryDTO>> getAllDiaries() {
@@ -119,3 +131,64 @@ public class DiariesController {
         }
     }
 }
+
+/*
+ * สรุป URL และฟังก์ชันการทำงานใน DiariesController
+
+ 1. ดึงข้อมูลไดอารี่ตาม diaryId
+URL: GET http://localhost:8205/diaries/{id}
+คำอธิบาย: ดึงข้อมูลไดอารี่ตาม diaryId
+HTTP Status:
+200 OK หากพบไดอารี่
+404 Not Found หากไม่พบไดอารี่
+
+2. ดึงข้อมูลไดอารี่ตาม userId
+URL: GET http://localhost:8205/diaries/user/{userId}
+คำอธิบาย: ดึงข้อมูลไดอารี่ของผู้ใช้ตาม userId
+HTTP Status:
+200 OK หากพบไดอารี่
+404 Not Found หากไม่พบไดอารี่
+
+3. ดึงข้อมูลไดอารี่ทั้งหมด
+URL: GET http://localhost:8205/diaries/all
+คำอธิบาย: ดึงข้อมูลไดอารี่ทั้งหมดในระบบ
+HTTP Status:
+200 OK
+
+4. สร้างไดอารี่ใหม่
+URL: POST http://localhost:8205/diaries/create
+คำอธิบาย: สร้างข้อมูลไดอารี่ใหม่
+Request Body ตัวอย่าง:
+json
+คัดลอกโค้ด
+{
+  "userId": 10001,
+  "stories": []
+}
+HTTP Status:
+201 Created หากสร้างสำเร็จ
+500 Internal Server Error หากเกิดข้อผิดพลาด
+
+5. เพิ่มหน้าใหม่ในไดอารี่
+URL: POST http://localhost:8205/diaries/{diaryId}/pages
+คำอธิบาย: เพิ่มหน้าหรือบันทึกใหม่ในไดอารี่ตาม diaryId
+ข้อจำกัด: ผู้ใช้สามารถเพิ่มได้เพียง 1 หน้า/วัน
+Request Body ตัวอย่าง:
+json
+คัดลอกโค้ด
+{
+  "details": "วันนี้อากาศดีมาก!",
+  "createDate": "2024-11-18"
+}
+HTTP Status:
+201 Created หากเพิ่มสำเร็จ
+400 Bad Request หากผู้ใช้เพิ่มหน้าซ้ำในวันเดียวกัน
+404 Not Found หากไม่พบไดอารี่
+
+6. ดึงหน้าทั้งหมดในไดอารี่
+URL: GET http://localhost:8205/diaries/{diaryId}/pages
+คำอธิบาย: ดึงข้อมูลหน้าทั้งหมดที่อยู่ในไดอารี่ตาม diaryId
+HTTP Status:
+200 OK หากพบหน้าของไดอารี่
+404 Not Found หากไม่พบไดอารี่
+ */

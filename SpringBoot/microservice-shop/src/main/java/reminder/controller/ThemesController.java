@@ -70,3 +70,50 @@ public class ThemesController {
     }
 
 }
+
+/*
+ * สรุป URL และฟังก์ชันการทำงานใน ThemesController
+
+ 1. ดึงข้อมูล Theme ตาม themeId
+URL: GET http://localhost:8204/themes/{id}
+คำอธิบาย: ดึงรายละเอียดของ Theme โดยระบุ themeId
+HTTP Status:
+200 OK หากพบ Theme
+404 Not Found หากไม่พบ Theme
+
+2. ดึงข้อมูล Theme ทั้งหมด
+URL: GET http://localhost:8204/themes/all
+คำอธิบาย: ดึงรายการ Theme ทั้งหมดที่มีในระบบ
+HTTP Status:
+200 OK
+
+3. สร้าง Theme ใหม่
+URL: POST http://localhost:8204/themes/create
+คำอธิบาย: เพิ่ม Theme ใหม่เข้าสู่ระบบ
+Request Body ตัวอย่าง:
+json
+คัดลอกโค้ด
+{
+  "frameSpriteArts": "path/to/frame.png",
+  "backGround": "path/to/background.png",
+  "bgm": "path/to/bgm.mp3",
+  "price": 500
+}
+HTTP Status:
+201 Created หากสร้าง Theme สำเร็จ
+
+4. ซื้อ Theme
+URL: POST http://localhost:8204/themes/purchase/{themeId}
+คำอธิบาย: ผู้ใช้งานสามารถซื้อ Theme โดยส่ง themeId และ userId
+Request Parameters:
+themeId (Path Variable): ID ของ Theme ที่ต้องการซื้อ
+userId (Request Param): ID ของผู้ใช้งาน
+ตัวอย่างการเรียกใช้งาน:
+bash
+คัดลอกโค้ด
+POST http://localhost:8204/themes/purchase/1?userId=1001
+HTTP Status:
+200 OK หากซื้อสำเร็จ
+400 Bad Request หากเกิดข้อผิดพลาด เช่น Beryl ไม่เพียงพอ หรือ Theme ซ้ำใน Inventory
+ฟังก์ชันนี้ใช้ Service (ThemesService) ในการตรวจสอบการซื้อ
+ */

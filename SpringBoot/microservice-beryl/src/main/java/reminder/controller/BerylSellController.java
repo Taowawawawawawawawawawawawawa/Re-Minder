@@ -57,3 +57,36 @@ public class BerylSellController {
         }
     }
 }
+
+/*
+ * สรุป URL และฟังก์ชันการทำงานใน BerylSellController
+
+ 1. ดึงข้อมูลสินค้า Beryl ตาม berylId
+URL: GET http://localhost:8206/beryl/{id}
+คำอธิบาย: ดึงข้อมูลสินค้า Beryl ตาม berylId
+HTTP Status:
+200 OK หากพบสินค้า Beryl
+404 Not Found หากไม่พบสินค้า Beryl
+
+2. ดึงข้อมูลสินค้า Beryl ทั้งหมด
+URL: GET http://localhost:8206/beryl/all
+คำอธิบาย: ดึงข้อมูลสินค้า Beryl ทั้งหมดที่มีอยู่ในระบบ
+HTTP Status:
+200 OK
+
+3. สร้างรายการขาย Beryl ใหม่
+URL: POST http://localhost:8206/beryl/create
+คำอธิบาย: เพิ่มรายการสินค้า Beryl ใหม่เข้าสู่ระบบ
+Request Body ตัวอย่าง:
+json
+คัดลอกโค้ด
+{
+  "berylAmount": 100,
+  "pointAmount": 10,
+  "price": 99.0
+}
+HTTP Status:
+201 Created หากสร้างสำเร็จ
+500 Internal Server Error หากเกิดข้อผิดพลาด
+
+ */

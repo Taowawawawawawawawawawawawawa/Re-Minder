@@ -69,3 +69,51 @@ public class CostumeController {
         }
     }
 }
+
+/*
+ * สรุป URL และฟังก์ชันการทำงานใน CostumeController
+
+ 1. ดึงข้อมูล Costume ตาม costumeId
+URL: GET http://localhost:8204/costumes/{id}
+คำอธิบาย: ดึงข้อมูลรายละเอียดของ Costume ตาม costumeId
+HTTP Status:
+200 OK หากพบ Costume
+404 Not Found หากไม่พบ Costume
+
+2. ดึงข้อมูล Costume ทั้งหมด
+URL: GET http://localhost:8204/costumes/all
+คำอธิบาย: ดึงรายการ Costume ทั้งหมดที่มีในระบบ
+HTTP Status:
+200 OK
+
+3. สร้าง Costume ใหม่
+URL: POST http://localhost:8204/costumes/create
+คำอธิบาย: เพิ่ม Costume ใหม่เข้าสู่ระบบ
+Request Body ตัวอย่าง:
+json
+คัดลอกโค้ด
+{
+  "costumeType": "HAT",
+  "costumeName": "Cowboy Hat",
+  "costumeDescription": "A stylish cowboy hat.",
+  "costumeFiles": "path/to/cowboy-hat.png",
+  "price": 100
+}
+HTTP Status:
+201 Created หากสร้าง Costume สำเร็จ
+
+4. ซื้อ Costume
+URL: POST http://localhost:8204/costumes/purchase/{costumeId}
+คำอธิบาย: ผู้ใช้งานสามารถซื้อ Costume โดยส่ง costumeId และ userId
+Request Parameters:
+costumeId (Path Variable): ID ของ Costume ที่ต้องการซื้อ
+userId (Request Param): ID ของผู้ใช้งาน
+ตัวอย่างการเรียกใช้งาน:
+bash
+คัดลอกโค้ด
+POST http://localhost:8204/costumes/purchase/1?userId=1001
+HTTP Status:
+200 OK หากซื้อสำเร็จ
+400 Bad Request หากเกิดข้อผิดพลาด เช่น เครดิตไม่พอ หรือ Costume ซ้ำใน Inventory
+ฟังก์ชันนี้ใช้ Service (CostumeService) ในการตรวจสอบการซื้อ
+ */

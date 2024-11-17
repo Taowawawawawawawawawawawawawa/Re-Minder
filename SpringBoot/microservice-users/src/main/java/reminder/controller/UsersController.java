@@ -99,4 +99,118 @@ public class UsersController {
             return new ResponseEntity<>("Insufficient points or user not found", HttpStatus.BAD_REQUEST);
         }
     }
+
+    // Update user information (for users themselves)
+    @PutMapping("/{id}/update")
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UsersDTO userDTO) {
+        Optional<Users> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) {
+            Users user = existingUser.get();
+            if (userDTO.getName() != null) user.setName(userDTO.getName());
+            if (userDTO.getMbti() != null) user.setMbti(userDTO.getMbti());
+            if (userDTO.getDateOfBirth() != null) user.setDateOfBirth(userDTO.getDateOfBirth());
+            userRepository.save(user);
+            return new ResponseEntity<>("User information updated successfully.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
+    }
+
+    // Admin updates user information
+    @PutMapping("/admin/{id}/update")
+    public ResponseEntity<String> adminUpdateUser(@PathVariable Long id, @RequestBody UsersDTO userDTO) {
+        Optional<Users> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) {
+            Users user = existingUser.get();
+            userMapper.updateUsersFromDto(userDTO, user);
+            userRepository.save(user);
+            return new ResponseEntity<>("User updated successfully by admin.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
+    }
+
+    // Admin deletes user
+    @DeleteMapping("/admin/{id}/delete")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        Optional<Users> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            userRepository.delete(user.get());
+            return new ResponseEntity<>("User deleted successfully by admin.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
+    }
 }
+
+/*
+ * สรุป URL และฟังก์ชันการทำงานใน UsersController
+
+ 1. ดึงข้อมูลผู้ใช้
+URL: GET http://localhost:8200/users/{id}
+คำอธิบาย: ดึงข้อมูลผู้ใช้ตาม id ที่ระบุ
+HTTP Status:
+200 OK หากพบผู้ใช้
+404 Not Found หากไม่พบผู้ใช้
+
+2. ดึงข้อมูลผู้ใช้ทั้งหมด
+URL: GET http://localhost:8200/users/all
+คำอธิบาย: ดึงข้อมูลผู้ใช้ทั้งหมดในระบบ
+HTTP Status:
+200 OK
+
+3. สร้างผู้ใช้ใหม่
+URL: POST http://localhost:8200/users/create
+คำอธิบาย: สร้างผู้ใช้ใหม่โดยส่งข้อมูลผ่าน Request Body
+HTTP Status:
+201 Created หากสร้างสำเร็จ
+500 Internal Server Error หากเกิดข้อผิดพลาด
+
+4. ดูยอด Beryl ของผู้ใช้
+URL: GET http://localhost:8200/users/{userId}/beryl
+คำอธิบาย: ดูจำนวน Beryl ของผู้ใช้ตาม userId
+HTTP Status:
+200 OK พร้อมจำนวน Beryl
+404 Not Found หากไม่พบผู้ใช้
+
+5. หัก Beryl ของผู้ใช้
+URL: PUT http://localhost:8200/users/{userId}/deductBeryl
+คำอธิบาย: หักจำนวน Beryl ออกจากบัญชีของผู้ใช้
+Parameter: amount (จำนวน Beryl ที่ต้องการหัก)
+HTTP Status:
+200 OK หากหักสำเร็จ
+400 Bad Request หากยอด Beryl ไม่เพียงพอหรือไม่พบผู้ใช้
+
+6. ดูยอด Points ของผู้ใช้
+URL: GET http://localhost:8200/users/{userId}/points
+คำอธิบาย: ดูจำนวน Points ของผู้ใช้ตาม userId
+HTTP Status:
+200 OK พร้อมจำนวน Points
+404 Not Found หากไม่พบผู้ใช้
+
+7. หัก Points ของผู้ใช้
+URL: PUT http://localhost:8200/users/{userId}/deductPoints
+คำอธิบาย: หักจำนวน Points ออกจากบัญชีของผู้ใช้
+Parameter: amount (จำนวน Points ที่ต้องการหัก)
+HTTP Status:
+200 OK หากหักสำเร็จ
+400 Bad Request หากยอด Points ไม่เพียงพอหรือไม่พบผู้ใช้
+
+8. ผู้ใช้อัปเดตข้อมูลตนเอง
+URL: PUT http://localhost:8200/users/{id}/update
+คำอธิบาย: ผู้ใช้อัปเดตข้อมูลส่วนตัว เช่น ชื่อ, MBTI, หรือวันเกิด
+HTTP Status:
+200 OK หากอัปเดตสำเร็จ
+404 Not Found หากไม่พบผู้ใช้
+
+9. แอดมินอัปเดตข้อมูลผู้ใช้
+URL: PUT http://localhost:8200/users/admin/{id}/update
+คำอธิบาย: แอดมินอัปเดตข้อมูลผู้ใช้ตาม id
+HTTP Status:
+200 OK หากอัปเดตสำเร็จ
+404 Not Found หากไม่พบผู้ใช้
+
+10. แอดมินลบผู้ใช้
+URL: DELETE http://localhost:8200/users/admin/{id}/delete
+คำอธิบาย: แอดมินลบผู้ใช้ตาม id
+HTTP Status:
+200 OK หากลบสำเร็จ
+404 Not Found หากไม่พบผู้ใช้
+*/

@@ -57,3 +57,35 @@ public class AdsController {
         }
     }
 }
+
+/*
+ * สรุป URL และฟังก์ชันการทำงานใน AdsController
+
+ 1. ดึงข้อมูลโฆษณาตาม adsId
+URL: GET http://localhost:8207/ads/{id}
+คำอธิบาย: ดึงข้อมูลโฆษณาตาม adsId
+HTTP Status:
+200 OK หากพบโฆษณา
+404 Not Found หากไม่พบโฆษณา
+
+2. ดึงข้อมูลโฆษณาทั้งหมด
+URL: GET http://localhost:8207/ads/all
+คำอธิบาย: ดึงข้อมูลโฆษณาทั้งหมดที่มีในระบบ
+HTTP Status:
+200 OK
+
+3. สร้างโฆษณาใหม่
+URL: POST http://localhost:8207/ads/create
+คำอธิบาย: เพิ่มข้อมูลโฆษณาใหม่ในระบบ
+Request Body ตัวอย่าง:
+json
+คัดลอกโค้ด
+{
+  "adsName": "ชื่อโฆษณา",
+  "adsSrc": "https://example.com/ad.png",
+  "productLink": "https://example.com/product"
+}
+HTTP Status:
+201 Created หากสร้างโฆษณาสำเร็จ
+500 Internal Server Error หากเกิดข้อผิดพลาด
+ */
