@@ -1,0 +1,9 @@
+{
+    "name": "Alice Johnson",
+    "dateOfBirth": "1995-08-12",
+    "email": "alice.johnson@example.com",
+    "password": "securePassword123",
+    "mbti": "INFJ",
+    "beryl": 200,
+    "points": 75
+}

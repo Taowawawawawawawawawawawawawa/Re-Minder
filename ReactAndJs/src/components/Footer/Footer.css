@@ -1,0 +1,24 @@
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #2e2e2e; /* สีพื้นหลังเข้ม */
+    padding: 15px 20px;
+    border-top: 2px solid #1a1a1a; /* เส้นขอบด้านบน */
+  }
+  
+  .contact-button {
+    padding: 10px 20px;
+    background-color: #5c4033; /* สีน้ำตาลสำหรับปุ่ม */
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .contact-button:hover {
+    background-color: #7a5a44; /* สีเมื่อลากเมาส์ผ่าน */
+  }
+  

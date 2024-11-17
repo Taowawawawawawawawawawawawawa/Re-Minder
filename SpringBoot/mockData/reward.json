@@ -1,0 +1,6 @@
+{
+    "rewardSpriteArts": "/images/rewards/coupon.png",
+    "rewardName": "Discount Coupon",
+    "rewardDescription": "10% discount coupon for the next purchase.",
+    "rewardPrice": 50
+}

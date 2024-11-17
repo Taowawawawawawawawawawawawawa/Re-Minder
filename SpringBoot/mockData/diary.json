@@ -1,0 +1,13 @@
+{
+    "userId": 1,
+    "stories": [
+        {
+            "createDate": "2024-11-14",
+            "details": "Today was a great day. I accomplished a lot and felt productive."
+        },
+        {
+            "createDate": "2024-11-15",
+            "details": "I went for a walk in the park and enjoyed the fresh air."
+        }
+    ]
+}

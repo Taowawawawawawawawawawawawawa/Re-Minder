@@ -1,0 +1,63 @@
+.point-exchange {
+    font-family: "Arial", sans-serif;
+    background: url("") center/cover no-repeat;
+    padding: 20px;
+    color: #fff;
+    border-radius: 10px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .header h2 {
+    font-size: 24px;
+    background-color: #2e2e2e;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #ffd700;
+  }
+  
+  .exchange-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    justify-items: center;
+  }
+  
+  .exchange-card {
+    background-color: #4b2e2e;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .exchange-card .exchange-icon {
+    width: 50px;
+    height: auto;
+    margin-bottom: 5px;
+  }
+  
+  .exchange-card .exchange-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .exchange-card .points {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .exchange-card .reward-icon {
+    width: 30px;
+    height: auto;
+  }
+  
