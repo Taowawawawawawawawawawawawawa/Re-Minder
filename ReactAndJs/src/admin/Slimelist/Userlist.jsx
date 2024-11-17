@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./Userlist.css";
+<<<<<<< HEAD
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/footer";
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/footer';
+import { useEffect } from "react";
+>>>>>>> 71088e8f0e96955f31d618e8a98a37844e10569f
 
 const Userlist = () => {
     const [user, setUser] = useState([]);
