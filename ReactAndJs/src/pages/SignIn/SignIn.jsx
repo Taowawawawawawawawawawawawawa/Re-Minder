@@ -8,6 +8,7 @@ function SignIn() {
     const [password, setPassword] = useState('');
 
     const handleSignIn = () => {
+        navigate('/Home');
         // Implement SignIn logic
     };
 
