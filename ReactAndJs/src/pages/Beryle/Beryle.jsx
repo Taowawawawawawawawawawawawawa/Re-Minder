@@ -4,16 +4,16 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 
 const Beryle = () => {
-  const offers = [
-    { amount: "10 + 1p", price: "1.0$", promo: true },
-    { amount: "20 + 5p", price: "2.0$", promo: true },
-    { amount: "35 + 3p", price: "3.0$", promo: true },
-    { amount: "83 + 26p", price: "7.0$", promo: true },
-    { amount: "125 + 59p", price: "12.0$", promo: true },
-    { amount: "333 + 33p", price: "25.0$", promo: false },
-    { amount: "590 + 56p", price: "50.0$", promo: true },
-    { amount: "3594 + 224p", price: "200.0$", promo: true },
-  ];
+  // const offers = [
+  //   { amount: "10 + 1p", price: "1.0$", promo: true },
+  //   { amount: "20 + 5p", price: "2.0$", promo: true },
+  //   { amount: "35 + 3p", price: "3.0$", promo: true },
+  //   { amount: "83 + 26p", price: "7.0$", promo: true },
+  //   { amount: "125 + 59p", price: "12.0$", promo: true },
+  //   { amount: "333 + 33p", price: "25.0$", promo: false },
+  //   { amount: "590 + 56p", price: "50.0$", promo: true },
+  //   { amount: "3594 + 224p", price: "200.0$", promo: true },
+  // ];
 
   const [beryle, setberyle] = useState([]);
   const [error, setError] = useState(null); // For error handling

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Userlist.css";
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
+import { useEffect } from "react";
 
 const Userlist = () => {
     // Sample data to render the user details
