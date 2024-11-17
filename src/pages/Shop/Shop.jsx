@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './Shop.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
@@ -25,6 +25,17 @@ const Shop = () => {
     setSelectedItem(item);
     alert(`You selected: ${item.name}`);
   };
+  /*ดึงAPI*/
+  const [shops,setshops] = useState([]);
+
+  useEffect(()=>{
+    const fetchshop = async() => {
+      const datashop = await fetch("http://API/");
+      const json = await datashop.json();
+      setshops(json);
+    };
+    fetchshop();
+  },[]);
 
   return <><Navbar />
     <div className="shop-container">
@@ -42,7 +53,10 @@ const Shop = () => {
           Theme
         </button>
       </div>
-
+      {/* ดึงข้อมูลมาใส้ */}
+      {shops.map((quest)=>{
+                console.log(shops);
+            })}
       <div className="shop-shelf">
         {items
           .filter(item => item.category === selectedSection)
