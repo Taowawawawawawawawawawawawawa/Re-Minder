@@ -10,19 +10,14 @@ const AdminQuestBoard = () => {
 
   useEffect(()=>{
     const fetchquestAM = async() => {
-      const dataAM = await fetch("http://API/");
+      const dataAM = await fetch("#");
       const json = await dataAM.json();
       setQuestAM(json);
     };
     fetchquestAM();
 
 
-
   },[]);
-
-
-
-
     return <><Navbar />
     <div className="admin-quest-board">
       <div className="quest-container">
