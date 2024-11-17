@@ -48,7 +48,7 @@ const Beryle = () => {
         <button>Watch Video</button>
       </div>
       <div className="offers-section">
-        {beryle.map((beryle, index) => (
+        {beryle.map((beryle) => (
           <div
             key={beryle.berylId}
             className={`offer-card ${beryle.promo ? "promo" : ""}`}

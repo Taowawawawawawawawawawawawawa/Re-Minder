@@ -17,6 +17,27 @@ const Userlist = () => {
     const toggleUserDetails = (userId) => {
         setExpandedUserId(expandedUserId === userId ? null : userId);
     };
+    const [user, setuser] = useState([]);
+    const [error, setError] = useState(null); // For error handling
+
+    const fetchuser = async () => {
+        try {
+          const response = await fetch('http://localhost:8200/users/all');
+          if (!response.ok) {
+            throw new Error(`Costume API error: ${response.status}`);
+          }
+          const data = await response.json();
+          setuser(data);
+        } catch (err) {
+          setError(err.message);
+        }
+      };
+
+      useEffect(() => {
+        // Fetch both costumes and themes on component load
+        fetchuser();
+      }, []);
+
 
     return <><Navbar />
         <div className="user-list">
@@ -33,8 +54,8 @@ const Userlist = () => {
             </div>
             
             <ul className="user-items">
-                {users.map((user) => (
-                    <li key={user.id} className="user-item">
+                {user.map((user) => (
+                    <li key={user.userId} className="user-item">
                         <div className="user-summary">
                             <span>{user.name}</span>
                             <div className="action-buttons">
@@ -49,10 +70,9 @@ const Userlist = () => {
                             <div className="user-detail">
                                 <div className="information">
                                     <h3>Information</h3>
-                                    <p>ชื่อ: John Doe</p>
-                                    <p>Email: john@example.com</p>
-                                    <p>เบอร์โทร: 123-456-7890</p>
-                                    <p>MBTI: INTJ</p>
+                                    <p>ชื่อ: {user.name}</p>
+                                    <p>Email: {user.email}</p>
+                                    <p>MBTI: {user.mbti}</p>
                                 </div>
                                 <div className="item">
                                     <h3>Item</h3>
