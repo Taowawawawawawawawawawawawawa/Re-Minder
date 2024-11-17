@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import "./Beryle.css";
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
@@ -15,6 +15,28 @@ const Beryle = () => {
     { amount: "3594 + 224p", price: "200.0$", promo: true },
   ];
 
+  const [beryle, setberyle] = useState([]);
+  const [error, setError] = useState(null); // For error handling
+
+  const fetchberyle = async () => {
+    try {
+      const response = await fetch('http://localhost:8206/beryl/all');
+      if (!response.ok) {
+        throw new Error(`Costume API error: ${response.status}`);
+      }
+      const data = await response.json();
+      setberyle(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch both costumes and themes on component load
+    fetchberyle();
+  }, []);
+
+
   return <><Navbar />
     <div className="beryl-shop">
       <div className="free-section">
@@ -26,14 +48,14 @@ const Beryle = () => {
         <button>Watch Video</button>
       </div>
       <div className="offers-section">
-        {offers.map((offer, index) => (
+        {beryle.map((beryle) => (
           <div
-            key={index}
-            className={`offer-card ${offer.promo ? "promo" : ""}`}
+            key={beryle.berylId}
+            className={`offer-card ${beryle.promo ? "promo" : ""}`}
           >
-            <p>{offer.amount}</p>
+            <p>{beryle.berylAmount}</p>
             <img src="path_to_gem_image" alt="Gem" />
-            <p>{offer.price}</p>
+            <p>{beryle.price}</p>
           </div>
         ))}
       </div>
