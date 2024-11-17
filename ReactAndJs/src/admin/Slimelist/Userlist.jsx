@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Userlist.css";
-
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/footer";
-
-import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/footer';
-import { useEffect } from "react";
-
 
 const Userlist = () => {
     const [user, setUser] = useState([]);
