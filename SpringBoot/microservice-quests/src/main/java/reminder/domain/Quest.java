@@ -1,7 +1,6 @@
 package reminder.domain;
 
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +19,14 @@ public class Quest {
     private String questSubmitMethod;
 
     @ElementCollection
-    private List<String> availableTime;
+    @CollectionTable(name = "Quest_suitableMBTI", joinColumns = @JoinColumn(name = "Quest_questId"))
+    @Column(name = "suitableMBTI")
+    private List<String> suitableMBTI = new ArrayList<>();
 
-    @PrePersist
-    public void prePersist() {
-        if (availableTime == null) {
-            availableTime = new ArrayList<>();
-        }
-    }
-
+    @ElementCollection
+    @CollectionTable(name = "Quest_availableTime", joinColumns = @JoinColumn(name = "Quest_questId"))
+    @Column(name = "availableTime")
+    private List<String> availableTime = new ArrayList<>();
 
     // Getter and Setter methods
     public Long getQuestId() {
@@ -93,5 +91,13 @@ public class Quest {
 
     public void setAvailableTime(List<String> availableTime) {
         this.availableTime = availableTime;
+    }
+
+    public List<String> getSuitableMBTI() {
+        return suitableMBTI;
+    }
+
+    public void setSuitableMBTI(List<String> suitableMBTI) {
+        this.suitableMBTI = suitableMBTI;
     }
 }
