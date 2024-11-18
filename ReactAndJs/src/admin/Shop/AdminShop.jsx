@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import "./AdminShop.css";
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
@@ -35,6 +35,45 @@ const AdminShop = () => {
     { name: "ผ้าคลุม", price: "420pt", icon: "path_to_icon7" },
     { name: "ปีก", price: "580pt", icon: "path_to_icon8" },
   ];
+
+  const [costumes, setCostumes] = useState([]);
+  const [themes, setThemes] = useState([]);
+  const [selectedSection, setSelectedSection] = useState('costume');
+  const fetchCostumes = async () => {
+    try {
+      const response = await fetch('http://localhost:8204/costumes/all');
+      if (!response.ok) {
+        throw new Error(`Costume API error: ${response.status}`);
+      }
+      const data = await response.json();
+      setCostumes(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const fetchThemes = async () => {
+    try {
+      const response = await fetch('http://localhost:8204/themes/all');
+      if (!response.ok) {
+        throw new Error(`Theme API error: ${response.status}`);
+      }
+      const data = await response.json();
+      setThemes(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch both costumes and themes on component load
+    fetchCostumes();
+    fetchThemes();
+  }, []);
+
+  const handleItemClick = (item) => {
+    alert(`You selected: ${item.costumeName || item.themeName}`);
+  };
 
   return <><Navbar />
     <div className="admin-shop">
@@ -92,17 +131,47 @@ const AdminShop = () => {
 
       <div className="items-section">
         <div className="tabs">
-          <button>Costume</button>
-          <button>Theme</button>
+          <button 
+          className={selectedSection === 'costume' ? 'active' : ''}
+            onClick={() => setSelectedSection('costume')}>
+              Costume
+              </button>
+          <button 
+          className={selectedSection === 'theme' ? 'active' : ''}
+            onClick={() => setSelectedSection('theme')}>
+              Theme
+               </button>
         </div>
         <div className="items-grid">
-          {categories.map((item, index) => (
-            <div key={index} className="item-card">
-              <img src={item.icon} alt={item.name} />
-              <p>{item.name}</p>
-              <p>{item.price}</p>
-            </div>
-          ))}
+        {selectedSection === 'costume' &&
+            costumes.map((costume) => (
+              <div
+                key={costume.costumeId}
+                className="item-card"
+                onClick={() => handleItemClick(costume)}
+              >
+                <img src={costume.costumeFiles} alt={costume.costumeName} />
+                <div className="item-name">{costume.costumeName}</div>
+                <div className="item-price">
+                  {costume.price} <span className="currency-icon">💎</span>
+                </div>
+              </div>
+            ))}
+            
+            {selectedSection === 'theme' &&
+            themes.map((theme) => (
+              <div
+                key={theme.themeId}
+                className="item-card"
+                onClick={() => handleItemClick(theme)}
+              >
+                <img src={theme.frameSpriteArts} alt="Theme Frame" />
+                <div className="item-name">{theme.themeId}</div>
+                <div className="item-price">
+                  {theme.price} <span className="currency-icon">💎</span>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>
