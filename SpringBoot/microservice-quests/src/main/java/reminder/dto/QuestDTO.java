@@ -1,5 +1,6 @@
 package reminder.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QuestDTO {
@@ -12,6 +13,16 @@ public class QuestDTO {
     private int pointReward;
     private String questSubmitMethod;
     private List<String> availableTime;
+    private List<String> suitableMBTI;
+
+
+    public List<String> getSuitableMBTI() {
+        return suitableMBTI;
+    }
+
+    public void setSuitableMBTI(List<String> suitableMBTI) {
+        this.suitableMBTI = suitableMBTI;
+    }
 
     // Getter and Setter methods
     public Long getQuestId() {

@@ -14,9 +14,16 @@ public class QuestMapper {
         quest.setBerylReward(dto.getBerylReward());
         quest.setPointReward(dto.getPointReward());
         quest.setQuestSubmitMethod(dto.getQuestSubmitMethod());
-        
-        // ไม่ต้องแปลงจาก List<String> เป็น List<Integer
-        quest.setAvailableTime(dto.getAvailableTime());
+
+        // Map the suitableMBTI field
+        if (dto.getSuitableMBTI() != null) {
+            quest.setSuitableMBTI(dto.getSuitableMBTI());
+        }
+
+        // Map the availableTime field
+        if (dto.getAvailableTime() != null) {
+            quest.setAvailableTime(dto.getAvailableTime());
+        }
     }
 
     public void updateQuestFromEntity(Quest quest, QuestDTO dto) {
@@ -26,6 +33,15 @@ public class QuestMapper {
         dto.setBerylReward(quest.getBerylReward());
         dto.setPointReward(quest.getPointReward());
         dto.setQuestSubmitMethod(quest.getQuestSubmitMethod());
-        dto.setAvailableTime(quest.getAvailableTime());
+
+        // Map the suitableMBTI field
+        if (quest.getSuitableMBTI() != null) {
+            dto.setSuitableMBTI(quest.getSuitableMBTI());
+        }
+
+        // Map the availableTime field
+        if (quest.getAvailableTime() != null) {
+            dto.setAvailableTime(quest.getAvailableTime());
+        }
     }
 }
