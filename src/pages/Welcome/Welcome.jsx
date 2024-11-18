@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Welcome.css';
+import SlimeGif from '../../images/Slime.GIF';
 
 function Welcome() {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ function Welcome() {
     return (
         <div className="welcome-container">
             <div className="welcome-avatar">
-                <img src="path/to/avatar.png" alt="Avatar" className="avatar-image" />
+            <img src={SlimeGif} alt="Avatar" className="avatar-image" />
             </div>
             <p className="welcome-message">คุณพอจะรู้บ้างมั้ยว่าฉันเป็นใคร?</p>
             <div className="welcome-buttons">
