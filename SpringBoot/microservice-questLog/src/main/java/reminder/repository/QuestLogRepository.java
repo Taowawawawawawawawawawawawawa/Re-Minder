@@ -1,8 +1,8 @@
 package reminder.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import reminder.domain.QuestLog;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuestLogRepository extends JpaRepository<QuestLog, Long> {
-    // กำหนดเมธอดค้นหาหรือประมวลผลต่างๆ ได้ที่นี่
+    // สามารถเพิ่ม query ที่ต้องการที่นี่ได้
 }

@@ -27,4 +27,9 @@ public class QuestService {
     public List<Quest> getAllQuests() {
         return questRepository.findAll();
     }
+
+    public boolean startQuest(Long questId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'startQuest'");
+    }
 }
