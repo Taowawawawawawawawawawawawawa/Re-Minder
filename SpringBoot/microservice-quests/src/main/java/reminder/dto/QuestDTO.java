@@ -3,30 +3,17 @@ package reminder.dto;
 import java.util.List;
 
 public class QuestDTO {
+
     private Long questId;
     private String questName;
-    private int difficulty;
-    private List<Integer> availableTime;
     private String questDescription;
-    private String questSubmitMethod;
+    private int difficulty;
     private int berylReward;
     private int pointReward;
+    private String questSubmitMethod;
+    private List<String> availableTime;
 
-    // Constructors, Getters, and Setters
-    public QuestDTO() {}
-
-    public QuestDTO(Long questId, String questName, int difficulty, List<Integer> availableTime, 
-                    String questDescription, String questSubmitMethod, int berylReward, int pointReward) {
-        this.questId = questId;
-        this.questName = questName;
-        this.difficulty = difficulty;
-        this.availableTime = availableTime;
-        this.questDescription = questDescription;
-        this.questSubmitMethod = questSubmitMethod;
-        this.berylReward = berylReward;
-        this.pointReward = pointReward;
-    }
-
+    // Getter and Setter methods
     public Long getQuestId() {
         return questId;
     }
@@ -43,22 +30,6 @@ public class QuestDTO {
         this.questName = questName;
     }
 
-    public int getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public List<Integer> getAvailableTime() {
-        return availableTime;
-    }
-
-    public void setAvailableTime(List<Integer> availableTime) {
-        this.availableTime = availableTime;
-    }
-
     public String getQuestDescription() {
         return questDescription;
     }
@@ -67,12 +38,12 @@ public class QuestDTO {
         this.questDescription = questDescription;
     }
 
-    public String getQuestSubmitMethod() {
-        return questSubmitMethod;
+    public int getDifficulty() {
+        return difficulty;
     }
 
-    public void setQuestSubmitMethod(String questSubmitMethod) {
-        this.questSubmitMethod = questSubmitMethod;
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 
     public int getBerylReward() {
@@ -91,5 +62,19 @@ public class QuestDTO {
         this.pointReward = pointReward;
     }
 
-    
+    public String getQuestSubmitMethod() {
+        return questSubmitMethod;
+    }
+
+    public void setQuestSubmitMethod(String questSubmitMethod) {
+        this.questSubmitMethod = questSubmitMethod;
+    }
+
+    public List<String> getAvailableTime() {
+        return availableTime;
+    }
+
+    public void setAvailableTime(List<String> availableTime) {
+        this.availableTime = availableTime;
+    }
 }

@@ -1,60 +1,35 @@
 package reminder.domain;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class QuestLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long questLogId;
-
+    private Long id;
     private Long questId;
-
     private Long userId;
+    private String imageUrl;
+    private String status; // Pending, Approved, Rejected
 
-    @Lob
-    private String attachmentTxt;
+    // ฟิลด์ที่เพิ่มเข้าไปใน QuestLog
+    private String questName;
+    private String questDescription;
+    private int berylReward;
+    private int difficulty; // เปลี่ยนเป็น int
+    private int pointReward;
 
-    @Lob
-    private byte[] attachmentPic;
-
-    private LocalDate submitDate;
-
-    private LocalTime submitTime;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    public enum Status {
-        PENDING,
-        PASS,
-        FAIL
+    // Getter/Setter methods สำหรับฟิลด์ใหม่
+    public Long getId() {
+        return id;
     }
 
-    private String message;
-
-    public QuestLog() {}
-
-    public QuestLog(Long questId, Long userId, String attachmentTxt, byte[] attachmentPic, LocalDate submitDate, LocalTime submitTime, Status status, String message) {
-        this.questId = questId;
-        this.userId = userId;
-        this.attachmentTxt = attachmentTxt;
-        this.attachmentPic = attachmentPic;
-        this.submitDate = submitDate;
-        this.submitTime = submitTime;
-        this.status = status;
-        this.message = message;
-    }
-
-    public Long getQuestLogId() {
-        return questLogId;
-    }
-
-    public void setQuestLogId(Long questLogId) {
-        this.questLogId = questLogId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getQuestId() {
@@ -73,51 +48,59 @@ public class QuestLog {
         this.userId = userId;
     }
 
-    public String getAttachmentTxt() {
-        return attachmentTxt;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAttachmentTxt(String attachmentTxt) {
-        this.attachmentTxt = attachmentTxt;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public byte[] getAttachmentPic() {
-        return attachmentPic;
-    }
-
-    public void setAttachmentPic(byte[] attachmentPic) {
-        this.attachmentPic = attachmentPic;
-    }
-
-    public LocalDate getSubmitDate() {
-        return submitDate;
-    }
-
-    public void setSubmitDate(LocalDate submitDate) {
-        this.submitDate = submitDate;
-    }
-
-    public LocalTime getSubmitTime() {
-        return submitTime;
-    }
-
-    public void setSubmitTime(LocalTime submitTime) {
-        this.submitTime = submitTime;
-    }
-
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public String getQuestName() {
+        return questName;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setQuestName(String questName) {
+        this.questName = questName;
+    }
+
+    public String getQuestDescription() {
+        return questDescription;
+    }
+
+    public void setQuestDescription(String questDescription) {
+        this.questDescription = questDescription;
+    }
+
+    public int getBerylReward() {
+        return berylReward;
+    }
+
+    public void setBerylReward(int berylReward) {
+        this.berylReward = berylReward;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int getPointReward() {
+        return pointReward;
+    }
+
+    public void setPointReward(int pointReward) {
+        this.pointReward = pointReward;
     }
 }

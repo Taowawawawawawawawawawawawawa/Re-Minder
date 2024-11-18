@@ -1,20 +1,37 @@
 package reminder.dto.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 import reminder.domain.QuestLog;
 import reminder.dto.QuestLogDTO;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface QuestLogMapper {
+@Component
+public class QuestLogMapper {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "questLogId", ignore = true)
-    void updateQuestLogFromDto(QuestLogDTO dto, @MappingTarget QuestLog entity);
+    // แปลงจาก QuestLogDTO เป็น QuestLog Entity
+    public QuestLog toEntity(QuestLogDTO questLogDTO) {
+        QuestLog questLog = new QuestLog();
+        questLog.setQuestId(questLogDTO.getQuestId());
+        questLog.setUserId(questLogDTO.getUserId());
+        questLog.setImageUrl(questLogDTO.getImageUrl());
+        questLog.setStatus(questLogDTO.getStatus());
+        questLog.setQuestName(questLogDTO.getQuestName());
+        questLog.setQuestDescription(questLogDTO.getQuestDescription());
+        questLog.setBerylReward(questLogDTO.getBerylReward());
+        questLog.setDifficulty(questLogDTO.getDifficulty()); // difficulty เป็น int
+        questLog.setPointReward(questLogDTO.getPointReward());
+        return questLog;
+    }
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateQuestLogFromEntity(QuestLog entity, @MappingTarget QuestLogDTO dto);
+    // แปลงจาก QuestLog Entity เป็น QuestLogDTO
+    public void updateQuestLogFromEntity(QuestLog questLog, QuestLogDTO questLogDTO) {
+        questLogDTO.setQuestId(questLog.getQuestId());
+        questLogDTO.setUserId(questLog.getUserId());
+        questLogDTO.setImageUrl(questLog.getImageUrl());
+        questLogDTO.setStatus(questLog.getStatus());
+        questLogDTO.setQuestName(questLog.getQuestName());
+        questLogDTO.setQuestDescription(questLog.getQuestDescription());
+        questLogDTO.setBerylReward(questLog.getBerylReward());
+        questLogDTO.setDifficulty(questLog.getDifficulty()); // difficulty เป็น int
+        questLogDTO.setPointReward(questLog.getPointReward());
+    }
 }

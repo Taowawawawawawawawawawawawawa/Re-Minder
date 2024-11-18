@@ -1,42 +1,18 @@
 package reminder.dto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 public class QuestLogDTO {
 
-    private Long questLogId;
     private Long questId;
     private Long userId;
-    private String attachmentTxt;
-    private byte[] attachmentPic;
-    private LocalDate submitDate;
-    private LocalTime submitTime;
+    private String imageUrl;
     private String status;
-    private String message;
+    private String questName;
+    private String questDescription;
+    private Integer berylReward;
+    private int difficulty;  // เปลี่ยนเป็น int เพื่อให้ตรงกับ Entity
+    private Integer pointReward;
 
-    public QuestLogDTO() {}
-
-    public QuestLogDTO(Long questLogId, Long questId, Long userId, String attachmentTxt, byte[] attachmentPic, LocalDate submitDate, LocalTime submitTime, String status, String message) {
-        this.questLogId = questLogId;
-        this.questId = questId;
-        this.userId = userId;
-        this.attachmentTxt = attachmentTxt;
-        this.attachmentPic = attachmentPic;
-        this.submitDate = submitDate;
-        this.submitTime = submitTime;
-        this.status = status;
-        this.message = message;
-    }
-
-    public Long getQuestLogId() {
-        return questLogId;
-    }
-
-    public void setQuestLogId(Long questLogId) {
-        this.questLogId = questLogId;
-    }
-
+    // Getter และ Setter สำหรับส่วนต่าง ๆ
     public Long getQuestId() {
         return questId;
     }
@@ -53,36 +29,12 @@ public class QuestLogDTO {
         this.userId = userId;
     }
 
-    public String getAttachmentTxt() {
-        return attachmentTxt;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAttachmentTxt(String attachmentTxt) {
-        this.attachmentTxt = attachmentTxt;
-    }
-
-    public byte[] getAttachmentPic() {
-        return attachmentPic;
-    }
-
-    public void setAttachmentPic(byte[] attachmentPic) {
-        this.attachmentPic = attachmentPic;
-    }
-
-    public LocalDate getSubmitDate() {
-        return submitDate;
-    }
-
-    public void setSubmitDate(LocalDate submitDate) {
-        this.submitDate = submitDate;
-    }
-
-    public LocalTime getSubmitTime() {
-        return submitTime;
-    }
-
-    public void setSubmitTime(LocalTime submitTime) {
-        this.submitTime = submitTime;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getStatus() {
@@ -93,11 +45,43 @@ public class QuestLogDTO {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public String getQuestName() {
+        return questName;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setQuestName(String questName) {
+        this.questName = questName;
+    }
+
+    public String getQuestDescription() {
+        return questDescription;
+    }
+
+    public void setQuestDescription(String questDescription) {
+        this.questDescription = questDescription;
+    }
+
+    public Integer getBerylReward() {
+        return berylReward;
+    }
+
+    public void setBerylReward(Integer berylReward) {
+        this.berylReward = berylReward;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Integer getPointReward() {
+        return pointReward;
+    }
+
+    public void setPointReward(Integer pointReward) {
+        this.pointReward = pointReward;
     }
 }
