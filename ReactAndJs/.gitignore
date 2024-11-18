@@ -1,0 +1,16 @@
+# # Ignore everything
+# /*
+
+# # Don't ignore src folder
+# !src/
+
+# # Optionally add specific files/folders within src to track
+# !src/components/
+# !src/pages/
+# !src/admin/
+# !src/images/
+# !src/assets/
+# *.json
+# *.json
+# *.json
+# package-lock.json

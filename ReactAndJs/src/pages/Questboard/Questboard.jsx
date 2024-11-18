@@ -16,7 +16,7 @@ function Questboard() {
 
   useEffect(()=>{
     const fetchquest = async() => {
-      const data = await fetch("http://API/");
+      const data = await fetch("");
       const json = await data.json();
       setQuest(json);
     };
