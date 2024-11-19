@@ -14,10 +14,16 @@ public class QuestLog {
     public String getImageUrl() {
         return imageUrl;
     }
+    
     private Long questId;
     private Long userId;
     private String status;
     private String questName;
+    private String questDescription;
+    private Integer berylReward;
+    private Integer difficulty;
+    private Integer pointReward;
+
     public Long getId() {
         return id;
     }
@@ -72,9 +78,8 @@ public class QuestLog {
     public void setPointReward(Integer pointReward) {
         this.pointReward = pointReward;
     }
-    private String questDescription;
-    private Integer berylReward;
-    private Integer difficulty;
-    private Integer pointReward;
-
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    
 }

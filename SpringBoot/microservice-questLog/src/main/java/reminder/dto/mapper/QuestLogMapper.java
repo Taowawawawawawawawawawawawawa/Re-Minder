@@ -10,16 +10,30 @@ public class QuestLogMapper {
     // Convert QuestLogDTO to QuestLog entity
     public QuestLog toEntity(QuestLogDTO dto) {
         QuestLog questLog = new QuestLog();
+        questLog.setId(dto.getId());
         questLog.setUserId(dto.getUserId());
         questLog.setQuestId(dto.getQuestId());
         questLog.setStatus(dto.getStatus());
+        questLog.setImageUrl(dto.getImageUrl());
+        questLog.setQuestName(dto.getQuestName());
+        questLog.setQuestDescription(dto.getQuestDescription());
+        questLog.setBerylReward(dto.getBerylReward());
+        questLog.setDifficulty(dto.getDifficulty());
+        questLog.setPointReward(dto.getPointReward());
         return questLog;
     }
 
-    // Update existing QuestLog entity from DTO
+    // Update QuestLogDTO from QuestLog entity
     public void updateQuestLogFromEntity(QuestLog entity, QuestLogDTO dto) {
+        dto.setId(entity.getId());
         dto.setUserId(entity.getUserId());
         dto.setQuestId(entity.getQuestId());
         dto.setStatus(entity.getStatus());
+        dto.setImageUrl(entity.getImageUrl());
+        dto.setQuestName(entity.getQuestName());
+        dto.setQuestDescription(entity.getQuestDescription());
+        dto.setBerylReward(entity.getBerylReward());
+        dto.setDifficulty(entity.getDifficulty());
+        dto.setPointReward(entity.getPointReward());
     }
 }
