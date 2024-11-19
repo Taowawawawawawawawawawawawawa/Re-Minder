@@ -1,56 +1,80 @@
 package reminder.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
+
 
 @Entity
 public class QuestLog {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    private Long userId;
+
+    private String imageUrl; // เพิ่มฟิลด์นี้
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
     private Long questId;
+    private Long userId;
     private String status;
-    private LocalDateTime submissionDate;  // ฟิลด์ใหม่ที่ต้องเพิ่ม
-
-    // Getter และ Setter สำหรับ submissionDate
-    public LocalDateTime getSubmissionDate() {
-        return submissionDate;
+    private String questName;
+    public Long getId() {
+        return id;
     }
-
-    public void setSubmissionDate(LocalDateTime submissionDate) {
-        this.submissionDate = submissionDate;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    // Getter และ Setter อื่น ๆ สำหรับ userId, questId, status
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public Long getQuestId() {
         return questId;
     }
-
     public void setQuestId(Long questId) {
         this.questId = questId;
     }
-
+    public Long getUserId() {
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
+    public String getQuestName() {
+        return questName;
+    }
+    public void setQuestName(String questName) {
+        this.questName = questName;
+    }
+    public String getQuestDescription() {
+        return questDescription;
+    }
+    public void setQuestDescription(String questDescription) {
+        this.questDescription = questDescription;
+    }
+    public Integer getBerylReward() {
+        return berylReward;
+    }
+    public void setBerylReward(Integer berylReward) {
+        this.berylReward = berylReward;
+    }
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
+    public Integer getPointReward() {
+        return pointReward;
+    }
+    public void setPointReward(Integer pointReward) {
+        this.pointReward = pointReward;
+    }
+    private String questDescription;
+    private Integer berylReward;
+    private Integer difficulty;
+    private Integer pointReward;
 
-    // Constructor, toString, equals, hashCode ถ้าจำเป็น
 }
