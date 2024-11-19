@@ -52,7 +52,7 @@ function Myroom() {
         <img 
           src={wardrobe} 
           alt="Wardrobe" 
-          className="wardrobe-icon" 
+          className="wardrobe-mainicon2" 
           onClick={handleWardrobeClick} 
         />
       </div>

@@ -75,85 +75,72 @@ const Wardrobe = () => {
   return (
     <>
       <Navbar />
-      <div className="wardrobe">
-        <h2>Wardrobe</h2>
+      <div className="game-screen">
+        <div className="wardrobe-container">
+          <h2>Wardrobe</h2>
 
-        {/* Error Message */}
-        {error && <div className="error">Error: {error}</div>}
+          {/* Error Message */}
+          {error && <div className="error">Error: {error}</div>}
 
-        {/* Section Switcher */}
-        <div className="section-switcher">
-          <button
-            className={selectedSection === 'costume' ? 'active' : ''}
-            onClick={() => setSelectedSection('costume')}
-          >
-            Costumes
-          </button>
-          <button
-            className={selectedSection === 'theme' ? 'active' : ''}
-            onClick={() => setSelectedSection('theme')}
-          >
-            Themes
-          </button>
+
+          {/* Render costumes if the selected section is costume */}
+          <div className="wardrobe-shelf">
+            {selectedSection === 'costume' && costumes.length > 0 ? (
+              costumes.map((costume) => (
+                <div
+                  key={costume.costumeId}
+                  className={`wardrobe-item ${selectedItem?.costumeId === costume.costumeId ? 'selected' : ''}`}
+                  onClick={() => handleItemClick(costume)}
+                >
+                  <img
+                    src={costume.costumeFiles}
+                    alt={costume.costumeName}
+                    className="wardrobe-icon"
+                  />
+                  <p>{costume.costumeName}</p>
+                </div>
+              ))
+            ) : (
+              <p>No costumes available.</p>
+            )}
+
+            {/* Render themes if the selected section is theme */}
+            {selectedSection === 'theme' && themes.length > 0 ? (
+              themes.map((theme) => (
+                <div
+                  key={theme.themeId}
+                  className={`wardrobe-item ${selectedItem?.themeId === theme.themeId ? 'selected' : ''}`}
+                  onClick={() => handleItemClick(theme)}
+                >
+                  <img
+                    src={theme.frameSpriteArts}
+                    alt={theme.themeName}
+                    className="wardrobe-icon"
+                  />
+                  <p>{theme.themeName}</p>
+                </div>
+              ))
+            ) : (
+              <p></p>
+            )}
+          </div>
+          </div>
+
+          {/* Avatar display */}
+          <div className="character">
+            <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
+          </div>
+
+          {/* Control Buttons */}
+          <div className="controls">
+            <button className="control-button1" onClick={handleCancel}>
+              Remove Costume
+            </button>
+            <button className="control-button2" onClick={handleMyroomClick}>
+              Back to Myroom
+            </button>
+          </div>
         </div>
-
-        {/* Render costumes if the selected section is costume */}
-        <div className="wardrobe-shelf">
-          {selectedSection === 'costume' && costumes.length > 0 ? (
-            costumes.map((costume) => (
-              <div
-                key={costume.costumeId}
-                className={`wardrobe-item ${selectedItem?.costumeId === costume.costumeId ? 'selected' : ''}`}
-                onClick={() => handleItemClick(costume)}
-              >
-                <img
-                  src={costume.costumeFiles}
-                  alt={costume.costumeName}
-                  className="wardrobe-icon"
-                />
-                <p>{costume.costumeName}</p>
-              </div>
-            ))
-          ) : (
-            <p>No costumes available.</p>
-          )}
-
-          {/* Render themes if the selected section is theme */}
-          {selectedSection === 'theme' && themes.length > 0 ? (
-            themes.map((theme) => (
-              <div
-                key={theme.themeId}
-                className={`wardrobe-item ${selectedItem?.themeId === theme.themeId ? 'selected' : ''}`}
-                onClick={() => handleItemClick(theme)}
-              >
-                <img
-                  src={theme.frameSpriteArts}
-                  alt={theme.themeName}
-                  className="wardrobe-icon"
-                />
-                <p>{theme.themeName}</p>
-              </div>
-            ))
-          ) : (
-            <p>No themes available.</p>
-          )}
-        </div>
-
-        {/* Avatar display */}
-        <div className="character">
-          <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
-        </div>
-
-        {/* Control Buttons */}
-        <div className="controls">
-          <button className="control-button1" onClick={handleCancel}>
-            Remove Costume
-          </button>
-          <button className="control-button2" onClick={handleMyroomClick}>
-            Back to Myroom
-          </button>
-        </div>
-      </div>
 
       {/* Wardrobe Icon */}
       <img src={wardrobe} alt="Wardrobe" className="wardrobe-mainicon" />

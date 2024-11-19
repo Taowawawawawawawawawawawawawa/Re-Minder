@@ -89,7 +89,7 @@ html, body {
 .control-button1 {
   position: absolute;
   bottom: 20%;
-  left: 33.5%;
+  left: 30.5%;
   padding: 12px 24px;
   background: #4b3e34;
   color: white;
@@ -146,21 +146,6 @@ html, body {
 
 .wardrobe-button:hover {
   background: #6e564a;
-}
-
-.wardrobe-icon {
-  transform: scaleX(-1); /* Keep the flipped state */
-  position: absolute;
-  bottom: 15%; /* Adjust to fine-tune vertical position */
-  right: -50px;  /* Adjust to fine-tune horizontal position */
-  width: 700px;  /* Set the size of the icon */
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-}
-
-.wardrobe-icon:hover {
-  transform: scaleX(-1) scale(1.1); /* Keep the flip and apply zoom */
 }
 
 /* Questlog Page Styles */
@@ -331,16 +316,67 @@ html, body {
   transform: scaleX(-1) scale(1.1); /* Keep the flip and apply zoom */
 }
 
+.wardrobe-mainicon2 {
+  transform: scaleX(-1); /* Keep the flipped state */
+  position: absolute;
+  bottom: 10%; /* Adjust to fine-tune vertical position */
+  right: -50px;  /* Adjust to fine-tune horizontal position */
+  width: 700px;  /* Set the size of the icon */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.wardrobe-mainicon2:hover {
+  transform: scaleX(-1) scale(1.1); /* Keep the flip and apply zoom */
+}
+
+.wardrobe-container h2 {
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  margin: 0 0 10px;
+}
+.wardrobe-container {
+  font-family: 'Arial', sans-serif;
+  background: url(/src/images/BGwood.png), #D9D9D9;
+  border: 2px solid #8b5a2b;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex; /* Enable Flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: flex-start; /* Align items at the top */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  width: auto; /* Make the wardrobe wider */
+  height: auto; /* Increase the height */
+  margin: 50px 0; /* Remove auto centering */
+  position: absolute; /* Position it on the left */
+  left: 40px; /* Place it 20px from the left */
+  top: 25%; /* Center it vertically */
+  transform: translateY(-50%); /* Adjust for vertical centering */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
 .wardrobe-item {
+  width: 120px; /* Keep consistent sizing */
+  height: auto;
+  margin-bottom: 10px; /* Add spacing between items */
   background-color: #fff;
   border: 1px solid #c69a6b;
   border-radius: 10px;
   padding: 10px;
-  width: 120px;
   text-align: center;
   cursor: pointer;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wardrobe-item img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .wardrobe-item:hover {
@@ -348,8 +384,8 @@ html, body {
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.wardrobe-item img {
-  width: 100px;
-  height: auto;
-  margin-bottom: 5px;
+.wardrobe-item.selected {
+  border: 2px solid #d4a373;
+  box-shadow: 0 0 10px rgba(212, 163, 115, 0.8);
 }
+
