@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './AdminCreateQuest.css';
-import { Link } from 'react-router-dom'; // Import Link
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 
@@ -14,26 +13,6 @@ const AdminCreateQuest = () => {
   const [targetObject, setTargetObject] = useState('');
   const [suitableMBTI, setSuitableMBTI] = useState([]);
   const [availableTime, setAvailableTime] = useState([]);
-  const [questList, setQuestList] = useState([]);
-
-  // Fetch quest list on component mount
-  // useEffect(() => {
-  //   fetchQuestList();
-  // }, []);
-
-  // const fetchQuestList = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:8202/quests/create');
-  //     if (response.ok) {
-  //       const quests = await response.json();
-  //       setQuestList(quests);
-  //     } else {
-  //       alert('Failed to fetch quests.');
-  //     }
-  //   } catch (err) {
-  //     alert('An error occurred while fetching quests.');
-  //   }
-  // };
 
   const handleCreateQuest = async () => {
     if (
@@ -64,7 +43,7 @@ const AdminCreateQuest = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8202/quests/create', { 
+      const response = await fetch('http://localhost:8202/quests/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(questData),
@@ -81,7 +60,6 @@ const AdminCreateQuest = () => {
         setTargetObject('');
         setSuitableMBTI([]);
         setAvailableTime([]);
-        // fetchQuestList(); // Refresh the quest list
       } else {
         const error = await response.json();
         alert(`Failed to create quest: ${error.message}`);
@@ -91,70 +69,30 @@ const AdminCreateQuest = () => {
     }
   };
 
-<<<<<<< HEAD
   const handleAddMBTI = (mbti) => {
     if (!suitableMBTI.includes(mbti)) {
       setSuitableMBTI([...suitableMBTI, mbti]);
     }
   };
-=======
-  return <><Navbar />
-    <div className="admin-create-quest">
-      <div className="quest-detail">
-        <h2>Quest Detail</h2>
-        <input
-          type="text"
-          placeholder="ชื่อเควส"
-          value={questName}
-          onChange={(e) => setQuestName(e.target.value)}
-        />
-        <select
-          value={questMethod}
-          onChange={(e) => setQuestMethod(e.target.value)}
-        >
-          <option value="">วิธีส่งงาน</option>
-          <option value="detail1">รูปภาพ</option>
-          <option value="detail2">ข้อความ</option>
-        </select>
-        <input
-          type="text"
-          placeholder="ช่องใส่รายละเอียดเควส"
-          value={questDetails}
-          onChange={(e) => setQuestDetails(e.target.value)}
-        />
-        <select
-          value={difficultyLevel}
-          onChange={(e) => setDifficultyLevel(e.target.value)}
-        >
-          <option value="">ระดับความยาก (ที่คาดใช้)</option>
-          <option value="easy">ง่าย</option>
-          <option value="medium">กลาง</option>
-          <option value="hard">ยาก</option>
-        </select>
-        <button onClick={handleCreateQuest}>สร้างเควส</button>
-        {/* <button onClick={handleCreateQuest}>สร้างเควส</button> */}
-      </div>
->>>>>>> 0fca0f3f14c67e2f9f11fc91d1cd216ded14517d
 
   const handleRemoveMBTI = (mbti) => {
     setSuitableMBTI(suitableMBTI.filter((item) => item !== mbti));
   };
 
-  const handleAddTimeSlot = (timeSlot) => {
-    if (!availableTime.includes(timeSlot)) {
-      setAvailableTime([...availableTime, timeSlot]);
+  const handleAddTimeSlot = (slot) => {
+    if (!availableTime.includes(slot)) {
+      setAvailableTime([...availableTime, slot]);
     }
   };
 
-  const handleRemoveTimeSlot = (timeSlot) => {
-    setAvailableTime(availableTime.filter((item) => item !== timeSlot));
+  const handleRemoveTimeSlot = (slot) => {
+    setAvailableTime(availableTime.filter((item) => item !== slot));
   };
 
   return (
     <>
       <Navbar />
       <div className="admin-create-quest">
-        {/* Quest Detail Section */}
         <div className="quest-detail">
           <h2>Quest Detail</h2>
           <input
