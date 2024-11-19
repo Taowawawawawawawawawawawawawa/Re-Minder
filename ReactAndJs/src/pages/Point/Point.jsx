@@ -16,7 +16,7 @@ const Point = () => {
 
   const fetchpoint = async () => {
     try {
-        const response = await fetch("http://localhost:8206/beryl/all");
+        const response = await fetch("http://localhost:8204/rewards/all");
         if (!response.ok) {
             throw new Error(`API error: ${response.status}`);
         }
@@ -37,17 +37,13 @@ useEffect(()=>{
       </div>
       <div className="exchange-grid">
         {point.map((point) => (
-          <div key={point.beryleID} className="exchange-card">
-            <img
-              className="exchange-icon"
-              src={exchange.icon}
-              alt="Exchange Item"
-            />
+          <div key={point.rewardId} className="exchange-card">
+  
             <div className="exchange-info">
-              <p className="points">{point.pointAmont}</p>
+              <p className="points">{point.rewardPrice}</p>
               <img
                 className="reward-icon"
-                src={exchange.reward}
+                src={point.rewardSpriteArts}
                 alt="Reward Gem"
               />
             </div>
