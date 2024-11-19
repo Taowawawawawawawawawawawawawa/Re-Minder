@@ -1,232 +1,101 @@
-/* Background and layout */
+/* Prevent scrolling */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .game-screen {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url('/src/images/myroom_bg.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Redundant, but safe to keep for internal container control */
+}
 
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Character styling */
-  .character {
-    position: absolute;
-    bottom: 20%;
-    left: 45%;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #cceeff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .character-eye {
-    width: 20px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #fff;
-    margin: 0 5px;
-  }
-  
-  /* Thought bubble styling */
-  .thought-bubble {
-    position: absolute;
-    width: 150px;
-    padding: 20px;
-    border-radius: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  
-  .thought-bubble-left {
-    bottom: 50%;
-    left: 30%;
-  }
-  
-  .thought-bubble-right {
-    bottom: 50%;
-    right: 30%;
-  }
-  
-  .bubble-icon {
-    width: 100px;
-  }
-  
-  /* Wardrobe button styling */
-  .wardrobe-button {
-    position: absolute;
-    bottom: 30%;
-    right: 20%;
-    padding: 10px 20px;
-    background-color: brown;
-    color: #fff;
-    border-radius: 10px;
-    border: none;
-    font-size: 16px;
-  }
-  
-  .quest-list {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 10px;
-    width: 300px;
-  }
-  
-  .quest-item {
-    list-style: none;
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .quest-item:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .quest-details {
-    margin-top: 20px;
-    width: 400px;
-  }
-  
-  .quest-detail {
-    margin-bottom: 20px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .quest-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-  
-  .status.success {
-    color: green;
-    font-weight: bold;
-  }
+.character {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
 
-  .wardrobe {
-    position: absolute;
-    left: 10%;
-    width: 150px;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 10px;
-  }
-  
-  .wardrobe h2 {
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .wardrobe-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .wardrobe-item {
-    margin: 10px 0;
-    padding: 5px;
-    text-align: center;
-    cursor: pointer;
-    transition: background 0.3s;
-    border-radius: 8px;
-  }
-  
-  .wardrobe-item.selected {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .wardrobe-icon {
-    width: 50px;
-    height: auto;
-  }
-  
-  .character-item {
-    position: absolute;
-    top: -20px;
-    width: 80px;
-    animation: float 2s infinite ease-in-out;
-  }
-  
-  .controls {
-    position: absolute;
-    bottom: 10%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-  
-  .control-button {
-    padding: 10px 20px;
-    background-color: brown;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .control-button:hover {
-    background-color: darkred;
-  }
+.avatar-image {
+  width: 450px;
+  height: auto;
+}
 
-  .diary {
-    display: flex;
-    flex-direction: row;
-    height: 70%;
-    width: 90%;
-  }
-  
-  .diary-sidebar {
-    width: 25%;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 10px;
-  }
-  
-  .diary-entry-button {
-    background-color: #d8b894;
-    border: none;
-    margin: 5px;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .diary-main {
-    flex-grow: 1;
-    margin-left: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  
-  textarea {
-    border-radius: 10px;
-    font-size: 15px;
-    border: 1px solid gray;
-  }
-  
-  button {
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-  }
-  
-  .upload-button {
-    background-color: #ffd700;
-    color: black;
-    font-size: 14px;
-  }
-  
-  
+.diary-image-container {
+  position: absolute;
+  top: 30%;
+  right: 20%;
+  cursor: pointer;
+}
+
+.diary-image {
+  width: 150px;
+  height: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.diary-image:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
+.thought-bubble {
+  position: absolute;
+  width: 150px;
+  height: 100px;
+  background: white;
+  border-radius: 50px;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+}
+
+.thought-bubble-left {
+  top: 30%;
+  left: 20%;
+}
+
+.thought-bubble-right {
+  top: 30%;
+  right: 20%;
+}
+
+.bubble-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.wardrobe-button {
+  position: absolute;
+  bottom: 30%;
+  right: 10%;
+  padding: 10px 20px;
+  background: #4b3e34;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.wardrobe-button:hover {
+  background: #6e564a;
+}
