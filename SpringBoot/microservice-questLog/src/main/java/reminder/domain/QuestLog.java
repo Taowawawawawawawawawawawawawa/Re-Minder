@@ -29,6 +29,17 @@ public class QuestLog {
     private Integer pointReward;
     private String detail;
 
+    private String message; // ตรวจสอบว่ามี field นี้หรือไม่
+
+    // Getter และ Setter
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getDetail() {
         return detail;
     }
@@ -130,5 +141,9 @@ public class QuestLog {
     }
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public Object getSubmittedImage() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSubmittedImage'");
     }
 }

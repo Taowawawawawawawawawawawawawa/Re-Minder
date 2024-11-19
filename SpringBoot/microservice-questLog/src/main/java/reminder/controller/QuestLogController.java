@@ -1,6 +1,11 @@
 package reminder.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import reminder.dto.QuestDTO;
+import reminder.dto.QuestLogDTO;
+// import reminder.Service.QuestLogService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
@@ -33,16 +38,27 @@ public class QuestLogController {
                 response.put("message", "No file uploaded");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-    
-            // Process file...
+
             byte[] fileBytes = file.getBytes();
             if (fileBytes.length > 5000000) {
                 response.put("status", "error");
                 response.put("message", "File size is too large");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-    
-            // Send file to YOLO API
+
+            // 1. ดึงข้อมูลเควสจาก API
+            String currentQuestUrl = "http://localhost:8202/quests/" + questId;
+            ResponseEntity<QuestDTO> currentQuestResponse = restTemplate.getForEntity(currentQuestUrl, QuestDTO.class);
+
+            if (currentQuestResponse.getStatusCode() != HttpStatus.OK) {
+                response.put("status", "error");
+                response.put("message", "ไม่สามารถดึงข้อมูลเควส");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+
+            QuestDTO currentQuest = currentQuestResponse.getBody();
+            String targetObject = currentQuest.getTargetObject(); // เป้าหมายจากข้อมูลเควส
+
             String yolov5ApiUrl = "http://localhost:8000/detect";
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
             body.add("file", new ByteArrayResource(fileBytes) {
@@ -51,57 +67,68 @@ public class QuestLogController {
                     return file.getOriginalFilename();
                 }
             });
-    
+
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
             HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
-    
+
             ResponseEntity<String> yoloResponse = restTemplate.exchange(
                     yolov5ApiUrl, HttpMethod.POST, request, String.class);
-    
-            // Log YOLO API response
-            System.out.println("YOLO API Response: " + yoloResponse.getBody());
-    
+
             if (yoloResponse.getStatusCode() == HttpStatus.OK) {
-                // Parse YOLO response
                 ObjectMapper objectMapper = new ObjectMapper();
                 Map<String, Object> yoloResponseBody = objectMapper.readValue(yoloResponse.getBody(), Map.class);
-    
-                // Extract detected objects and filter by confidence
+
                 List<Map<String, Object>> predictions = (List<Map<String, Object>>) yoloResponseBody.get("predictions");
-                System.out.println("Predictions: " + predictions);
-    
+
                 List<String> detectedObjects = new ArrayList<>();
                 for (Map<String, Object> prediction : predictions) {
-                    System.out.println("Prediction Entry: " + prediction);
                     double confidence = (double) prediction.get("confidence");
-                    if (confidence > 0.5) { // Filter by confidence threshold
-                        String label = (String) prediction.get("name"); // Correctly cast 'name'
+                    if (confidence > 0.5) {
+                        String label = (String) prediction.get("name");
                         detectedObjects.add(label);
                     }
                 }
-    
-                System.out.println("Filtered Detected Objects: " + detectedObjects);
-    
+
+                // String targetObject = ; // เป้าหมายของภารกิจที่ต้องการ
                 if (detectedObjects.isEmpty()) {
                     response.put("status", "success");
-                    response.put("message", "No objects detected");
+                    response.put("message", "ไม่พบวัตถุในภาพ");
+                } else if (detectedObjects.contains(targetObject)) {
+                    response.put("status", "success");
+                    response.put("message", "เควสสำเร็จ");
+                    response.put("questStatus", "completed");
                 } else {
                     response.put("status", "success");
-                    response.put("detectedObjects", detectedObjects);
+                    response.put("message", "วัตถุที่พบไม่ตรงกับเป้าหมาย");
+                    response.put("questStatus", "not_completed");
                 }
-                return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 response.put("status", "error");
-                response.put("message", "Failed to process image, YOLO API error");
-                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                response.put("message", "การตรวจจับล้มเหลว");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             response.put("status", "error");
-            response.put("message", "Error processing request: " + e.getMessage());
+            response.put("message", "เกิดข้อผิดพลาด: " + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    
+
+    // @GetMapping
+    // public ResponseEntity<List<QuestLogDTO>> getAllQuestLogs() {
+    //     Map<String, Object> response = new HashMap<>();
+    //     try {
+    //         // เรียกบริการหรือ repository เพื่อดึงข้อมูล Quest Logs
+    //         List<QuestLogDTO> questLogs = QuestLogService.getAllQuestLogs(); // Service ที่คุณต้องสร้าง
+    //         if (questLogs.isEmpty()) {
+    //             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    //         }
+    //         return new ResponseEntity<>(questLogs, HttpStatus.OK);
+    //     } catch (Exception e) {
+    //         response.put("status", "error");
+    //         response.put("message", "เกิดข้อผิดพลาด: " + e.getMessage());
+    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 }

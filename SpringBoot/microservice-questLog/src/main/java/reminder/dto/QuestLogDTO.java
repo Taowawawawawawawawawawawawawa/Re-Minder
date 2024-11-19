@@ -13,6 +13,17 @@ public class QuestLogDTO {
     private String questDescription;
     private Integer berylReward;
 
+    private String message; // ตรวจสอบว่ามี field นี้หรือไม่
+
+    // Getter และ Setter
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     
     public String getDetail() {
         return detail;

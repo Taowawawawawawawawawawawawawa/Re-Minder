@@ -12,25 +12,16 @@ function Questboard() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(null);
 
-  // Handle difficulty selection
-  const handleTabClick = (difficulty) => {
-    setSelectedDifficulty(difficulty);
-  };
-
-  // Fetch quests data from API
   useEffect(() => {
     const fetchQuests = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:8202/quests/all`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch quests");
-        }
+        const response = await fetch("http://localhost:8202/quests/all");
+        if (!response.ok) throw new Error("Failed to fetch quests");
         const data = await response.json();
         setQuests(data);
         setError(null);
       } catch (err) {
-        console.error("Error fetching quests:", err);
         setError(`Failed to fetch quests: ${err.message}`);
       } finally {
         setIsLoading(false);
@@ -40,65 +31,44 @@ function Questboard() {
     fetchQuests();
   }, []);
 
-  // Filter quests based on selected difficulty
   const filteredQuests = quests.filter(
     (quest) =>
       quest.difficulty ===
       (selectedDifficulty === "ง่าย" ? 1 : selectedDifficulty === "กลาง" ? 2 : 3)
   );
 
-  // Select a quest
   const selectedQuest = quests.find((quest) => quest.questId === selectedQuestId);
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+  const handleFileChange = (event) => setSelectedFile(event.target.files[0]);
 
   const handleFileSubmit = async () => {
-    if (!selectedQuestId) {
-      alert("กรุณาเลือกภารกิจก่อนจัดส่ง");
+    if (!selectedQuestId || !selectedFile) {
+      alert(!selectedQuestId ? "กรุณาเลือกภารกิจก่อนจัดส่ง" : "กรุณาเลือกรูปภาพก่อนจัดส่ง");
       return;
     }
-  
-    if (!selectedFile) {
-      alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
-      return;
-    }
-  
+
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("questId", selectedQuestId);
-  
+
     try {
       setUploadStatus("กำลังตรวจสอบ...");
       const response = await fetch(
         "http://localhost:8203/questlogs/submit-image",
-        {
-          method: "POST",
-          body: formData,
-        }
+        { method: "POST", body: formData }
       );
-  
       const result = await response.json();
-      console.log("Backend Result:", result);
-  
-      if (result.status === "success") {
-        if (result.detectedObjects && result.detectedObjects.length > 0) {
-          const detectedObjects = result.detectedObjects.join(", ");
-          setUploadStatus(`ตรวจพบวัตถุ: ${detectedObjects}`);
-        } else {
-          setUploadStatus("ไม่พบวัตถุในภาพ");
-        }
-      } else {
-        setUploadStatus(result.message || "รูปภาพไม่ถูกต้อง ❌");
-      }
+      setUploadStatus(
+        result.status === "success"
+          ? result.detectedObjects?.length
+            ? `ตรวจพบวัตถุ: ${result.detectedObjects.join(", ")}`
+            : "ไม่พบวัตถุในภาพ"
+          : result.message || "รูปภาพไม่ถูกต้อง ❌"
+      );
     } catch (err) {
-      console.error("Upload error:", err);
       setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
     }
   };
-  
-
 
   return (
     <>
@@ -112,15 +82,13 @@ function Questboard() {
                 {["ง่าย", "กลาง", "ยาก"].map((difficulty) => (
                   <button
                     key={difficulty}
-                    className={`tab-button ${selectedDifficulty === difficulty ? "active" : ""
-                      }`}
-                    onClick={() => handleTabClick(difficulty)}
+                    className={`tab-button ${selectedDifficulty === difficulty ? "active" : ""}`}
+                    onClick={() => setSelectedDifficulty(difficulty)}
                   >
                     {difficulty}
                   </button>
                 ))}
               </div>
-
               {isLoading ? (
                 <p>กำลังโหลด...</p>
               ) : error ? (
@@ -130,8 +98,7 @@ function Questboard() {
                   {filteredQuests.map((quest) => (
                     <li
                       key={quest.questId}
-                      className={`quest-item ${selectedQuestId === quest.questId ? "selected" : ""
-                        }`}
+                      className={`quest-item ${selectedQuestId === quest.questId ? "selected" : ""}`}
                       onClick={() => setSelectedQuestId(quest.questId)}
                     >
                       <p>{quest.questName}</p>
@@ -147,41 +114,16 @@ function Questboard() {
               {selectedQuest ? (
                 <>
                   <h3>รายละเอียดของภารกิจ: {selectedQuest.questName}</h3>
-                  <p>
-                    <strong>คำอธิบาย:</strong> {selectedQuest.questDescription}
-                  </p>
-                  <p>
-                    <strong>รางวัล Beryl:</strong> {selectedQuest.berylReward}
-                  </p>
-                  <p>
-                    <strong>รางวัลคะแนน:</strong> {selectedQuest.pointReward}
-                  </p>
-                  <p>
-                    <strong>วิธีการส่งภารกิจ:</strong>{" "}
-                    {selectedQuest.questSubmitMethod}
-                  </p>
-                  <p>
-                    <strong>เวลาที่เหมาะสม:</strong>{" "}
-                    {selectedQuest.availableTime.join(", ")}
-                  </p>
-                  <p>
-                    <strong>MBTI ที่เหมาะสม:</strong>{" "}
-                    {selectedQuest.suitableMBTI.join(", ")}
-                  </p>
-                  <p>
-                    <strong>เป้าหมาย:</strong> {selectedQuest.targetObject}
-                  </p>
-
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="response-input"
-                  />
+                  <p><strong>คำอธิบาย:</strong> {selectedQuest.questDescription}</p>
+                  <p><strong>รางวัล Beryl:</strong> {selectedQuest.berylReward}</p>
+                  <p><strong>รางวัลคะแนน:</strong> {selectedQuest.pointReward}</p>
+                  <p><strong>วิธีการส่งภารกิจ:</strong> {selectedQuest.questSubmitMethod}</p>
+                  <p><strong>เวลาที่เหมาะสม:</strong> {selectedQuest.availableTime.join(", ")}</p>
+                  <p><strong>MBTI ที่เหมาะสม:</strong> {selectedQuest.suitableMBTI.join(", ")}</p>
+                  <p><strong>เป้าหมาย:</strong> {selectedQuest.targetObject}</p>
+                  <input type="file" accept="image/*" onChange={handleFileChange} className="response-input" />
                   <div className="action-buttons">
-                    <button className="send-button" onClick={handleFileSubmit}>
-                      จัดส่ง
-                    </button>
+                    <button className="send-button" onClick={handleFileSubmit}>จัดส่ง</button>
                     <button
                       className="cancel-button"
                       onClick={() => {
@@ -193,10 +135,7 @@ function Questboard() {
                     </button>
                   </div>
                   {uploadStatus && (
-                    <p
-                      className={`upload-status ${uploadStatus.includes("❌") ? "error" : "success"
-                        }`}
-                    >
+                    <p className={`upload-status ${uploadStatus.includes("❌") ? "error" : "success"}`}>
                       {uploadStatus}
                     </p>
                   )}

@@ -21,6 +21,9 @@ print("Loading YOLOv5 model...")
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
 print("YOLOv5 model loaded successfully.")
 
+# วัตถุที่ต้องการตรวจจับ (สามารถปรับตามที่ต้องการ)
+target_objects = ["dog", "cat"]  # ตัวอย่างการกรองแค่ "dog" และ "cat"
+
 @app.post("/detect")
 async def detect_object(file: UploadFile = File(...)):
     try:
@@ -37,14 +40,17 @@ async def detect_object(file: UploadFile = File(...)):
         # ตรวจสอบผลลัพธ์ที่ได้
         predictions = results.pandas().xyxy[0].to_dict(orient="records")
         
-        # ตรวจสอบให้มั่นใจว่า results เป็น JSON ที่ถูกต้อง
-        if not predictions:
-            return JSONResponse(status_code=400, content={"message": "No objects detected"})
-        
+        # กรองผลลัพธ์ตามวัตถุที่ต้องการ
+        filtered_predictions = [pred for pred in predictions if pred['name'] in target_objects]
+
+        # ตรวจสอบให้มั่นใจว่าไม่มีผลลัพธ์
+        if not filtered_predictions:
+            return JSONResponse(status_code=400, content={"message": "No target objects detected"})
+
         # การจัดรูปแบบผลลัพธ์เป็น JSON ที่ถูกต้อง
         result_data = {
-            "objects": results.names,  # รายชื่อวัตถุที่ตรวจจับได้
-            "predictions": predictions  # แปลงเป็น JSON-ready
+            "objects": [results.names[i] for i in range(len(results.names))],  # รายชื่อวัตถุที่ตรวจจับได้
+            "predictions": filtered_predictions  # แสดงเฉพาะผลที่กรองแล้ว
         }
 
         # ส่งข้อมูลกลับเป็น JSONResponse
@@ -54,7 +60,7 @@ async def detect_object(file: UploadFile = File(...)):
     except Exception as e:
         # แสดงข้อผิดพลาด
         print("Error:", str(e))
-        return JSONResponse(status_code=500, content={"message": str(e)})
+        return JSONResponse(status_code=500, content={"message": "An error occurred during detection."})
 
 if __name__ == "__main__":
     import uvicorn
