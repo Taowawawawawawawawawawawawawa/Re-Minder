@@ -1,49 +1,66 @@
 import React from 'react';
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
+import icon from '../../images/IconSlime.PNG';
+import Beryle from '../../images/Beryle.PNG';
+import Point from '../../images/Point.PNG';
 
 
 function Navbar() {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate("/home "); 
+    navigate("/home ");
   };
 
   const handlesettingsClick = () => {
-    navigate("/setting"); 
+    navigate("/setting");
   };
 
   const handlePointClick = () => {
-    navigate("/Point"); 
+    navigate("/Point");
   };
 
   const handleBeryleClick = () => {
-    navigate("/Beryle"); 
+    navigate("/Beryle");
   };
 
   return (
+
+    
     <div className="navbar">
       <div className="navbar-left">
         <img
-          src="profile-icon.png"  // Replace with actual path to profile icon
+          src={icon}
           alt="Profile Icon"
           className="profile-icon"
-          onClick={handleProfileClick} 
+          onClick={handleProfileClick}
         />
         <span className="navbar-title">บทสนทนาแบบสุ่ม</span>
       </div>
       <div className="navbar-right">
-        <div className="currency">
-          <img src="green-gem.png" alt="Green Gem" className="icon" />
-          <span>100 p</span>
-          <button className="add-button" onClick={handlePointClick}>+</button>
+        <div class="navbar-right">
+          <div class="currency">
+            <img src={Point} alt="Green Gem" class="icon" />
+            <span class="currency-amount">100 p</span>
+            <button class="add-button" onClick={handlePointClick}>+</button>
+          </div>
+          <div class="currency">
+            <img src={Beryle} alt="Blue Gem" class="icon" />
+            <span class="currency-amount">99999</span>
+            <button class="add-button" onClick={handleBeryleClick}>+</button>
+          </div>
+          <div class="counter-container">
+            <img src={Beryle} alt="Blue Gem" class="gem-icon" />
+            <div class="counter-display">
+    <span class="counter-text">99999</span>
+  </div>
+            <button class="add-button" onClick={handleBeryleClick}>+</button>
+          </div>
         </div>
-        <div className="currency">
-          <img src="blue-gem.png" alt="Blue Gem" className="icon" />
-          <span>99999</span>
-          <button className="add-button" onClick={handleBeryleClick} >+</button>
-        </div>
+
+        
+
         <button className="settings-button" onClick={handlesettingsClick}>
           <img src="settings-icon.png" alt="settings" />
         </button>
