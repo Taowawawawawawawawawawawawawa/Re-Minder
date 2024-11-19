@@ -98,10 +98,10 @@ function Navbar() {
           <img src={setting_icon} alt="Settings" />
         </button>
 
-        {/* Logout */}
+        {/* Logout
         <button className="logout-button" onClick={handleLogout} title="Logout">
           Logout
-        </button>
+        </button> */}
       </div>
     </div>
   );
