@@ -21,20 +21,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 120px; /* Adjust size as needed */
-  height: 120px;
+  width: 70px; /* Adjust size as needed */
+  height: 70px;
   border-radius: 50%; /* Ensures the frame is circular */
   border: 5px solid #8b5e3c; /* Outer frame border color */
   background: linear-gradient(145deg, #d2b48c, #c2a17b); /* Decorative gradient */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adds depth */
   padding: 5px; /* Spacing between frame and image */
+  margin: 10px 10px 10px 10px;
 }
 
 .profile-icon {
   width: 100px;
   height: 100px;
   border-radius: 100%;
-  margin-right: -10px;
+
 
 }
 
@@ -52,28 +53,29 @@
 }
 
 .currency {
-  height: 40px;
-  width: auto;
+  height: 50px; /* Slightly larger for better visibility */
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Ensures content spreads evenly */
   background-color: #deb887;
-  border: 10px solid #4a2f27;
+  border: 5px solid #4a2f27; /* Thinner border for a cleaner look */
   border-radius: 20px;
-  padding: 5px 5px;
-  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
-  gap: 5px;
+  padding: 5px 10px; /* More even padding for balanced spacing */
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3); /* Keeps the subtle shadow */
+  gap: 8px; /* Space between icon and text */
+  min-width: 120px; /* Ensures enough space for content */
 }
 
 .icon {
-  width: 50px;
-  height: 50px;
+  width: 40px; /* Reduced size for better alignment */
+  height: 40px;
   border-radius: 50%;
-  border: 10px solid #4a2f27;
-  padding: -25px;
+  border: 3px solid #4a2f27; /* Thinner border */
+  margin-right: 5px; /* Space adjustment */
 }
 
 .currency-amount {
-  font-size: 1rem;
+  font-size: 1.2rem; /* Slightly increased font size for readability */
   color: #4a2f27;
   font-weight: bold;
 }
@@ -81,11 +83,11 @@
 .add-button {
   background-color: #4a2f27;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem; /* Adjusted to match size of container */
   border: none;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 30px; /* Increased width for a larger clickable area */
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,7 +96,6 @@
 
 .add-button:hover {
   background-color: #6b4a3e;
-  /* Slightly lighter brown on hover */
 }
 
 
