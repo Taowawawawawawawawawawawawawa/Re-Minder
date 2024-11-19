@@ -27,7 +27,14 @@ public class QuestLog {
     private Integer berylReward;
     private Integer difficulty;
     private Integer pointReward;
+    private String detail;
 
+    public String getDetail() {
+        return detail;
+    }
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
     private LocalDateTime submissionDate;
 
 
@@ -103,6 +110,10 @@ public class QuestLog {
     }
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public void getDetail(String detail2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDetail'");
     }
     
 }

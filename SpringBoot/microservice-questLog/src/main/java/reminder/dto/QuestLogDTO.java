@@ -12,9 +12,18 @@ public class QuestLogDTO {
     private String questName;
     private String questDescription;
     private Integer berylReward;
+    public String getDetail() {
+        return detail;
+    }
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
     private Integer difficulty;
     private Integer pointReward;
     private LocalDateTime submissionDate;
+    private String detail;
+
+
     public String getSubmitText() {
         return submitText;
     }

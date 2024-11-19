@@ -90,7 +90,7 @@ const AdminQuestBoard = () => {
                       "ไม่มีข้อมูล"
                     )}
                   </p>
-                  <p>ระดับความยาก: {selectedQuest.difficulty || "ไม่มีข้อมูล"}</p>
+                  <p>วันที่ส่ง: {selectedQuest.submissionDate || "ไม่มีข้อมูล"}</p>
                 </div>
               </>
             ) : (
