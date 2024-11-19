@@ -40,13 +40,14 @@ public class QuestLog {
         this.message = message;
     }
 
+    private LocalDateTime submissionDate;
     public String getDetail() {
         return detail;
     }
     public void setDetail(String detail) {
         this.detail = detail;
     }
-    private LocalDateTime submissionDate;
+    
 
 
     public LocalDateTime getSubmissionDate() {
@@ -143,7 +144,7 @@ public class QuestLog {
         this.imageUrl = imageUrl;
     }
     public Object getSubmittedImage() {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'getSubmittedImage'");
     }
 }
