@@ -30,7 +30,7 @@ const Questlog = () => {
   };
 
   const navigate = useNavigate();
-
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
   const handleMyroomClick = () => {
     navigate('/Myroom');
   };
@@ -50,20 +50,19 @@ const Questlog = () => {
       <div className="game-screen">
         {/* Quest List Section */}
         <div className="questlog-list">
+          <h2>Quest List</h2>
           <div className="difficulty-tabs">
             {['ง่าย', 'กลาง', 'ยาก'].map((difficulty) => (
               <button
                 key={difficulty}
-                className={`tab-button ${
-                  selectedDifficulty === difficulty ? 'active' : ''
-                }`}
+                className={`tab-button ${selectedDifficulty === difficulty ? 'active' : ''
+                  }`}
                 onClick={() => handleTabClick(difficulty)}
               >
                 {difficulty}
               </button>
             ))}
           </div>
-          <h2>Quest List</h2>
           <ul>
             {filteredQuests.map((quest) => (
               <li
@@ -80,6 +79,7 @@ const Questlog = () => {
 
         {/* Quest Details Section */}
         <div className="questlog-details">
+          <h2>Quest Detail</h2>
           {quests.some((quest) => quest.isOpen) ? (
             quests.map(
               (quest) =>
@@ -97,7 +97,9 @@ const Questlog = () => {
             </div>
           )}
         </div>
-
+        <div className="character">
+          <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
+        </div>
         {/* Buttons */}
         <button className="questlog-button" onClick={handleMyroomClick}>
           กลับห้อง
