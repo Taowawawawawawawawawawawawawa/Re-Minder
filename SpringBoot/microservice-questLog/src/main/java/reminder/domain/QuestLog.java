@@ -44,9 +44,7 @@ public class QuestLog {
     public void setSubmissionDate(LocalDateTime submissionDate) {
         this.submissionDate = submissionDate;
     }
-    public String getImageUrl() {
-        return imageUrl;
-    }
+
     public String getSubmitText() {
         return submitText;
     }
@@ -57,54 +55,76 @@ public class QuestLog {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+
     public Long getQuestId() {
         return questId;
     }
+
     public void setQuestId(Long questId) {
         this.questId = questId;
     }
+
     public Long getUserId() {
         return userId;
     }
+
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
+
     public String getQuestName() {
         return questName;
     }
+
     public void setQuestName(String questName) {
         this.questName = questName;
     }
+
     public String getQuestDescription() {
         return questDescription;
     }
+
     public void setQuestDescription(String questDescription) {
         this.questDescription = questDescription;
     }
+
     public Integer getBerylReward() {
         return berylReward;
     }
+
     public void setBerylReward(Integer berylReward) {
         this.berylReward = berylReward;
     }
+
     public Integer getDifficulty() {
         return difficulty;
     }
+
     public void setDifficulty(Integer difficulty) {
         this.difficulty = difficulty;
     }
+
     public Integer getPointReward() {
         return pointReward;
     }
+
     public void setPointReward(Integer pointReward) {
         this.pointReward = pointReward;
     }

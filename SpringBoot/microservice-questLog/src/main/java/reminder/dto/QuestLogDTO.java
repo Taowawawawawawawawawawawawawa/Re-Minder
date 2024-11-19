@@ -3,13 +3,13 @@ package reminder.dto;
 import java.time.LocalDateTime;
 
 public class QuestLogDTO {
+    
 
-    private Long id;
+
     private Long userId;
     private Long questId;
     private String status;
-    private String imageUrl;
-    private String questName;
+
     private String questDescription;
     private Integer berylReward;
 
@@ -37,98 +37,90 @@ public class QuestLogDTO {
 
     // Getters and Setters
     public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
         return userId;
     }
+    private String questName;
+    private String imageUrl;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
-    public Long getQuestId() {
-        return questId;
-    }
 
-    public void setQuestId(Long questId) {
-        this.questId = questId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getQuestName() {
         return questName;
     }
-
     public void setQuestName(String questName) {
         this.questName = questName;
     }
-
-    public String getQuestDescription() {
-        return questDescription;
+    public String getImageUrl() {
+        return imageUrl;
     }
-
-    public void setQuestDescription(String questDescription) {
-        this.questDescription = questDescription;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
-
-    public Integer getBerylReward() {
-        return berylReward;
+    public Long getUserId() {
+        return userId;
     }
-
-    public void setBerylReward(Integer berylReward) {
-        this.berylReward = berylReward;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
-
-    public Integer getDifficulty() {
-        return difficulty;
+    public Long getQuestId() {
+        return questId;
     }
-
-    public void setDifficulty(Integer difficulty) {
-        this.difficulty = difficulty;
+    public void setQuestId(Long questId) {
+        this.questId = questId;
     }
-
-    public Integer getPointReward() {
-        return pointReward;
+    public String getStatus() {
+        return status;
     }
-
-    public void setPointReward(Integer pointReward) {
-        this.pointReward = pointReward;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
     public LocalDateTime getSubmissionDate() {
         return submissionDate;
     }
-
     public void setSubmissionDate(LocalDateTime submissionDate) {
         this.submissionDate = submissionDate;
     }
     public String setDetail() {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'setDetail'");
     }
     public void getDetail(String detail2) {
-        // TODO Auto-generated method stub
+ 
         throw new UnsupportedOperationException("Unimplemented method 'getDetail'");
     }
+    public String getQuestDescription() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestDescription'");
+    }
+    public Integer getBerylReward() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'getBerylReward'");
+    }
+    public Integer getDifficulty() {
+  
+        throw new UnsupportedOperationException("Unimplemented method 'getDifficulty'");
+    }
+    public Integer getPointReward() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'getPointReward'");
+    }
+    public void setQuestDescription(String questDescription2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setQuestDescription'");
+    }
+    public void setBerylReward(Integer berylReward2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setBerylReward'");
+    }
+    public void setDifficulty(Integer difficulty2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setDifficulty'");
+    }
+    public void setPointReward(Integer pointReward2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setPointReward'");
+    }
+
+    // Getter, Setter, Constructor
 }

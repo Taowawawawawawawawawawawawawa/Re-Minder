@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import io
 from PIL import Image
 import torch
-
+    
 # สร้าง FastAPI app
 app = FastAPI()
 
