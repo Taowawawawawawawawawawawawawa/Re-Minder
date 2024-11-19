@@ -21,5 +21,6 @@ public class QuestLogMapper {
         dto.setUserId(entity.getUserId());
         dto.setQuestId(entity.getQuestId());
         dto.setStatus(entity.getStatus());
+
     }
 }

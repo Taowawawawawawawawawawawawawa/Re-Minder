@@ -8,6 +8,24 @@ public class QuestLogDTO {
     private Long questId;
     private String status;
     private LocalDateTime submissionDate;
+    private String questName;
+    private String imageUrl;
+
+
+
+
+    public String getQuestName() {
+        return questName;
+    }
+    public void setQuestName(String questName) {
+        this.questName = questName;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
     public Long getUserId() {
         return userId;
     }

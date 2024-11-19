@@ -55,7 +55,7 @@ function Questboard() {
 
     try {
       setUploadStatus("กำลังตรวจสอบ...");
-      const response = await fetch(`/api/verify-image`, {
+      const response = await fetch(`/quest/submit`, {
         method: "POST",
         body: formData,
       });
