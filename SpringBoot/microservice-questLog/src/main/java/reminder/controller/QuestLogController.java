@@ -1,6 +1,7 @@
 package reminder.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import reminder.dto.QuestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
@@ -28,24 +29,42 @@ public class QuestLogController {
             @RequestParam("questId") Long questId) {
         Map<String, Object> response = new HashMap<>();
         try {
-            if (file.isEmpty()) {
+            // Validate input
+            if (file == null || file.isEmpty()) {
                 response.put("status", "error");
                 response.put("message", "No file uploaded");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-    
-            // Process file...
-            byte[] fileBytes = file.getBytes();
-            if (fileBytes.length > 5000000) {
+            if (questId == null) {
                 response.put("status", "error");
-                response.put("message", "File size is too large");
+                response.put("message", "Quest ID is missing");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
     
-            // Send file to YOLO API
+            // Fetch the quest details from the Quest microservice
+            String currentQuestUrl = "http://localhost:8202/quests/" + questId;
+            ResponseEntity<QuestDTO> currentQuestResponse = restTemplate.getForEntity(currentQuestUrl, QuestDTO.class);
+            if (currentQuestResponse.getStatusCode() != HttpStatus.OK || currentQuestResponse.getBody() == null) {
+                response.put("status", "error");
+                response.put("message", "Unable to fetch quest details. Response: " + currentQuestResponse.getStatusCode());
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+    
+            QuestDTO currentQuest = currentQuestResponse.getBody();
+            String targetObject = currentQuest.getTargetObject();
+            if (targetObject == null || targetObject.isEmpty()) {
+                response.put("status", "error");
+                response.put("message", "Quest target object is not defined for Quest ID: " + questId);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            }
+    
+            // Debug log for targetObject
+            System.out.println("Target Object: " + targetObject);
+    
+            // Send the image to the YOLO detection API
             String yolov5ApiUrl = "http://localhost:8000/detect";
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            body.add("file", new ByteArrayResource(fileBytes) {
+            body.add("file", new ByteArrayResource(file.getBytes()) {
                 @Override
                 public String getFilename() {
                     return file.getOriginalFilename();
@@ -56,52 +75,47 @@ public class QuestLogController {
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
             HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
     
-            ResponseEntity<String> yoloResponse = restTemplate.exchange(
-                    yolov5ApiUrl, HttpMethod.POST, request, String.class);
+            ResponseEntity<String> yoloResponse = restTemplate.exchange(yolov5ApiUrl, HttpMethod.POST, request, String.class);
     
-            // Log YOLO API response
-            System.out.println("YOLO API Response: " + yoloResponse.getBody());
-    
+            // Process YOLO response
             if (yoloResponse.getStatusCode() == HttpStatus.OK) {
-                // Parse YOLO response
                 ObjectMapper objectMapper = new ObjectMapper();
                 Map<String, Object> yoloResponseBody = objectMapper.readValue(yoloResponse.getBody(), Map.class);
     
-                // Extract detected objects and filter by confidence
+                @SuppressWarnings("unchecked")
                 List<Map<String, Object>> predictions = (List<Map<String, Object>>) yoloResponseBody.get("predictions");
-                System.out.println("Predictions: " + predictions);
     
                 List<String> detectedObjects = new ArrayList<>();
                 for (Map<String, Object> prediction : predictions) {
-                    System.out.println("Prediction Entry: " + prediction);
                     double confidence = (double) prediction.get("confidence");
-                    if (confidence > 0.5) { // Filter by confidence threshold
-                        String label = (String) prediction.get("name"); // Correctly cast 'name'
-                        detectedObjects.add(label);
+                    if (confidence > 0.5) {
+                        detectedObjects.add((String) prediction.get("name"));
                     }
                 }
     
-                System.out.println("Filtered Detected Objects: " + detectedObjects);
-    
                 if (detectedObjects.isEmpty()) {
                     response.put("status", "success");
-                    response.put("message", "No objects detected");
+                    response.put("message", "No objects detected in the image");
+                } else if (detectedObjects.contains(targetObject)) {
+                    response.put("status", "success");
+                    response.put("message", "Quest completed successfully");
+                    response.put("questStatus", "completed");
                 } else {
                     response.put("status", "success");
-                    response.put("detectedObjects", detectedObjects);
+                    response.put("message", "Detected objects do not match the target");
+                    response.put("questStatus", "not_completed");
                 }
-                return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 response.put("status", "error");
-                response.put("message", "Failed to process image, YOLO API error");
-                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                response.put("message", "Object detection failed");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             response.put("status", "error");
-            response.put("message", "Error processing request: " + e.getMessage());
+            response.put("message", "An error occurred: " + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
 }

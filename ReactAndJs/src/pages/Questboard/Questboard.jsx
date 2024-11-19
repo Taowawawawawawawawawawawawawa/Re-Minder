@@ -83,14 +83,18 @@ function Questboard() {
       console.log("Backend Result:", result);
   
       if (result.status === "success") {
-        if (result.detectedObjects && result.detectedObjects.length > 0) {
-          const detectedObjects = result.detectedObjects.join(", ");
-          setUploadStatus(`ตรวจพบวัตถุ: ${detectedObjects}`);
+        if (result.questStatus === "completed") {
+          // result.message || 
+          setUploadStatus("เควสสำเร็จ ✅");
+        } else if (result.questStatus === "not_completed") {
+          // result.message || 
+          setUploadStatus("วัตถุที่พบไม่ตรงกับเป้าหมาย ❌");
         } else {
-          setUploadStatus("ไม่พบวัตถุในภาพ");
+          setUploadStatus("ไม่พบวัตถุในภาพ ❌");
         }
       } else {
-        setUploadStatus(result.message || "รูปภาพไม่ถูกต้อง ❌");
+        // result.message || 
+        setUploadStatus("รูปภาพไม่ถูกต้อง ❌");
       }
     } catch (err) {
       console.error("Upload error:", err);
