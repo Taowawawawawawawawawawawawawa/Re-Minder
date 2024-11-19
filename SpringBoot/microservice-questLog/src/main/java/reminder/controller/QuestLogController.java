@@ -1,9 +1,19 @@
 package reminder.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.MediaType; // เพิ่มการ import MediaType
+import org.springframework.web.multipart.MultipartFile;
+
 import reminder.domain.QuestLog;
 import reminder.dto.QuestLogDTO;
 import reminder.dto.mapper.QuestLogMapper;
@@ -22,6 +32,45 @@ public class QuestLogController {
 
     @Autowired
     private QuestLogMapper questLogMapper;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @PostMapping("/submit-image")
+    public ResponseEntity<String> submitQuestImage(@RequestParam("file") MultipartFile file) {
+        try {
+            // URL ของ YOLOv5 API
+            String yolov5ApiUrl = "http://localhost:8000/detect";
+
+            // สร้างข้อมูลที่ใช้ส่ง
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            body.add("file", new ByteArrayResource(file.getBytes()) {
+                @Override
+                public String getFilename() {
+                    return file.getOriginalFilename();
+                }
+            });
+
+            // สร้าง HttpHeaders และ HttpEntity สำหรับ request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);  // ใช้ MediaType แทน String
+            HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
+
+            // ส่งข้อมูลไปยัง YOLOv5 API
+            ResponseEntity<String> response = restTemplate.exchange(
+                    yolov5ApiUrl,
+                    HttpMethod.POST,
+                    request,
+                    String.class
+            );
+
+            // ส่งผลลัพธ์กลับไปยัง frontend
+            return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error processing image: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // Get QuestLog by ID
     @GetMapping("/{id}")

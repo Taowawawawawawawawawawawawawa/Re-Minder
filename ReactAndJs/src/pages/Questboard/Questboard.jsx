@@ -55,19 +55,21 @@ function Questboard() {
 
     try {
       setUploadStatus("กำลังตรวจสอบ...");
-      const response = await fetch(`/quest/submit`, {
+      const response = await fetch("http://localhost:8203/questlogs/submit-image", {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("การตรวจสอบรูปภาพล้มเหลว");
+        const errorData = await response.json();
+        console.log("Error Response:", errorData);
+        throw new Error(errorData.message || "การตรวจสอบรูปภาพล้มเหลว");
       }
 
       const result = await response.json();
       setUploadStatus(result.isValid ? "รูปภาพถูกต้อง ✅" : "รูปภาพไม่ถูกต้อง ❌");
     } catch (err) {
-      setUploadStatus("เกิดข้อผิดพลาดในการตรวจสอบรูปภาพ");
+      setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
     }
   };
 
