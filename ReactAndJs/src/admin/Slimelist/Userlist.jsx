@@ -9,8 +9,11 @@ const Userlist = () => {
     const [userInventory, setUserInventory] = useState([]);
     const [items, setItems] = useState({ costumes: [], rewards: [], themes: [] });
     const [error, setError] = useState(null);
+    const [searchText, setSearchText] = useState(""); // State for search text
+    const [editingEmail, setEditingEmail] = useState(null); // State for the user being edited
+    const [editedEmail, setEditedEmail] = useState(""); // State for new email
 
-    // Fetch all users
+    // Function to fetch users data
     const fetchUsers = async () => {
         try {
             const response = await fetch("http://localhost:8200/users/all");
@@ -24,7 +27,6 @@ const Userlist = () => {
         }
     };
 
-    // Fetch user inventory
     const fetchUserInventory = async (userId) => {
         try {
             const response = await fetch(`http://localhost:8208/inventory/user/${userId}`);
@@ -33,8 +35,6 @@ const Userlist = () => {
             }
             const inventory = await response.json();
             setUserInventory(inventory);
-
-            // Fetch item details based on inventory IDs
             await fetchItemDetails(inventory);
         } catch (err) {
             console.error(err);
@@ -42,7 +42,6 @@ const Userlist = () => {
         }
     };
 
-    // Fetch item details from the shop microservice
     const fetchItemDetails = async (inventory) => {
         try {
             const [costumes, rewards, themes] = await Promise.all([
@@ -69,33 +68,79 @@ const Userlist = () => {
         }
     };
 
-    // Use effect to fetch users on initial render
+    // Function to update user email
+    const updateUserEmail = async (userId, newEmail) => {
+        try {
+            const response = await fetch(`http://localhost:8201/admins/user/${userId}/update`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: newEmail }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update email for userId: ${userId}`);
+            }
+
+            const updatedUser = await response.json();
+            setUsers((prevUsers) =>
+                prevUsers.map((user) =>
+                    user.userId === userId ? { ...user, email: updatedUser.email } : user
+                )
+            );
+            setEditingEmail(null); // Stop editing mode
+            setEditedEmail(""); // Clear email input
+            alert("อีเมลถูกอัปเดตสำเร็จ!");
+        } catch (err) {
+            console.error("Error updating email:", err);
+            alert("เกิดข้อผิดพลาดในการอัปเดตอีเมล");
+        }
+    };
+
     useEffect(() => {
         fetchUsers();
     }, []);
 
-    // Use effect to fetch inventory when a user is expanded
     useEffect(() => {
         if (expandedUserId !== null) {
             fetchUserInventory(expandedUserId);
         }
     }, [expandedUserId]);
 
-    // Handle toggling user details
     const toggleUserDetails = (userId) => {
         if (expandedUserId === userId) {
-            setExpandedUserId(null); // Collapse the details
-            setUserInventory([]); // Clear inventory when collapsed
-            setItems({ costumes: [], rewards: [], themes: [] }); // Clear item details
+            setExpandedUserId(null);
+            setUserInventory([]);
+            setItems({ costumes: [], rewards: [], themes: [] });
         } else {
-            setExpandedUserId(userId); // Expand the details
+            setExpandedUserId(userId);
         }
     };
 
-    // Get the full image URL (handles imgbb links)
     const getFullImageUrl = (path) => {
-        return path.trim(); // Ensure whitespace is removed
+        return path.trim();
     };
+
+    const filteredUsers = users
+        .filter((user) =>
+            user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            (user.email && user.email.toLowerCase().includes(searchText.toLowerCase())) ||
+            (user.mbti && user.mbti.toLowerCase().includes(searchText.toLowerCase()))
+        )
+        .sort((a, b) => {
+            const search = searchText.toLowerCase();
+            const aPriority =
+                a.name.toLowerCase().indexOf(search) !== -1
+                    ? a.name.toLowerCase().indexOf(search)
+                    : a.email?.toLowerCase().indexOf(search) ?? 
+                      a.mbti?.toLowerCase().indexOf(search) ?? Infinity;
+            const bPriority =
+                b.name.toLowerCase().indexOf(search) !== -1
+                    ? b.name.toLowerCase().indexOf(search)
+                    : b.email?.toLowerCase().indexOf(search) ?? 
+                      b.mbti?.toLowerCase().indexOf(search) ?? Infinity;
+
+            return aPriority - bPriority;
+        });
 
     return (
         <>
@@ -104,25 +149,36 @@ const Userlist = () => {
                 <header className="user-list-header">
                     <h2>Slime List</h2>
                     <div className="filter-input">
-                        <input type="text" placeholder="Filter" />
+                        <input
+                            type="text"
+                            placeholder="Filter by name, email, or MBTI"
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
                     </div>
                 </header>
 
                 <ul className="user-items">
-                    {users.map((user) => (
-                        <li key={user.userId} className="user-item" onClick={() => toggleUserDetails(user.userId)}>
-                            {/* User Summary */}
-                            <div className="user-summary">
+                    {filteredUsers.map((user) => (
+                        <li key={user.userId} className="user-item">
+                            <div className="user-summary" onClick={() => toggleUserDetails(user.userId)}>
                                 <span className="user-name">{user.name}</span>
                                 <div className="action-buttons">
-                                    <button>แก้ไข</button>
+                                    {/* Only show edit button for editing the email */}
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent toggling user details
+                                            setEditingEmail(user.userId); // Enable editing mode
+                                            setEditedEmail(user.email); // Set current email to edit
+                                        }}
+                                    >
+                                        แก้ไข
+                                    </button>
                                     <button>ลบ</button>
                                     <button>ระงับ</button>
                                 </div>
                             </div>
-
-                            {/* User Details */}
-                            {expandedUserId === user.userId && (
+                            {expandedUserId === user.userId && !editingEmail && (
                                 <div className="user-detail">
                                     <div className="information">
                                         <h3>Information</h3>
@@ -133,52 +189,51 @@ const Userlist = () => {
                                     <div className="item">
                                         <h3>Items</h3>
                                         <div className="item-icons">
-                                            {/* Costumes */}
                                             {items.costumes.map((costume) => (
                                                 <div key={costume.costumeId} className="item-container">
                                                     <img
                                                         src={getFullImageUrl(costume.costumeFiles)}
                                                         alt={costume.costumeName}
                                                         className="item-icon"
-                                                        onError={(e) => {
-                                                            e.target.src = "https://via.placeholder.com/150"; // Fallback image
-                                                        }}
                                                     />
                                                     <p>{costume.costumeName}</p>
                                                 </div>
                                             ))}
-
-                                            {/* Rewards */}
                                             {items.rewards.map((reward) => (
                                                 <div key={reward.rewardId} className="item-container">
                                                     <img
                                                         src={getFullImageUrl(reward.rewardSpriteArts)}
                                                         alt={reward.rewardName}
                                                         className="item-icon"
-                                                        onError={(e) => {
-                                                            e.target.src = "https://via.placeholder.com/150"; // Fallback image
-                                                        }}
                                                     />
                                                     <p>{reward.rewardName}</p>
                                                 </div>
                                             ))}
-
-                                            {/* Themes */}
                                             {items.themes.map((theme) => (
                                                 <div key={theme.themeId} className="item-container">
                                                     <img
                                                         src={getFullImageUrl(theme.frameSpriteArts)}
                                                         alt={`Theme ${theme.themeId}`}
                                                         className="item-icon"
-                                                        onError={(e) => {
-                                                            e.target.src = "https://via.placeholder.com/150"; // Fallback image
-                                                        }}
                                                     />
                                                     <p>Theme</p>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
+                                </div>
+                            )}
+                            {editingEmail === user.userId && (
+                                <div className="edit-email">
+                                    <input
+                                        type="email"
+                                        value={editedEmail}
+                                        onChange={(e) => setEditedEmail(e.target.value)}
+                                    />
+                                    <button onClick={() => updateUserEmail(user.userId, editedEmail)}>
+                                        บันทึก
+                                    </button>
+                                    <button onClick={() => setEditingEmail(null)}>ยกเลิก</button>
                                 </div>
                             )}
                         </li>
