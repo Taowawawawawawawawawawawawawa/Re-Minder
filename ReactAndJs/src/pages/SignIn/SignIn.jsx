@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignIn.css';
+import SlimeGif from '../../images/Slime.GIF';
 
 function SignIn() {
     const navigate = useNavigate();
@@ -22,9 +23,9 @@ function SignIn() {
 
     return (
         <div className="signin-container">
-            <h1 className="signin-title">SignIn</h1>
+            <h1 className="signin-title">LOGIN</h1>
             <div className="signin-avatar">
-                <img src="path/to/avatar.png" alt="Avatar" className="avatar-image" />
+                <img src={SlimeGif} alt="Avatar" className="avatar-image" />
             </div>
             <p className="signin-question">จริงๆเหรอ?</p>
             <form className="signin-form">
