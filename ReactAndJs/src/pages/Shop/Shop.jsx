@@ -4,7 +4,6 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 import SlimeGif from '../../images/Slime.GIF';
 
-
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
   const [costumes, setCostumes] = useState([]);
@@ -47,6 +46,10 @@ const Shop = () => {
   const handleItemClick = (item) => {
     alert(`You selected: ${item.costumeName || item.themeName}`);
     setSelectedAvatar(item.costumeFiles || item.frameSpriteArts); // Update the avatar image
+  };
+
+  const handleCancel = () => {
+    setSelectedAvatar(SlimeGif); // Reset to the default profile picture
   };
 
   return (
@@ -109,7 +112,7 @@ const Shop = () => {
         </div>
 
         <div className="shop-buttons">
-          <button className="cancel-btn">Cancel</button>
+          <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
           <button className="save-btn">Save</button>
         </div>
       </div>

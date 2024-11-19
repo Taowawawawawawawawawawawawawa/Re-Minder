@@ -1,6 +1,6 @@
 /* Set the page background */
 body {
-  background: url('C:/work/Re-Minder/Re-Minder/ReactAndJs/src/images/shop_bg.png') no-repeat center center fixed;
+  background: url('/src/images/shop_bg.png') no-repeat center center fixed;
   background-size: cover;
   margin: 0;
   padding: 0;
