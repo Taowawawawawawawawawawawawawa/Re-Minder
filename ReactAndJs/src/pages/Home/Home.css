@@ -78,7 +78,7 @@ body, html {
 
 .section p {
   font-size: 14px;
-  color: #555;
+  color: black;
 }
 
 /* Quest Section Styling */
@@ -91,7 +91,7 @@ body, html {
 
 .refresh-timer {
   font-size: 12px;
-  color: #999;
+  color: black;
   margin-top: 5px;
 }
 

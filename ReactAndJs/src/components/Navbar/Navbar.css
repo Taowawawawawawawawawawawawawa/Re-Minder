@@ -17,11 +17,25 @@
   align-items: center;
 }
 
+.profile-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px; /* Adjust size as needed */
+  height: 120px;
+  border-radius: 50%; /* Ensures the frame is circular */
+  border: 5px solid #8b5e3c; /* Outer frame border color */
+  background: linear-gradient(145deg, #d2b48c, #c2a17b); /* Decorative gradient */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adds depth */
+  padding: 5px; /* Spacing between frame and image */
+}
+
 .profile-icon {
   width: 100px;
   height: 100px;
-  border-radius: 3000%;
+  border-radius: 100%;
   margin-right: -10px;
+
 }
 
 .navbar-title {

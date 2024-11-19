@@ -12,12 +12,14 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <img
-          src={icon}
-          alt="Profile Icon"
-          className="profile-icon"
-          onClick={() => navigate("/home")}
-        />
+        <div className="profile-icon-wrapper">
+          <img
+            src={icon}
+            alt="Profile Icon"
+            className="profile-icon"
+            onClick={() => navigate("/home")}
+          />
+        </div>
         <span className="navbar-title">บทสนทนาแบบสุ่ม</span>
       </div>
       <div className="navbar-right">
