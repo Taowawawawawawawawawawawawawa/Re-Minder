@@ -4,6 +4,8 @@ import Footer from '../../components/Footer/footer';
 import './Myroom.css';
 import { useNavigate } from 'react-router-dom';
 import SlimeGif from '../../images/Slime.GIF';
+import Diary from '../../images/Diary.png';
+import Questlog from '../../images/Questlog.png';
 
 function Myroom() {
   const navigate = useNavigate();
@@ -23,20 +25,22 @@ function Myroom() {
   return <><Navbar />
     
       <div className="game-screen">
+
+        
         {/* Character */}
         <div className="character">
         <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
         </div>
         
         {/* Thought Bubble 1 */}
-        <div className="thought-bubble thought-bubble-left">
-          <img src="path-to-quest-log-icon.png" alt="Quest Log" className="bubble-icon" onClick={handleQuestlogClick} />
+        <div className="thought-bubble thought-bubble-left" onClick={handleQuestlogClick}>
+          <img src={Questlog} alt="Quest Log" className="bubble-icon" />
           <p>quest log</p>
         </div>
   
         {/* Thought Bubble 2 */}
-        <div className="thought-bubble thought-bubble-right">
-          <img src="path-to-diary-icon.png" alt="Diary" className="bubble-icon" onClick={handleDiaryClick} />
+        <div className="thought-bubble thought-bubble-right" onClick={handleDiaryClick}>
+          <img src={Diary} alt="Diary" className="bubble-icon"  />
           <p>ไดอารี่ของฉัน</p>
         </div>
   

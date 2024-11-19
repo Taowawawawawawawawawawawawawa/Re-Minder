@@ -26,18 +26,18 @@ const AdminCreateQuest = () => {
           onChange={(e) => setQuestName(e.target.value)}
         />
         <select
-          value={questDetails}
-          onChange={(e) => setQuestDetails(e.target.value)}
+          value={questMethod}
+          onChange={(e) => setQuestMethod(e.target.value)}
         >
-          <option value="">ช่องใส่รายละเอียดเควส</option>
-          <option value="detail1">Detail 1</option>
-          <option value="detail2">Detail 2</option>
+          <option value="">วิธีส่งงาน</option>
+          <option value="detail1">รูปภาพ</option>
+          <option value="detail2">ข้อความ</option>
         </select>
         <input
           type="text"
-          placeholder="วิธีส่งงาน"
-          value={questMethod}
-          onChange={(e) => setQuestMethod(e.target.value)}
+          placeholder="ช่องใส่รายละเอียดเควส"
+          value={questDetails}
+          onChange={(e) => setQuestDetails(e.target.value)}
         />
         <select
           value={difficultyLevel}
