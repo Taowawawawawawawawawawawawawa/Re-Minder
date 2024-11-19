@@ -10,18 +10,21 @@ function SignIn() {
     const [error, setError] = useState('');
 
     const handleSignIn = async () => {
-        setError(''); // Clear previous error
+        setError(''); // Clear previous errors
         try {
             // Try user login
-            let response = await fetch('http://localhost:8200/users/login', {
+            let response = await fetch('http://localhost:8200/users/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
             });
 
             if (response.ok) {
-                alert('Welcome, User!');
-                navigate('/Home'); // Redirect to Home
+                const user = await response.json();
+                sessionStorage.setItem('role', 'user');
+                sessionStorage.setItem('userData', JSON.stringify(user));
+                alert(`Welcome, ${user.name}!`);
+                navigate('/Home');
                 return;
             }
 
@@ -32,15 +35,18 @@ function SignIn() {
 
             if (response.status === 404) {
                 // Try admin login
-                response = await fetch('http://localhost:8201/admins/login', {
+                response = await fetch('http://localhost:8201/admins/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password }),
                 });
 
                 if (response.ok) {
-                    alert('Welcome, Admin!');
-                    navigate('/AdminDashboard'); // Redirect to Admin Dashboard
+                    const admin = await response.json();
+                    sessionStorage.setItem('role', 'admin');
+                    sessionStorage.setItem('adminData', JSON.stringify(admin));
+                    alert(`Welcome, ${admin.name}!`);
+                    navigate('/AdminDashboard');
                     return;
                 }
 
@@ -56,16 +62,8 @@ function SignIn() {
             }
         } catch (err) {
             console.error('Login error:', err);
-            setError('An error occurred during login. Please try again later.');
+            setError('An error occurred. Please try again later.');
         }
-    };
-
-    const handleBack = () => {
-        navigate('/');
-    };
-
-    const handleSignUp = () => {
-        navigate('/SignUp');
     };
 
     return (
@@ -98,12 +96,8 @@ function SignIn() {
             {error && <p className="signin-error">{error}</p>}
             <div className="signin-buttons">
                 <button className="signin-button" onClick={handleSignIn}>จริงสิ (Login)</button>
-                <button className="signin-button" onClick={handleBack}>ย้อนกลับ</button>
+                <button className="signin-button" onClick={() => navigate('/')}>ย้อนกลับ</button>
             </div>
-            <div className="signup-button-container">
-                <button className="signup-button" onClick={handleSignUp}>คิดว่าจำผิดนะ (Register)</button>
-            </div>
-            <button className="contact-admin">Contact Admin</button>
         </div>
     );
 }

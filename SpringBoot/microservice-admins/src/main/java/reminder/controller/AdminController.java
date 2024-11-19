@@ -13,7 +13,9 @@ import reminder.dto.AdminDTO;
 import reminder.dto.mapper.AdminMapper;
 import reminder.repository.AdminRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -149,20 +151,28 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        Optional<Admins> admin = Optional.of(adminRepository.findByAdminEmail(loginRequest.getEmail()));
+    @PostMapping("/auth/login")
+    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
+        Optional<Admins> admin = Optional.ofNullable(adminRepository.findByAdminEmail(loginRequest.getEmail()));
+
         if (admin.isPresent()) {
             if (admin.get().getPassword().equals(loginRequest.getPassword())) {
-                return ResponseEntity.ok("Login successful");
+                // Return the full admin object as JSON
+                return ResponseEntity.ok(admin.get());
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+                // Invalid password
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "Invalid password");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No admin account found with this email");
+            // No account found
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "No account found with this email");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
-    
+
 }
 
 /*

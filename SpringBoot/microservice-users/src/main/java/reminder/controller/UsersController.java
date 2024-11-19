@@ -9,7 +9,9 @@ import reminder.dto.UsersDTO;
 import reminder.dto.mapper.UsersMapper;
 import reminder.repository.UsersRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -142,19 +144,31 @@ public class UsersController {
         return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        Optional<Users> user = Optional.of(userRepository.findByEmail(loginRequest.getEmail()));
-        if (user.isPresent()) {
-            if (user.get().getPassword().equals(loginRequest.getPassword())) {
-                return ResponseEntity.ok("Login successful");
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
-            }
+    @PostMapping("/auth/login")
+public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
+    Optional<Users> user = Optional.ofNullable(userRepository.findByEmail(loginRequest.getEmail()));
+
+    if (user.isPresent()) {
+        if (user.get().getPassword().equals(loginRequest.getPassword())) {
+            // Return the full user object as JSON
+            return ResponseEntity.ok(user.get());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No account found with this email");
+            // Invalid password
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Invalid password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
+    } else {
+        // No account found
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "No account found with this email");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+}
+
+    
+
+    
     
 }
 
