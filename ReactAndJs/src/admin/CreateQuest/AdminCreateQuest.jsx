@@ -91,11 +91,50 @@ const AdminCreateQuest = () => {
     }
   };
 
+<<<<<<< HEAD
   const handleAddMBTI = (mbti) => {
     if (!suitableMBTI.includes(mbti)) {
       setSuitableMBTI([...suitableMBTI, mbti]);
     }
   };
+=======
+  return <><Navbar />
+    <div className="admin-create-quest">
+      <div className="quest-detail">
+        <h2>Quest Detail</h2>
+        <input
+          type="text"
+          placeholder="ชื่อเควส"
+          value={questName}
+          onChange={(e) => setQuestName(e.target.value)}
+        />
+        <select
+          value={questMethod}
+          onChange={(e) => setQuestMethod(e.target.value)}
+        >
+          <option value="">วิธีส่งงาน</option>
+          <option value="detail1">รูปภาพ</option>
+          <option value="detail2">ข้อความ</option>
+        </select>
+        <input
+          type="text"
+          placeholder="ช่องใส่รายละเอียดเควส"
+          value={questDetails}
+          onChange={(e) => setQuestDetails(e.target.value)}
+        />
+        <select
+          value={difficultyLevel}
+          onChange={(e) => setDifficultyLevel(e.target.value)}
+        >
+          <option value="">ระดับความยาก (ที่คาดใช้)</option>
+          <option value="easy">ง่าย</option>
+          <option value="medium">กลาง</option>
+          <option value="hard">ยาก</option>
+        </select>
+        <button onClick={handleCreateQuest}>สร้างเควส</button>
+        {/* <button onClick={handleCreateQuest}>สร้างเควส</button> */}
+      </div>
+>>>>>>> 0fca0f3f14c67e2f9f11fc91d1cd216ded14517d
 
   const handleRemoveMBTI = (mbti) => {
     setSuitableMBTI(suitableMBTI.filter((item) => item !== mbti));
