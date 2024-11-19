@@ -1,10 +1,10 @@
+/* Container styling */
 .signin-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-
     background: url(/src/images/BG_welcome.png), #D9D9D9;
     background-size: cover;
     background-position: center;
@@ -13,12 +13,14 @@
     color: #ffffff;
 }
 
+/* Title styling */
 .signin-title {
     font-size: 96px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
+/* Avatar styling */
 .signin-avatar {
     margin-top: -55px;
     margin-bottom: -55px;
@@ -30,60 +32,97 @@
     border-radius: 10%;
 }
 
+/* Question text styling */
 .signin-question {
     font-size: 18px;
     margin-bottom: 20px;
 }
 
+/* Form styling */
 .signin-form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     width: 80%;
     max-width: 300px;
 }
 
+/* Label styling */
 .signin-form label {
     font-size: 14px;
-    margin-bottom: 5px;
     color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    width: 100%;
 }
 
+/* Input field styling */
 .signin-input {
+    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: none;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.15); /* Semi-transparent background */
     color: #ffffff;
     font-size: 14px;
+    text-align: center;
+    backdrop-filter: blur(5px); /* Blur effect for a frosted glass look */
 }
 
 .signin-input::placeholder {
     color: #bbbbbb;
 }
 
+/* Styling for the container holding the SignIn and Back buttons */
 .signin-buttons {
     display: flex;
-    flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
+/* Individual button styling remains the same */
 .signin-button {
     background-color: #8b6f4e;
     color: #ffffff;
     border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .signin-button:hover {
     background-color: #705a3c;
 }
 
+/* Styling for the new SignUp button container */
+.signup-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Space between SignIn/Back and SignUp buttons */
+}
+
+/* Styling for the SignUp button */
+.signup-button {
+    background-color: #8b6f4e;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.signup-button:hover {
+    background-color: #705a3c;
+}
+/* Contact Admin Button */
 .contact-admin {
     background-color: transparent;
     color: #ffffff;
@@ -91,6 +130,7 @@
     font-size: 14px;
     cursor: pointer;
     text-decoration: underline;
+    margin-top: 10px;
 }
 
 .contact-admin:hover {

@@ -47,10 +47,16 @@ function SignIn() {
                 />
             </form>
             <div className="signin-buttons">
-                <button className="signin-button" onClick={handleSignIn}>จริงสิ (SignIn)</button>
+
+                <button className="signin-button" onClick={handleSignIn}>จริงสิ (Login)</button>
                 <button className="signin-button" onClick={handleBack}>ย้อนกลับ</button>
-                <button className="signin-button" onClick={handleSignUp}>คิดว่าจำผิดนะ (SignUp)</button>
             </div>
+
+
+            <div className="signup-button-container">
+                <button className="signup-button" onClick={handleSignUp}>คิดว่าจำผิดนะ (Register)</button>
+            </div>
+
             <button className="contact-admin">Contact Admin</button>
         </div>
     );
