@@ -3,13 +3,15 @@ import './Shop.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 import SlimeGif from '../../images/Slime.GIF';
+import SlimeWizard from '../../images/Slime-Wizard.PNG'; // Add the image for wizard
+import SlimePrincess from '../../images/Slime-princess.PNG'; // Add the image for princess
 
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
   const [costumes, setCostumes] = useState([]);
   const [themes, setThemes] = useState([]);
   const [error, setError] = useState(null); // For error handling
-  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // State for the current avatar image
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
 
   const fetchCostumes = async () => {
     try {
@@ -45,7 +47,16 @@ const Shop = () => {
 
   const handleItemClick = (item) => {
     alert(`You selected: ${item.costumeName || item.themeName}`);
-    setSelectedAvatar(item.costumeFiles || item.frameSpriteArts); // Update the avatar image
+    
+    // Check the selected costume/theme and set the corresponding avatar
+    if (item.costumeName === 'Wizard Hat') {
+      setSelectedAvatar(SlimeWizard); // Set to Slime-Wizard.PNG if Wizard Hat is selected
+    } else if (item.costumeName === 'Princess Dress') {
+      setSelectedAvatar(SlimePrincess); // Set to Slime-princess.PNG if Princess is selected
+    } else {
+
+      setSelectedAvatar(item.costumeFiles || item.frameSpriteArts);
+    }
   };
 
   const handleCancel = () => {
@@ -59,7 +70,6 @@ const Shop = () => {
         <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
       </div>
       <div className="shop-container">
-        
         <div className="shop-tabs">
           <button
             className={selectedSection === 'costume' ? 'active' : ''}
