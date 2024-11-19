@@ -28,14 +28,14 @@ public class QuestLog {
     private Integer difficulty;
     private Integer pointReward;
     private String detail;
-
+    private LocalDateTime submissionDate;
     public String getDetail() {
         return detail;
     }
     public void setDetail(String detail) {
         this.detail = detail;
     }
-    private LocalDateTime submissionDate;
+    
 
 
     public LocalDateTime getSubmissionDate() {
