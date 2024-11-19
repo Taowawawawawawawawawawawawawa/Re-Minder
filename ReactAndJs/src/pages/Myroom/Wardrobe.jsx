@@ -1,108 +1,151 @@
 import React, { useState, useEffect } from 'react';
-import './Myroom.css'; // CSS สำหรับ styling
+import './Myroom.css';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/footer';
+import SlimeGif from '../../images/Slime.GIF';
+import wardrobe from '../../images/wardrobe.png';
+import SlimeWizard from '../../images/Slime-Wizard.PNG'; // Add the image for wizard
+import SlimePrincess from '../../images/Slime-princess.PNG'; // Add the image for princess
 
 const Wardrobe = () => {
-  const [selectedItem, setSelectedItem] = useState(null); // เก็บ item ที่ถูกเลือก
-  const navigate = useNavigate(); // ใช้สำหรับ navigation
-  const [items, setItems] = useState({ costumes: [] }); // เก็บ costumes ที่ดึงมาจาก API
-  const [error, setError] = useState(null); // เก็บ error ถ้ามี
+  const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
+  const [costumes, setCostumes] = useState([]);
+  const [themes, setThemes] = useState([]);
+  const [error, setError] = useState(null); // For error handling
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
+  const [selectedItem, setSelectedItem] = useState(null); // To track the selected item
+  const navigate = useNavigate();
 
-  // ฟังก์ชันสำหรับเลือก item
-  const selectItem = (item) => {
-    setSelectedItem(item);
-  };
-
-  // ฟังก์ชันสำหรับกลับไปที่หน้า Myroom
-  const handleMyroomClick = () => {
-    navigate('/Myroom');
-  };
-
-  // ฟังก์ชันสำหรับดึงข้อมูล costumes
   const fetchCostumes = async () => {
     try {
-      const response = await fetch('http://localhost:8204/costumes/all'); // API URL สำหรับ costumes
+      const response = await fetch('http://localhost:8204/costumes/all');
       if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
+        throw new Error(`Costume API error: ${response.status}`);
       }
       const data = await response.json();
-      console.log('Fetched costumes:', data); // Debugging log
-      setItems({ costumes: data });
+      setCostumes(data);
     } catch (err) {
-      console.error('Error fetching costumes:', err.message);
-      setError('Failed to fetch costumes.');
+      setError(err.message);
     }
   };
 
-  // ใช้ useEffect เพื่อดึงข้อมูล costumes เมื่อ component ถูก mount
+  const fetchThemes = async () => {
+    try {
+      const response = await fetch('http://localhost:8204/themes/all');
+      if (!response.ok) {
+        throw new Error(`Theme API error: ${response.status}`);
+      }
+      const data = await response.json();
+      setThemes(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   useEffect(() => {
+    // Fetch both costumes and themes on component load
     fetchCostumes();
+    fetchThemes();
   }, []);
 
-  // ฟังก์ชันสำหรับสร้าง URL ของภาพ
-  const getFullImageUrl = (path) => {
-    return path.trim(); // เอา whitespace ออก
+  const handleItemClick = (item) => {
+    alert(`You selected: ${item.costumeName || item.themeName}`);
+    setSelectedItem(item);
+
+    // Check the selected costume/theme and set the corresponding avatar
+    if (item.costumeName === 'Wizard Hat') {
+      setSelectedAvatar(SlimeWizard); // Set to Slime-Wizard.PNG if Wizard Hat is selected
+    } else if (item.costumeName === 'Princess Dress') {
+      setSelectedAvatar(SlimePrincess); // Set to Slime-princess.PNG if Princess is selected
+    } else {
+      setSelectedAvatar(item.costumeFiles || item.frameSpriteArts);
+    }
+  };
+
+  const handleCancel = () => {
+    setSelectedAvatar(SlimeGif); // Reset to the default profile picture
+    setSelectedItem(null); // Deselect item
+  };
+
+  const handleMyroomClick = () => {
+    navigate('/Myroom'); // Navigate back to Myroom
   };
 
   return (
-    <div>
-      <div className="navbar">Navbar</div> {/* Mock Navbar */}
+    <>
+      <Navbar />
       <div className="game-screen">
-        {/* Wardrobe Section */}
-        <div className="wardrobe">
+        <div className="wardrobe-container">
           <h2>Wardrobe</h2>
-          <ul className="wardrobe-list">
-            {items.costumes.length > 0 ? (
-              items.costumes.map((costume) => (
-                <li
+
+          {/* Error Message */}
+          {error && <div className="error">Error: {error}</div>}
+
+
+          {/* Render costumes if the selected section is costume */}
+          <div className="wardrobe-shelf">
+            {selectedSection === 'costume' && costumes.length > 0 ? (
+              costumes.map((costume) => (
+                <div
                   key={costume.costumeId}
-                  onClick={() => selectItem(costume)}
-                  className={`wardrobe-item ${
-                    selectedItem?.costumeId === costume.costumeId ? 'selected' : ''
-                  }`}
+                  className={`wardrobe-item ${selectedItem?.costumeId === costume.costumeId ? 'selected' : ''}`}
+                  onClick={() => handleItemClick(costume)}
                 >
                   <img
-                    src={getFullImageUrl(costume.costumeFiles)}
+                    src={costume.costumeFiles}
                     alt={costume.costumeName}
                     className="wardrobe-icon"
                   />
                   <p>{costume.costumeName}</p>
-                </li>
+                </div>
               ))
             ) : (
               <p>No costumes available.</p>
             )}
-          </ul>
+
+            {/* Render themes if the selected section is theme */}
+            {selectedSection === 'theme' && themes.length > 0 ? (
+              themes.map((theme) => (
+                <div
+                  key={theme.themeId}
+                  className={`wardrobe-item ${selectedItem?.themeId === theme.themeId ? 'selected' : ''}`}
+                  onClick={() => handleItemClick(theme)}
+                >
+                  <img
+                    src={theme.frameSpriteArts}
+                    alt={theme.themeName}
+                    className="wardrobe-icon"
+                  />
+                  <p>{theme.themeName}</p>
+                </div>
+              ))
+            ) : (
+              <p></p>
+            )}
+          </div>
+          </div>
+
+          {/* Avatar display */}
+          <div className="character">
+            <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
+          </div>
+
+          {/* Control Buttons */}
+          <div className="controls">
+            <button className="control-button1" onClick={handleCancel}>
+              Remove Costume
+            </button>
+            <button className="control-button2" onClick={handleMyroomClick}>
+              Back to Myroom
+            </button>
+          </div>
         </div>
 
-        {/* Character Section */}
-        <div className="character">
-          <div className="character-eye"></div>
-          <div className="character-eye"></div>
-          {selectedItem && selectedItem.costumeFiles ? (
-            <img
-              src={getFullImageUrl(selectedItem.costumeFiles)}
-              alt={selectedItem.costumeName}
-              className="character-item"
-            />
-          ) : (
-            <p>No item selected.</p>
-          )}
-        </div>
-
-        {/* Control Buttons */}
-        <div className="controls">
-          <button className="control-button" onClick={() => setSelectedItem(null)}>
-            ถอดเสื้อผ้า
-          </button>
-          <button className="control-button">ยืนยัน</button>
-          <button className="control-button" onClick={handleMyroomClick}>
-            กลับห้อง
-          </button>
-        </div>
-      </div>
-      <div className="footer">Footer</div> {/* Mock Footer */}
-    </div>
+      {/* Wardrobe Icon */}
+      <img src={wardrobe} alt="Wardrobe" className="wardrobe-mainicon" />
+      <Footer />
+    </>
   );
 };
 
