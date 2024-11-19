@@ -3,6 +3,7 @@ import './Shop.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 
+
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
   const [costumes, setCostumes] = useState([]);
@@ -49,6 +50,7 @@ const Shop = () => {
     <>
       <Navbar />
       <div className="shop-container">
+        
         <div className="shop-tabs">
           <button
             className={selectedSection === 'costume' ? 'active' : ''}
