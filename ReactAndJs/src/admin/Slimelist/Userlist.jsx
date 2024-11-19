@@ -7,6 +7,7 @@ const Userlist = () => {
     const [users, setUsers] = useState([]);
     const [expandedUserId, setExpandedUserId] = useState(null);
     const [userInventory, setUserInventory] = useState([]);
+    const [items, setItems] = useState({ costumes: [], rewards: [], themes: [] });
     const [error, setError] = useState(null);
 
     const fetchUsers = async () => {
@@ -24,26 +25,48 @@ const Userlist = () => {
 
     const fetchUserInventory = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:8208/inventory/users/${userId}`);
+            const response = await fetch(`http://localhost:8208/inventory/user/${userId}`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch inventory for userId: ${userId}`);
             }
-            const data = await response.json();
-            console.log("Inventory Data:", data); // ดูข้อมูล inventory
-            setUserInventory(data);
+            const inventory = await response.json();
+            setUserInventory(inventory);
+
+            // Fetch item details based on inventory IDs
+            await fetchItemDetails(inventory);
         } catch (err) {
             console.error(err);
             setError(err.message);
         }
     };
-    
+
+    const fetchItemDetails = async (inventory) => {
+        try {
+            const [costumes, rewards, themes] = await Promise.all([
+                Promise.all(inventory.costumeList.map((id) =>
+                    fetch(`http://localhost:8204/costumes/${id}`).then((res) => res.json())
+                )),
+                Promise.all(inventory.rewardList.map((id) =>
+                    fetch(`http://localhost:8204/rewards/${id}`).then((res) => res.json())
+                )),
+                Promise.all(inventory.themeList.map((id) =>
+                    fetch(`http://localhost:8204/themes/${id}`).then((res) => res.json())
+                )),
+            ]);
+            setItems({ costumes, rewards, themes });
+        } catch (err) {
+            console.error("Failed to fetch item details:", err);
+            setError("Failed to fetch item details.");
+        }
+    };
 
     useEffect(() => {
         fetchUsers();
     }, []);
+
     useEffect(() => {
         if (expandedUserId !== null) {
-            fetchUserInventory(expandedUserId); // เรียก fetchUserInventory เมื่อ expandedUserId เปลี่ยน
+            fetchUserInventory(expandedUserId); // Fetch inventory when a user is expanded
         }
     }, [expandedUserId]);
 
@@ -51,19 +74,17 @@ const Userlist = () => {
         if (expandedUserId === userId) {
             setExpandedUserId(null); // Collapse the details
             setUserInventory([]); // Clear inventory when collapsed
+            setItems({ costumes: [], rewards: [], themes: [] }); // Clear item details
         } else {
             setExpandedUserId(userId); // Expand the details
         }
     };
-    const getFullImageUrl = (costumeList) => {
-        return costumeList.startsWith("http") 
-            ? costumeList 
-            : `http://localhost:8200${costumeList}`;
+
+    const getFullImageUrl = (path) => {
+        return path.startsWith("http")
+            ? path
+            : `http://localhost:8204${path}`;
     };
-    
-    const handleInvenClick = (inven) => {
-        setExpandedUserId(inven); // Set the selected quest
-      };
 
     return (
         <>
@@ -78,7 +99,7 @@ const Userlist = () => {
 
                 <ul className="user-items">
                     {users.map((user) => (
-                        <li key={user.userId} className="user-item" onClick={() => handleInvenClick(user.userId)}>
+                        <li key={user.userId} className="user-item" onClick={() => toggleUserDetails(user.userId)}>
                             {/* User Summary */}
                             <div className="user-summary">
                                 <span className="user-name">{user.name}</span>
@@ -99,26 +120,45 @@ const Userlist = () => {
                                         <p>MBTI: {user.mbti}</p>
                                     </div>
                                     <div className="item">
-                                        <h3>Item</h3>
+                                        <h3>Items</h3>
                                         <div className="item-icons">
-                                        {userInventory.map((inv, index) => (
-                                            inv.costumeList ? (
+                                            {/* <h4>Costumes</h4> */}
+                                            {items.costumes.map((costume) => (
                                                 <img
-                                                    key={inv.inventoryId}
-                                                    src={getFullImageUrl(inv.costumeList)}
-                                                    alt={`Item ${index + 1}`}
+                                                    key={costume.costumeId}
+                                                    src={getFullImageUrl(costume.costumeFiles)}
+                                                    alt={costume.costumeName}
                                                     className="item-icon"
                                                     onError={(e) => {
-                                                        e.target.src = "https://via.placeholder.com/150"; // แสดง placeholder
+                                                        e.target.src = "https://via.placeholder.com/150"; // Placeholder
                                                     }}
                                                 />
-                                            ) : (
-                                                <span key={inv.inventoryId}>No image available</span>
-                                            )
-                                        ))}
-</div>
-
-
+                                            ))}
+                                            {/* <h4>Rewards</h4> */}
+                                            {items.rewards.map((reward) => (
+                                                <img
+                                                    key={reward.rewardId}
+                                                    src={getFullImageUrl(reward.rewardSpriteArts)}
+                                                    alt={reward.rewardName}
+                                                    className="item-icon"
+                                                    onError={(e) => {
+                                                        e.target.src = "https://via.placeholder.com/150"; // Placeholder
+                                                    }}
+                                                />
+                                            ))}
+                                            {/* <h4>Themes</h4> */}
+                                            {items.themes.map((theme) => (
+                                                <img
+                                                    key={theme.themeId}
+                                                    src={getFullImageUrl(theme.frameSpriteArts)}
+                                                    alt={`Theme ${theme.themeId}`}
+                                                    className="item-icon"
+                                                    onError={(e) => {
+                                                        e.target.src = "https://via.placeholder.com/150"; // Placeholder
+                                                    }}
+                                                />
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             )}
