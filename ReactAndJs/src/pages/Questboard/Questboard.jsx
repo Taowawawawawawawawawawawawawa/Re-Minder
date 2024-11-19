@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import './Questboard.css';
-import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/footer';
+import React, { useEffect, useState } from "react";
+import "./Questboard.css";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/footer";
 
 function Questboard() {
   const [selectedDifficulty, setSelectedDifficulty] = useState("ง่าย");
   const [quests, setQuests] = useState([]);
+  const [selectedQuestId, setSelectedQuestId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -16,12 +17,12 @@ function Questboard() {
     setSelectedDifficulty(difficulty);
   };
 
-  // Fetch quests based on difficulty
+  // Fetch quests data from API
   useEffect(() => {
     const fetchQuests = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`/api/quests?difficulty=${selectedDifficulty}`);
+        const response = await fetch(`http://localhost:8202/quests/all`);
         if (!response.ok) {
           throw new Error("Failed to fetch quests");
         }
@@ -29,22 +30,34 @@ function Questboard() {
         setQuests(data);
         setError(null);
       } catch (err) {
-        setError(err.message);
+        console.error("Error fetching quests:", err);
+        setError(`Failed to fetch quests: ${err.message}`);
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchQuests();
-  }, [selectedDifficulty]);
+  }, []);
 
-  // Handle file selection
+  // Filter quests based on selected difficulty
+  const filteredQuests = quests.filter(
+    (quest) => quest.difficulty === (selectedDifficulty === "ง่าย" ? 1 : selectedDifficulty === "กลาง" ? 2 : 3)
+  );
+
+  // Select a quest
+  const selectedQuest = quests.find((quest) => quest.questId === selectedQuestId);
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // Handle file submission
   const handleFileSubmit = async () => {
+    if (!selectedQuestId) {
+      alert("กรุณาเลือกภารกิจก่อนจัดส่ง");
+      return;
+    }
+
     if (!selectedFile) {
       alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
       return;
@@ -52,22 +65,27 @@ function Questboard() {
 
     const formData = new FormData();
     formData.append("file", selectedFile);
+    formData.append("questId", selectedQuestId);
 
     try {
       setUploadStatus("กำลังตรวจสอบ...");
-      const response = await fetch(`/api/verify-image`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "http://localhost:8203/questlogs/submit-image",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
-        throw new Error("การตรวจสอบรูปภาพล้มเหลว");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "การตรวจสอบรูปภาพล้มเหลว");
       }
 
       const result = await response.json();
       setUploadStatus(result.isValid ? "รูปภาพถูกต้อง ✅" : "รูปภาพไม่ถูกต้อง ❌");
     } catch (err) {
-      setUploadStatus("เกิดข้อผิดพลาดในการตรวจสอบรูปภาพ");
+      setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
     }
   };
 
@@ -77,14 +95,15 @@ function Questboard() {
       <div className="quest-board">
         <div className="quest-board-container">
           <div className="quest-content">
-            {/* Quest List */}
             <div className="quest-list">
               <h3>Quest List</h3>
               <div className="difficulty-tabs">
                 {["ง่าย", "กลาง", "ยาก"].map((difficulty) => (
                   <button
                     key={difficulty}
-                    className={`tab-button ${selectedDifficulty === difficulty ? "active" : ""}`}
+                    className={`tab-button ${
+                      selectedDifficulty === difficulty ? "active" : ""
+                    }`}
                     onClick={() => handleTabClick(difficulty)}
                   >
                     {difficulty}
@@ -96,12 +115,17 @@ function Questboard() {
                 <p>กำลังโหลด...</p>
               ) : error ? (
                 <p className="error">{error}</p>
-              ) : quests.length > 0 ? (
+              ) : filteredQuests.length > 0 ? (
                 <ul className="quest-items">
-                  {quests.map((quest) => (
-                    <li key={quest.id} className="quest-item">
-                      <p>{quest.name}</p>
-                      <div className="reward">{quest.reward}</div>
+                  {filteredQuests.map((quest) => (
+                    <li
+                      key={quest.questId}
+                      className={`quest-item ${
+                        selectedQuestId === quest.questId ? "selected" : ""
+                      }`}
+                      onClick={() => setSelectedQuestId(quest.questId)}
+                    >
+                      <p>{quest.questName}</p>
                     </li>
                   ))}
                 </ul>
@@ -110,37 +134,47 @@ function Questboard() {
               )}
             </div>
 
-            {/* Quest Detail */}
             <div className="quest-detail">
-              <h3>Detail</h3>
-              <p className="quest-message">
-                {selectedDifficulty === "ง่าย" && "นี่คือภารกิจง่าย! เริ่มต้นด้วยสิ่งเล็กๆ"}
-                {selectedDifficulty === "กลาง" && "ภารกิจกลางกำลังรอคุณ! มันจะท้าทายมากขึ้น"}
-                {selectedDifficulty === "ยาก" && "ภารกิจยาก! คุณต้องใช้ความพยายามมากขึ้น"}
-              </p>
+              {selectedQuest ? (
+                <>
+                  <h3>รายละเอียดของภารกิจ: {selectedQuest.questName}</h3>
+                  <p><strong>คำอธิบาย:</strong> {selectedQuest.questDescription}</p>
+                  <p><strong>รางวัล Beryl:</strong> {selectedQuest.berylReward}</p>
+                  <p><strong>รางวัลคะแนน:</strong> {selectedQuest.pointReward}</p>
+                  <p><strong>วิธีการส่งภารกิจ:</strong> {selectedQuest.questSubmitMethod}</p>
+                  <p><strong>เวลาที่เหมาะสม:</strong> {selectedQuest.availableTime.join(", ")}</p>
+                  <p><strong>MBTI ที่เหมาะสม:</strong> {selectedQuest.suitableMBTI.join(", ")}</p>
+                  <p><strong>เป้าหมาย:</strong> {selectedQuest.targetObject}</p>
 
-              {/* Image Upload Section */}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="response-input"
-              />
-              <div className="action-buttons">
-                <button className="send-button" onClick={handleFileSubmit}>
-                  จัดส่ง
-                </button>
-                <button
-                  className="cancel-button"
-                  onClick={() => {
-                    setSelectedFile(null);
-                    setUploadStatus(null);
-                  }}
-                >
-                  ยกเลิก
-                </button>
-              </div>
-              {uploadStatus && <p className="upload-status">{uploadStatus}</p>}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="response-input"
+                  />
+                  <div className="action-buttons">
+                    <button className="send-button" onClick={handleFileSubmit}>
+                      จัดส่ง
+                    </button>
+                    <button
+                      className="cancel-button"
+                      onClick={() => {
+                        setSelectedFile(null);
+                        setUploadStatus(null);
+                      }}
+                    >
+                      ยกเลิก
+                    </button>
+                  </div>
+                  {uploadStatus && (
+                    <p className={`upload-status ${uploadStatus.includes("❌") ? "error" : "success"}`}>
+                      {uploadStatus}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <p>กรุณาเลือกภารกิจเพื่อดูรายละเอียด</p>
+              )}
             </div>
           </div>
         </div>

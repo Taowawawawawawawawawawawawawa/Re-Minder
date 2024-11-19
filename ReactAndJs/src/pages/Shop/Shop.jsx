@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './Shop.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
+import SlimeGif from '../../images/Slime.GIF';
+import SlimeWizard from '../../images/Slime-Wizard.PNG'; // Add the image for wizard
+import SlimePrincess from '../../images/Slime-princess.PNG'; // Add the image for princess
 
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
   const [costumes, setCostumes] = useState([]);
   const [themes, setThemes] = useState([]);
   const [error, setError] = useState(null); // For error handling
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
 
   const fetchCostumes = async () => {
     try {
@@ -43,11 +47,28 @@ const Shop = () => {
 
   const handleItemClick = (item) => {
     alert(`You selected: ${item.costumeName || item.themeName}`);
+    
+    // Check the selected costume/theme and set the corresponding avatar
+    if (item.costumeName === 'Wizard Hat') {
+      setSelectedAvatar(SlimeWizard); // Set to Slime-Wizard.PNG if Wizard Hat is selected
+    } else if (item.costumeName === 'Princess Dress') {
+      setSelectedAvatar(SlimePrincess); // Set to Slime-princess.PNG if Princess is selected
+    } else {
+
+      setSelectedAvatar(item.costumeFiles || item.frameSpriteArts);
+    }
+  };
+
+  const handleCancel = () => {
+    setSelectedAvatar(SlimeGif); // Reset to the default profile picture
   };
 
   return (
     <>
       <Navbar />
+      <div className="shop-avatar">
+        <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
+      </div>
       <div className="shop-container">
         <div className="shop-tabs">
           <button
@@ -65,9 +86,6 @@ const Shop = () => {
         </div>
 
         {error && <div className="error">Error: {error}</div>}
-
-
-
 
         <div className="shop-shelf">
           {/* Render costumes if the selected section is costume */}
@@ -95,7 +113,7 @@ const Shop = () => {
                 onClick={() => handleItemClick(theme)}
               >
                 <img src={theme.frameSpriteArts} alt="Theme Frame" />
-                <div className="item-name">{theme.themeId}</div>
+                <div className="item-name">{theme.themeName}</div>
                 <div className="item-price">
                   {theme.price} <span className="currency-icon">💎</span>
                 </div>
@@ -104,7 +122,7 @@ const Shop = () => {
         </div>
 
         <div className="shop-buttons">
-          <button className="cancel-btn">Cancel</button>
+          <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
           <button className="save-btn">Save</button>
         </div>
       </div>
