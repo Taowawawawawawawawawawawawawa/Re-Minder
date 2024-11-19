@@ -4,11 +4,13 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 import SlimeGif from '../../images/Slime.GIF';
 
+
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
   const [costumes, setCostumes] = useState([]);
   const [themes, setThemes] = useState([]);
   const [error, setError] = useState(null); // For error handling
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // State for the current avatar image
 
   const fetchCostumes = async () => {
     try {
@@ -44,15 +46,17 @@ const Shop = () => {
 
   const handleItemClick = (item) => {
     alert(`You selected: ${item.costumeName || item.themeName}`);
+    setSelectedAvatar(item.costumeFiles || item.frameSpriteArts); // Update the avatar image
   };
 
   return (
     <>
       <Navbar />
       <div className="shop-avatar">
-        <img src={SlimeGif} alt="Avatar" className="avatar-image" />
+        <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
       </div>
       <div className="shop-container">
+        
         <div className="shop-tabs">
           <button
             className={selectedSection === 'costume' ? 'active' : ''}
@@ -69,9 +73,6 @@ const Shop = () => {
         </div>
 
         {error && <div className="error">Error: {error}</div>}
-
-
-
 
         <div className="shop-shelf">
           {/* Render costumes if the selected section is costume */}
@@ -99,7 +100,7 @@ const Shop = () => {
                 onClick={() => handleItemClick(theme)}
               >
                 <img src={theme.frameSpriteArts} alt="Theme Frame" />
-                <div className="item-name">{theme.themeId}</div>
+                <div className="item-name">{theme.themeName}</div>
                 <div className="item-price">
                   {theme.price} <span className="currency-icon">💎</span>
                 </div>
