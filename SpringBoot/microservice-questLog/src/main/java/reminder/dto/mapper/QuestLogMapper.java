@@ -13,7 +13,6 @@ public class QuestLogMapper {
         questLog.setUserId(dto.getUserId());
         questLog.setQuestId(dto.getQuestId());
         questLog.setStatus(dto.getStatus());
-        questLog.setSubmissionDate(dto.getSubmissionDate());
         return questLog;
     }
 
@@ -22,6 +21,5 @@ public class QuestLogMapper {
         dto.setUserId(entity.getUserId());
         dto.setQuestId(entity.getQuestId());
         dto.setStatus(entity.getStatus());
-        dto.setSubmissionDate(entity.getSubmissionDate());
     }
 }
