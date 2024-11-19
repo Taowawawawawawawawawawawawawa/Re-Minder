@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import "./AdminQuestBoard.css";
 import Navbar from '../../components/Navbar/Navbar';
@@ -6,71 +5,97 @@ import Footer from '../../components/Footer/footer';
 
 const AdminQuestBoard = () => {
 
-  const [questsAM,setQuestAM] = useState([]);
+  const [NameQuests, setNameQuests] = useState([]);
+  const [DetailQuest, setDetailQuest] = useState([]);
+  const [selectedQuest, setSelectedQuest] = useState(null); // State to track selected quest
+  const [error, setError] = useState(null);
+  
 
-  useEffect(()=>{
-    const fetchquestAM = async() => {
-      const dataAM = await fetch("http://API/");
-      const json = await dataAM.json();
-      setQuestAM(json);
-    };
-    fetchquestAM();
+  const fetchNameQuests = async () => {
+    try {
+      const response = await fetch('http://localhost:8203/questlogs/all');
+      if (!response.ok) {
+        throw new Error(`Costume API error: ${response.status}`);
+      }
+      const data = await response.json();
+      setNameQuests(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
+  const fetchDetailQuest = async () => {
+    try {
+      const response = await fetch('http://localhost:8202/quests/all');
+      if (!response.ok) {
+        throw new Error(`Costume API error: ${response.status}`);
+      }
+      const data = await response.json();
+      setDetailQuest(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
+  useEffect(() => {
+    fetchDetailQuest();
+    fetchNameQuests();
+  }, []);
 
-  },[]);
+  const handleQuestClick = (quest) => {
+    setSelectedQuest(quest); // Set the selected quest
+  };
 
-
-
-
-    return <><Navbar />
-    <div className="admin-quest-board">
-      <div className="quest-container">
-        <div className="quest-list">
-          <h2>Quest List</h2>
-          <div className="difficulty-tabs">
-            <button className="tab active">ง่าย</button>
-            <button className="tab">กลาง</button>
-            <button className="tab">ยาก</button>
+  return (
+    <>
+      <Navbar />
+      <div className="admin-quest-board">
+        <div className="quest-container">
+          
+          {/* Quest List */}
+          <div className="quest-list">
+            <h2>Quest List</h2>
+            <ul className="quest-items">
+              {DetailQuest.map((detailquest) => (
+                <li
+                  key={detailquest.id} // Add unique key for each quest
+                  className="quest-item"
+                  onClick={() => handleQuestClick(detailquest)} // Handle quest click
+                >
+                  <h3>{NameQuests.questID}</h3>
+                  <span className="quest-status">รอตรวจ</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="quest-items">
-            <li className="quest-item">
-              ขอกำลังใจหน่อย
-              <span className="quest-status">รอตรวจ</span>
-            </li>
-            <li className="quest-item">
-              ถ่ายรูปท้องฟ้า...
-              <span className="quest-status">รอตรวจ</span>
-            </li>
-            <li className="quest-item">
-              หิวมั้ย?
-              <span className="quest-status">รอตรวจ</span>
-            </li>
-            {/* Additional quest items */}
-          </ul>
-        </div>
-
-        <div className="quest-detail">
-          <h2>Detail</h2>
-          <p className="quest-title">ถ่ายรูปท้องฟ้าตอนเย็นให้ดูหน่อยสิ</p>
-          <div className="quest-info">
-            <p>รายละเอียดเควส: ...................</p>
-            <p>วิธีส่งงาน: JPG/PNG</p>
-            <p>ระดับความยาก: ง่าย</p>
+          
+          {/* Quest Detail */}
+          <div className="quest-detail">
+            <h2>Detail</h2>
+            {selectedQuest ? (
+              <>
+                <p className="quest-title">{selectedQuest.questName}</p>
+                <div className="quest-info">
+                  <p>ชื่อผู้ส่ง: {selectedQuest.description || "ไม่มีรายละเอียด"}</p>
+                  <p>สิ่งที่ส่ง: {selectedQuest.deliveryMethod || "ไม่มีข้อมูล"}</p>
+                  <p>ระดับความยาก: {selectedQuest.difficulty || "ไม่มีข้อมูล"}</p>
+                </div>
+              </>
+            ) : (
+              <p>กรุณาเลือกเควสจากรายการด้านซ้าย</p>
+            )}
+            <div className="action-buttons">
+              <button className="cancel-quest">ไม่อนุมัติ</button>
+              <button className="approve-quest">อนุมัติ</button>
+            </div>
+            <input type="text" className="reason-input" placeholder="เหตุผล" />
           </div>
-          <div className="approval-section">
-            <button className="approve-button">อนุมัติ III</button>
-            <button className="reject-button">ไม่อนุมัติ III</button>
-          </div>
-          <div className="action-buttons">
-            <button className="cancel-quest">ระงับเควส</button>
-            <button className="approve-quest">อนุมัติ</button>
-          </div>
-          <input type="text" className="reason-input" placeholder="เหตุผล" />
+          
         </div>
       </div>
-    </div>
-    <Footer /></>
+      <Footer />
+    </>
+  );
 };
 
 export default AdminQuestBoard;
