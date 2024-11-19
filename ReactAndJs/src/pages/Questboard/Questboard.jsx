@@ -66,7 +66,6 @@ function Questboard() {
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("questId", selectedQuestId);
-
     try {
       setUploadStatus("กำลังตรวจสอบ...");
       const response = await fetch(

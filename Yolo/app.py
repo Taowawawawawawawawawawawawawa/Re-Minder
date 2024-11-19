@@ -1,16 +1,11 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import io
 from PIL import Image
 import torch
-    
-# สร้าง FastAPI app
-app = FastAPI()
 
-print("Loading YOLOv5 model...")
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-print("YOLOv5 model loaded successfully.")
+app = FastAPI()
 
 # ตั้งค่า CORS
 app.add_middleware(
@@ -21,8 +16,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# โหลด YOLOv5 Model
+# โหลด YOLOv5 Model เพียงครั้งเดียวตอนเริ่มต้น
+print("Loading YOLOv5 model...")
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
+print("YOLOv5 model loaded successfully.")
 
 @app.post("/detect")
 async def detect_object(file: UploadFile = File(...)):
@@ -37,13 +34,22 @@ async def detect_object(file: UploadFile = File(...)):
         print("Running YOLOv5 detection...")
         results = model(image)
 
-        # ตรวจสอบผลลัพธ์
-        results_data = {
+        # ตรวจสอบผลลัพธ์ที่ได้
+        predictions = results.pandas().xyxy[0].to_dict(orient="records")
+        
+        # ตรวจสอบให้มั่นใจว่า results เป็น JSON ที่ถูกต้อง
+        if not predictions:
+            return JSONResponse(status_code=400, content={"message": "No objects detected"})
+        
+        # การจัดรูปแบบผลลัพธ์เป็น JSON ที่ถูกต้อง
+        result_data = {
             "objects": results.names,  # รายชื่อวัตถุที่ตรวจจับได้
-            "predictions": results.pandas().xyxy[0].to_dict(orient="records")  # แปลงเป็น JSON-ready
+            "predictions": predictions  # แปลงเป็น JSON-ready
         }
-        print("Detection completed:", results_data)
-        return JSONResponse(content=results_data)
+
+        # ส่งข้อมูลกลับเป็น JSONResponse
+        print("Detection completed:", result_data)
+        return JSONResponse(content=result_data)
 
     except Exception as e:
         # แสดงข้อผิดพลาด
