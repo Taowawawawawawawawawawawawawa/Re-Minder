@@ -1,7 +1,7 @@
 -- Mock data for Costumes
 INSERT INTO costume (costumeId, costumeType, costumeName, costumeDescription, costumeFiles, price) VALUES
-(10001, 'HAT', 'Wizard Hat', 'A magical hat for spellcasters.', '/images/costumes/wizard_hat.png', 200),
-(10002, 'DRESS', 'Princess Dress', 'An elegant dress for royal occasions.', '/images/costumes/princess_dress.png', 300);
+(10001, 'HAT', 'Cowboy Hat', 'A magical hat for cowboy.', 'https://drive.google.com/uc?id=1AgSjNDYF8o961aRBM4VFxduQ49EWQKLo', 200),
+(10002, 'DRESS', 'Princess Dress', 'An elegant dress for royal occasions.', 'https://drive.google.com/uc?id=1c7jGx_gY00uUsVzcoIysMOauwZ270pN7', 300);
 
 -- Mock data for Themes
 INSERT INTO themes (themeId, frameSpriteArts, backGround, bgm, price) VALUES
