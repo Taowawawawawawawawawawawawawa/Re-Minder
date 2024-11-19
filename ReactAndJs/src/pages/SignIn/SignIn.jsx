@@ -9,10 +9,38 @@ function SignIn() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const bypassLogin = async () => {
+        setError(''); // Clear previous errors
+        
+            // Try user login
+            let response = await fetch('http://localhost:8200/users/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: 'johndoe@example.com',
+                    password: 'securePassword123'
+                })
+            });
+            
+
+            if (response.ok) {
+                const user = await response.json();
+                sessionStorage.setItem('role', 'user');
+                sessionStorage.setItem('userData', JSON.stringify(user));
+                alert(`Welcome, ${user.name}!`);
+                navigate('/Home');
+                return;
+            }
+        }
+    
+
+
     const handleSignIn = async () => {
         setError(''); // Clear previous errors
         try {
             // Try user login
+            console.log(JSON.stringify({ email, password }));
+
             let response = await fetch('http://localhost:8200/users/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -97,6 +125,8 @@ function SignIn() {
             <div className="signin-buttons">
                 <button className="signin-button" onClick={handleSignIn}>จริงสิ (Login)</button>
                 <button className="signin-button" onClick={() => navigate('/')}>ย้อนกลับ</button>
+                <button className="signin-button" onClick={bypassLogin}>Bypass</button>
+
             </div>
         </div>
     );

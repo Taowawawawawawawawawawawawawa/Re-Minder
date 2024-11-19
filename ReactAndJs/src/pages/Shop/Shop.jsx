@@ -12,6 +12,7 @@ const Shop = () => {
   const [themes, setThemes] = useState([]);
   const [error, setError] = useState(null); // For error handling
   const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
+  const [showConfirmation, setShowConfirmation] = useState(false); // To toggle the purchase confirmation modal
 
   const fetchCostumes = async () => {
     try {
@@ -47,20 +48,32 @@ const Shop = () => {
 
   const handleItemClick = (item) => {
     alert(`You selected: ${item.costumeName || item.themeName}`);
-    
+
     // Check the selected costume/theme and set the corresponding avatar
     if (item.costumeName === 'Wizard Hat') {
       setSelectedAvatar(SlimeWizard); // Set to Slime-Wizard.PNG if Wizard Hat is selected
     } else if (item.costumeName === 'Princess Dress') {
       setSelectedAvatar(SlimePrincess); // Set to Slime-princess.PNG if Princess is selected
     } else {
-
       setSelectedAvatar(item.costumeFiles || item.frameSpriteArts);
     }
   };
 
   const handleCancel = () => {
     setSelectedAvatar(SlimeGif); // Reset to the default profile picture
+  };
+
+  const handlePurchaseClick = () => {
+    setShowConfirmation(true); // Show confirmation modal when purchase button is clicked
+  };
+
+  const handleConfirmPurchase = () => {
+    setShowConfirmation(false); // Close the modal
+    alert('Purchase successful'); // Show purchase success alert
+  };
+
+  const handleCancelPurchase = () => {
+    setShowConfirmation(false); // Close the modal without purchasing
   };
 
   return (
@@ -121,10 +134,31 @@ const Shop = () => {
             ))}
         </div>
 
+
         <div className="shop-buttons">
+          {/* Show Purchase button only when the avatar is changed */}
+          {selectedAvatar !== SlimeGif && (
+            <button className="purchase-btn" onClick={handlePurchaseClick}>
+              Purchase
+            </button>
+          )}
+
+          {/* Always show Cancel button */}
           <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
-          <button className="save-btn">Save</button>
         </div>
+
+        {/* Confirmation Modal */}
+        {showConfirmation && (
+          <div className="confirmation-modal">
+            <div className="confirmation-container">
+              <p>Are you sure you want to purchase this item?</p>
+              <div className="confirmation-buttons">
+                <button onClick={handleConfirmPurchase}>Yes</button>
+                <button onClick={handleCancelPurchase}>No</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </>

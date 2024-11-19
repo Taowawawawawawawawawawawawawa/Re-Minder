@@ -13,6 +13,7 @@ function Setting() {
 
     const navigate = useNavigate();
     const logOut = () => {
+        sessionStorage.clear(); // Clear the session
         navigate("/Welcome"); // Navigate to home
       };
     return <><Navbar />

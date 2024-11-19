@@ -1,232 +1,264 @@
-/* Background and layout */
+/* Prevent scrolling */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .game-screen {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: url('/src/images/myroom_bg.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
 
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* Character styling */
-  .character {
-    position: absolute;
-    bottom: 20%;
-    left: 45%;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #cceeff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .character-eye {
-    width: 20px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #fff;
-    margin: 0 5px;
-  }
-  
-  /* Thought bubble styling */
-  .thought-bubble {
-    position: absolute;
-    width: 150px;
-    padding: 20px;
-    border-radius: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  
-  .thought-bubble-left {
-    bottom: 50%;
-    left: 30%;
-  }
-  
-  .thought-bubble-right {
-    bottom: 50%;
-    right: 30%;
-  }
-  
-  .bubble-icon {
-    width: 100px;
-  }
-  
-  /* Wardrobe button styling */
-  .wardrobe-button {
-    position: absolute;
-    bottom: 30%;
-    right: 20%;
-    padding: 10px 20px;
-    background-color: brown;
-    color: #fff;
-    border-radius: 10px;
-    border: none;
-    font-size: 16px;
-  }
-  
-  .quest-list {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 10px;
-    width: 300px;
-  }
-  
-  .quest-item {
-    list-style: none;
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .quest-item:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .quest-details {
-    margin-top: 20px;
-    width: 400px;
-  }
-  
-  .quest-detail {
-    margin-bottom: 20px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .quest-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
-  
-  .status.success {
-    color: green;
-    font-weight: bold;
-  }
+.character {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
 
-  .wardrobe {
-    position: absolute;
-    left: 10%;
-    width: 150px;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 10px;
-  }
-  
-  .wardrobe h2 {
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .wardrobe-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .wardrobe-item {
-    margin: 10px 0;
-    padding: 5px;
-    text-align: center;
-    cursor: pointer;
-    transition: background 0.3s;
-    border-radius: 8px;
-  }
-  
-  .wardrobe-item.selected {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .wardrobe-icon {
-    width: 50px;
-    height: auto;
-  }
-  
-  .character-item {
-    position: absolute;
-    top: -20px;
-    width: 80px;
-    animation: float 2s infinite ease-in-out;
-  }
-  
-  .controls {
-    position: absolute;
-    bottom: 10%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-  
-  .control-button {
-    padding: 10px 20px;
-    background-color: brown;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .control-button:hover {
-    background-color: darkred;
-  }
+.avatar-image {
+  width: 350px;
+  height: auto;
+}
 
-  .diary {
-    display: flex;
-    flex-direction: row;
-    height: 70%;
-    width: 90%;
-  }
-  
-  .diary-sidebar {
-    width: 25%;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
-    border-radius: 10px;
-  }
-  
-  .diary-entry-button {
-    background-color: #d8b894;
-    border: none;
-    margin: 5px;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .diary-main {
-    flex-grow: 1;
-    margin-left: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-  }
-  
-  textarea {
-    border-radius: 10px;
-    font-size: 15px;
-    border: 1px solid gray;
-  }
-  
-  button {
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-  }
-  
-  .upload-button {
-    background-color: #ffd700;
-    color: black;
-    font-size: 14px;
-  }
-  
-  
+/* Common Thought Bubble Styles */
+.thought-bubble {
+  position: absolute;
+  width: 320px; /* Same width for both bubbles */
+  height: 120px; /* Same height for both bubbles */
+  text-align: center;
+  background: #fff; /* Default white background */
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  transition: background 0.3s ease-in-out;
+}
+
+/* Hover Effect: Image background with 10% transparency */
+.thought-bubble:hover {
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), /* 10% transparent overlay */
+    url('/src/images/myroom_bg.png') no-repeat center center;
+  background-size: cover;
+  color: white; /* Optional: change text color for visibility */
+}
+
+/* Align both bubbles on the left */
+.thought-bubble-left {
+  top: 15%; /* Adjusted for spacing */
+  left: 10%;
+}
+
+.thought-bubble-right {
+  top: 35%; /* Align directly below the left bubble */
+  left: 10%; /* Same horizontal position as the left bubble */
+}
+
+.bubble-icon {
+  width: 80px;
+  height: auto;
+  margin-bottom: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.bubble-icon:hover {
+  transform: scale(1.1); /* Zoom-in effect */
+}
+
+.thought-bubble p {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+/* Wardrobe Button */
+.wardrobe-button {
+  position: absolute;
+  bottom: 30%;
+  right: 10%;
+  padding: 12px 24px;
+  background: #4b3e34;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.wardrobe-button:hover {
+  background: #6e564a;
+}
+
+.wardrobe-icon {
+  transform: scaleX(-1); /* Keep the flipped state */
+  position: absolute;
+  bottom: 15%; /* Adjust to fine-tune vertical position */
+  right: -50px;  /* Adjust to fine-tune horizontal position */
+  width: 700px;  /* Set the size of the icon */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.wardrobe-icon:hover {
+  transform: scaleX(-1) scale(1.1); /* Keep the flip and apply zoom */
+}
+
+/* Questlog Page Styles */
+
+.questlog-list {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 30%;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  overflow-y: auto;
+  max-height: 60%;
+}
+
+.questlog-list h2 {
+  font-size: 20px;
+  color: #4b3e34;
+  margin: 0 0 10px;
+}
+
+.questlog-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.questlog-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f5f5f5;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.questlog-item:hover {
+  background: #e0e0e0;
+}
+
+.questlog-item span {
+  font-size: 16px;
+  color: #333;
+}
+
+.status.success {
+  color: green;
+  font-weight: bold;
+}
+
+.questlog-details {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: 40%;
+  background: url(/src/images/paper.png), #D9D9D9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  max-height: 75%;
+  overflow-y: auto;
+}
+
+.questlog-detail {
+  margin-bottom: 20px;
+}
+
+.questlog-detail h3 {
+  font-size: 18px;
+  color: #4b3e34;
+}
+
+.questlog-detail p {
+  font-size: 16px;
+  color: #555;
+}
+
+.questlog-image {
+  width: 250px;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.questlog-button {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  padding: 12px 24px;
+  background: #4b3e34;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.questlog-button:hover {
+  background: #6e564a;
+}
+.questlog-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.difficulty-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  padding: 10px 15px;
+  background: #f0e4d7;
+  border: 1px solid #d4c3a3;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.tab-button.active {
+  background: #d4a373;
+  color: white;
+  font-weight: bold;
+}
+
+.tab-button:hover {
+  background: #e0c4a8;
+}

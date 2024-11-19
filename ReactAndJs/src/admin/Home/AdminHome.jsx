@@ -1,35 +1,29 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './AdminHome.css';
 import { Link } from 'react-router-dom'; // Import Link
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 
 function AdminHome() {
+  const navigate = useNavigate();
     return <><Navbar />
     <div className="admin-home-container">
       <main className="admin-main-content">
-        <div className="section quest-section">
-        <Link to="/AdminCreateQuest" className="quest-link">
+        <div className="section quest-section" onClick={() => navigate('/AdminCreateQuest')}> 
           <h1>เควสต์</h1>
           <p>Quest</p>
-          </Link>
         </div>
-        <div className="section shop-section">
-        <Link to="/AdminShop" className="quest-link">
+        <div className="section shop-section" onClick={() => navigate('/AdminShop')}>
           <h1>เพิ่มของเข้าร้านค้า</h1>
           <p>Add to Shop</p>
-          </Link>
         </div>
-        <div className="slime-list">
-        <Link to="/Userlist" className="quest-link">
+        <div className="slime-list" onClick={() => navigate('/Userlist')}>
           SLIME LIST
-          </Link>
         </div>
-        <div className="section contact-section">
-        <Link to="/Admincontact" className="quest-link">
+        <div className="section contact-section" onClick={() => navigate('/Admincontact')}>
           <h1>จดหมายถึงแอดมิน</h1>
           <p>Contact Admin</p>
-          </Link>
         </div>
       </main>
     </div>
