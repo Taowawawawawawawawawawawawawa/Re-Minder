@@ -30,6 +30,7 @@ const AdminCreateQuest = () => {
   //     } else {
   //       alert('Failed to fetch quests.');
   //     }
+  
   //   } catch (err) {
   //     alert('An error occurred while fetching quests.');
   //   }
@@ -134,7 +135,6 @@ const AdminCreateQuest = () => {
         <button onClick={handleCreateQuest}>สร้างเควส</button>
         {/* <button onClick={handleCreateQuest}>สร้างเควส</button> */}
       </div>
->>>>>>> 0fca0f3f14c67e2f9f11fc91d1cd216ded14517d
 
   const handleRemoveMBTI = (mbti) => {
     setSuitableMBTI(suitableMBTI.filter((item) => item !== mbti));
