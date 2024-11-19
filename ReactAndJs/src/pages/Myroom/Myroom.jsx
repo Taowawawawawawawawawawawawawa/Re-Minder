@@ -3,10 +3,11 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer'; 
 import './Myroom.css';
 import { useNavigate } from 'react-router-dom';
+import SlimeGif from '../../images/Slime.GIF';
 
 function Myroom() {
   const navigate = useNavigate();
-
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
   const handleDiaryClick = () => {
     navigate("/Diary "); 
   };
@@ -24,7 +25,7 @@ function Myroom() {
       <div className="game-screen">
         {/* Character */}
         <div className="character">
-          
+        <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
         </div>
         
         {/* Thought Bubble 1 */}
