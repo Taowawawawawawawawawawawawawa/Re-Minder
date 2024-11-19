@@ -12,6 +12,8 @@ public class QuestLogDTO {
     private String questName;
     private String questDescription;
     private Integer berylReward;
+
+    
     public String getDetail() {
         return detail;
     }
@@ -120,5 +122,13 @@ public class QuestLogDTO {
 
     public void setSubmissionDate(LocalDateTime submissionDate) {
         this.submissionDate = submissionDate;
+    }
+    public String setDetail() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDetail'");
+    }
+    public void getDetail(String detail2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDetail'");
     }
 }

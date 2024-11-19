@@ -111,9 +111,4 @@ public class QuestLog {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    public void getDetail(String detail2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDetail'");
-    }
-    
 }

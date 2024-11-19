@@ -22,7 +22,6 @@ public class QuestLogMapper {
         questLog.setPointReward(dto.getPointReward());
         questLog.setSubmitText(dto.getSubmitText());
         questLog.setSubmissionDate(dto.getSubmissionDate());
-        questLog.getDetail(dto.getDetail());
         questLog.setDetail(dto.setDetail());
         return questLog;
     }
@@ -41,7 +40,6 @@ public class QuestLogMapper {
         dto.setPointReward(entity.getPointReward());
         dto.setSubmitText(entity.getSubmitText());
         dto.setSubmissionDate(entity.getSubmissionDate());
-        dto.getDetail(entity.getDetail());
-        dto.setDetail(entity.setDetail());
+        dto.setDetail(entity.getDetail());
     }
 }
