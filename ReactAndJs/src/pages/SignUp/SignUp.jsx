@@ -19,6 +19,7 @@ function SignUp() {
     };
 
     const handleSignUp = () => {
+        alert(`created account successfully!`);
         navigate('/Home');
     };
 
