@@ -39,6 +39,7 @@ const AdminShop = () => {
   const [costumes, setCostumes] = useState([]);
   const [themes, setThemes] = useState([]);
   const [selectedSection, setSelectedSection] = useState('costume');
+  const [error, setError] = useState(null);
   const fetchCostumes = async () => {
     try {
       const response = await fetch('http://localhost:8204/costumes/all');

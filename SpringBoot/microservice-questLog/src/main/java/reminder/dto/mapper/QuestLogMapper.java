@@ -13,6 +13,15 @@ public class QuestLogMapper {
         questLog.setUserId(dto.getUserId());
         questLog.setQuestId(dto.getQuestId());
         questLog.setStatus(dto.getStatus());
+        questLog.setImageUrl(dto.getImageUrl());
+        questLog.setQuestName(dto.getQuestName());
+        questLog.setQuestDescription(dto.getQuestDescription());
+        questLog.setBerylReward(dto.getBerylReward());
+        questLog.setDifficulty(dto.getDifficulty());
+        questLog.setPointReward(dto.getPointReward());
+        questLog.setSubmitText(dto.getSubmitText());
+        questLog.setSubmissionDate(dto.getSubmissionDate());
+        questLog.setDetail(dto.setDetail());
         return questLog;
     }
 
@@ -22,5 +31,14 @@ public class QuestLogMapper {
         dto.setQuestId(entity.getQuestId());
         dto.setStatus(entity.getStatus());
 
+        dto.setImageUrl(entity.getImageUrl());
+        dto.setQuestName(entity.getQuestName());
+        dto.setQuestDescription(entity.getQuestDescription());
+        dto.setBerylReward(entity.getBerylReward());
+        dto.setDifficulty(entity.getDifficulty());
+        dto.setPointReward(entity.getPointReward());
+        dto.setSubmitText(entity.getSubmitText());
+        dto.setSubmissionDate(entity.getSubmissionDate());
+        dto.setDetail(entity.getDetail());
     }
 }

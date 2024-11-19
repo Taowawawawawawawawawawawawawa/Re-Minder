@@ -1,24 +1,12 @@
--- QuestLog mock data
-INSERT INTO QuestLog (id, questId, userId, imageUrl, status, questName, questDescription, berylReward, difficulty, pointReward) 
+INSERT INTO quest_log (id, image_url, submitText, questId, userId, status, questName, questDescription, berylReward, difficulty, pointReward, submissionDate)
 VALUES 
-(10001, 10001, 10001, 'http://example.com/images/quest1.jpg', 'Pending', 'How are you feeling today?', 'Hello! How are you feeling today? Share with us!', 2, 1, 1);
-
-INSERT INTO QuestLog (id, questId, userId, imageUrl, status, questName, questDescription, berylReward, difficulty, pointReward) 
-VALUES 
-(10002, 10002, 10002, 'http://example.com/images/quest2.jpg', 'Approved', 'Take a picture of the sunrise', 'Wake up early and take a picture of the most beautiful sunrise you see.', 2, 1, 1);
-
-INSERT INTO QuestLog (id, questId, userId, imageUrl, status, questName, questDescription, berylReward, difficulty, pointReward) 
-VALUES 
-(10003, 10003, 10003, 'http://example.com/images/quest3.jpg', 'Rejected', 'Run 1 km', 'Spend time exercising by running for 1 kilometer.', 5, 2, 1);
-
-INSERT INTO QuestLog (id, questId, userId, imageUrl, status, questName, questDescription, berylReward, difficulty, pointReward) 
-VALUES 
-(10004, 10004, 10004, 'http://example.com/images/quest4.jpg', 'Approved', 'Cook a meal', 'Prepare your favorite dish and take a photo.', 5, 2, 1);
-
-INSERT INTO QuestLog (id, questId, userId, imageUrl, status, questName, questDescription, berylReward, difficulty, pointReward) 
-VALUES 
-(10005, 10005, 10005, 'http://example.com/images/quest5.jpg', 'Pending', 'Write an article about happiness', 'Write an article about your perspective on happiness.', 10, 3, 1);
-
-INSERT INTO QuestLog (id, questId, userId, imageUrl, status, questName, questDescription, berylReward, difficulty, pointReward) 
-VALUES 
-(10006, 10006, 10002, 'http://example.com/images/quest6.jpg', 'Rejected', 'Climb a mountain', 'Go climb a mountain and share a photo of your experience.', 10, 3, 1);
+(10001, 'https://example.com/images/quest1.png', 'I completed the quest successfully!', 101, 10001, 'COMPLETED', 'Morning Reflection', 'Write about your morning mood and thoughts.', 2, 1, 1, '2024-11-19T08:00:00'),
+(10002, 'https://example.com/images/quest2.png', 'Shared my exercise journey today.', 102, 10002, 'PENDING', 'Daily Exercise', 'Submit a photo of you exercising.', 5, 2, 1, '2024-11-19T09:00:00'),
+(10003, 'https://example.com/images/quest3.png', 'This quest really helped me unwind.', 103, 10003, 'COMPLETED', 'Evening Gratitude', 'List three things you are grateful for today.', 10, 3, 1, '2024-11-19T10:00:00'),
+(10004, 'https://example.com/images/quest4.png', 'Posted my favorite recipe!', 104, 10001, 'PENDING', 'Cooking Therapy', 'Submit a photo of your cooked dish.', 5, 2, 1, '2024-11-19T11:00:00'),
+(10005, 'https://example.com/images/quest5.png', 'Meditation completed. Feeling refreshed.', 105, 10002, 'COMPLETED', 'Mindful Meditation', 'Upload a text description of your meditation session.', 2, 1, 1, '2024-11-19T12:00:00'),
+(10006, 'https://example.com/images/quest6.png', 'Completed my 10,000 steps today!', 106, 10003, 'PENDING', 'Step Challenge', 'Log the number of steps you walked today.', 5, 2, 1, '2024-11-19T13:00:00'),
+(10007, 'https://example.com/images/quest7.png', 'My favorite book is shared!', 107, 10001, 'PENDING', 'Book Lover', 'Describe your favorite book in text.', 2, 1, 1, '2024-11-19T14:00:00'),
+(10008, 'https://example.com/images/quest8.png', 'Captured a beautiful flower.', 108, 10002, 'PENDING', 'Nature Walk', 'Submit a picture of something beautiful in nature.', 5, 2, 1, '2024-11-19T15:00:00'),
+(10009, 'https://example.com/images/quest9.png', 'Reflected on my achievements today.', 109, 10003, 'PENDING', 'Achievement Reflection', 'Write about one achievement you’re proud of.', 10, 3, 1, '2024-11-19T16:00:00'),
+(10010, 'https://example.com/images/quest10.png', 'Helped someone today. Feeling good.', 110, 10001, 'FAILED', 'Random Act of Kindness', 'Describe an act of kindness you did today.', 2, 1, 1, '2024-11-19T17:00:00');

@@ -1,10 +1,11 @@
+/* Main container styling */
 .signup-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-
+    background: url(/src/images/BG_welcome.png), #D9D9D9;
     background-size: cover;
     background-position: center;
     text-align: center;
@@ -12,27 +13,32 @@
     color: #ffffff;
 }
 
+/* Title styling */
 .signup-title {
-    font-size: 36px;
+    font-size: 56px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
+/* Avatar styling */
 .signup-avatar {
-    margin-bottom: 20px;
+    margin-top: -55px;
+    margin-bottom: -55px;
 }
 
 .avatar-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
 }
 
+/* Question text styling */
 .signup-question {
     font-size: 18px;
     margin-bottom: 20px;
 }
 
+/* Form styling */
 .signup-form {
     display: flex;
     flex-direction: column;
@@ -41,25 +47,38 @@
     gap: 15px;
 }
 
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
 .form-group {
     display: flex;
+    margin-right: 15px;
     flex-direction: column;
     gap: 5px;
+    flex: 1;
 }
 
 .signup-form label {
     font-size: 14px;
     color: #ffffff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: left;
 }
 
 .signup-input,
 .signup-select {
+    width: 100%;
     padding: 10px;
     border: none;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.15);
     color: #ffffff;
     font-size: 14px;
+    text-align: center;
+    backdrop-filter: blur(5px);
 }
 
 .signup-input::placeholder,
@@ -67,9 +86,10 @@
     color: #bbbbbb;
 }
 
+/* Button container styling */
 .signup-buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     gap: 10px;
     margin-top: 20px;
 }
@@ -78,17 +98,19 @@
     background-color: #8b6f4e;
     color: #ffffff;
     border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .signup-button:hover {
     background-color: #705a3c;
 }
 
+/* Contact Admin button styling */
 .contact-admin {
     background-color: transparent;
     color: #ffffff;

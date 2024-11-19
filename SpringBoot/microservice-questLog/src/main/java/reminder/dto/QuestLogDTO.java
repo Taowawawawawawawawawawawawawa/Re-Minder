@@ -7,7 +7,36 @@ public class QuestLogDTO {
     private Long userId;
     private Long questId;
     private String status;
+    private String imageUrl;
+    private String questName;
+    private String questDescription;
+    private Integer berylReward;
+
+    
+    public String getDetail() {
+        return detail;
+    }
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+    private Integer difficulty;
+    private Integer pointReward;
     private LocalDateTime submissionDate;
+    private String detail;
+
+
+    public String getSubmitText() {
+        return submitText;
+    }
+    public void setSubmitText(String submitText) {
+        this.submitText = submitText;
+    }
+    private String submitText;
+
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
     private String questName;
     private String imageUrl;
 
@@ -49,6 +78,14 @@ public class QuestLogDTO {
     }
     public void setSubmissionDate(LocalDateTime submissionDate) {
         this.submissionDate = submissionDate;
+    }
+    public String setDetail() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setDetail'");
+    }
+    public void getDetail(String detail2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDetail'");
     }
 
     // Getter, Setter, Constructor
