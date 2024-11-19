@@ -4,30 +4,66 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/footer";
 
 const Userlist = () => {
-    const [user, setUser] = useState([]);
+    const [users, setUsers] = useState([]);
     const [expandedUserId, setExpandedUserId] = useState(null);
+    const [userInventory, setUserInventory] = useState([]);
     const [error, setError] = useState(null);
 
-    const fetchUser = async () => {
+    const fetchUsers = async () => {
         try {
             const response = await fetch("http://localhost:8200/users/all");
             if (!response.ok) {
                 throw new Error(`API error: ${response.status}`);
             }
             const data = await response.json();
-            setUser(data);
+            setUsers(data);
         } catch (err) {
             setError(err.message);
         }
     };
 
+    const fetchUserInventory = async (userId) => {
+        try {
+            const response = await fetch(`http://localhost:8208/inventory/users/${userId}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch inventory for userId: ${userId}`);
+            }
+            const data = await response.json();
+            console.log("Inventory Data:", data); // ดูข้อมูล inventory
+            setUserInventory(data);
+        } catch (err) {
+            console.error(err);
+            setError(err.message);
+        }
+    };
+    
+
     useEffect(() => {
-        fetchUser();
+        fetchUsers();
     }, []);
+    useEffect(() => {
+        if (expandedUserId !== null) {
+            fetchUserInventory(expandedUserId); // เรียก fetchUserInventory เมื่อ expandedUserId เปลี่ยน
+        }
+    }, [expandedUserId]);
 
     const toggleUserDetails = (userId) => {
-        setExpandedUserId(expandedUserId === userId ? null : userId);
+        if (expandedUserId === userId) {
+            setExpandedUserId(null); // Collapse the details
+            setUserInventory([]); // Clear inventory when collapsed
+        } else {
+            setExpandedUserId(userId); // Expand the details
+        }
     };
+    const getFullImageUrl = (costumeList) => {
+        return costumeList.startsWith("http") 
+            ? costumeList 
+            : `http://localhost:8200${costumeList}`;
+    };
+    
+    const handleInvenClick = (inven) => {
+        setExpandedUserId(inven); // Set the selected quest
+      };
 
     return (
         <>
@@ -41,9 +77,9 @@ const Userlist = () => {
                 </header>
 
                 <ul className="user-items">
-                    {user.map((user) => (
-                        <li key={user.userId} className="user-item" onClick={() => toggleUserDetails(user.userId)}>
-                            {/* ส่วนข้อมูลผู้ใช้ */}
+                    {users.map((user) => (
+                        <li key={user.userId} className="user-item" onClick={() => handleInvenClick(user.userId)}>
+                            {/* User Summary */}
                             <div className="user-summary">
                                 <span className="user-name">{user.name}</span>
                                 <div className="action-buttons">
@@ -53,7 +89,7 @@ const Userlist = () => {
                                 </div>
                             </div>
 
-                            {/* แสดง Information ด้านล่าง */}
+                            {/* User Details */}
                             {expandedUserId === user.userId && (
                                 <div className="user-detail">
                                     <div className="information">
@@ -65,15 +101,24 @@ const Userlist = () => {
                                     <div className="item">
                                         <h3>Item</h3>
                                         <div className="item-icons">
-                                            {user.items?.map((item, index) => (
+                                        {userInventory.map((inv, index) => (
+                                            inv.costumeList ? (
                                                 <img
-                                                    key={index}
-                                                    src={item.icon}
+                                                    key={inv.inventoryId}
+                                                    src={getFullImageUrl(inv.costumeList)}
                                                     alt={`Item ${index + 1}`}
                                                     className="item-icon"
+                                                    onError={(e) => {
+                                                        e.target.src = "https://via.placeholder.com/150"; // แสดง placeholder
+                                                    }}
                                                 />
-                                            ))}
-                                        </div>
+                                            ) : (
+                                                <span key={inv.inventoryId}>No image available</span>
+                                            )
+                                        ))}
+</div>
+
+
                                     </div>
                                 </div>
                             )}
