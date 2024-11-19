@@ -3,8 +3,8 @@
 <br />
 <div align="center">
   <a href="">
-    <img src="ReactAndJs/src/images/Slime.PNG" alt="Logo" width="80" height="80">
-  </a>
+  <img src="ReactAndJs/src/images/Slime.GIF" alt="Logo" width="80" height="80">
+</a>
 
   <h3 align="center">Re-Minder</h3>
 
