@@ -7,6 +7,7 @@ const AdminQuestBoard = () => {
   const [NameQuests, setNameQuests] = useState([]); // Quests pending approval
   const [selectedQuest, setSelectedQuest] = useState(null); // State to track selected quest
   const [error, setError] = useState(null);
+  const [reason, setReason] = useState(""); // Reason for rejecting quest
 
   // Fetch pending quests
   const fetchNameQuests = async () => {
@@ -45,6 +46,52 @@ const AdminQuestBoard = () => {
     setSelectedQuest(quest); // Set the selected quest
   };
 
+  // Handle approve and reject actions
+  const handleApprove = async () => {
+    if (selectedQuest) {
+      try {
+        const response = await fetch(`http://localhost:8203/questlogs/${selectedQuest.questId}/approve`, {
+          method: 'PATCH',
+        });
+        if (response.ok) {
+          alert("เควสต์ได้รับการอนุมัติแล้ว");
+          fetchNameQuests(); // Re-fetch pending quests
+          setSelectedQuest(null);
+        } else {
+          alert("เกิดข้อผิดพลาดในการอนุมัติเควสต์");
+        }
+      } catch (error) {
+        alert("เกิดข้อผิดพลาดในการอนุมัติเควสต์");
+      }
+    }
+  };
+
+  const handleReject = async () => {
+    if (selectedQuest && reason.trim()) {
+      try {
+        const response = await fetch(`http://localhost:8203/questlogs/${selectedQuest.questId}/reject`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ reason }),
+        });
+
+        if (response.ok) {
+          alert("เควสต์ถูกปฏิเสธแล้ว");
+          fetchNameQuests(); // Re-fetch pending quests
+          setSelectedQuest(null);
+        } else {
+          alert("เกิดข้อผิดพลาดในการปฏิเสธเควสต์");
+        }
+      } catch (error) {
+        alert("เกิดข้อผิดพลาดในการปฏิเสธเควสต์");
+      }
+    } else {
+      alert("กรุณากรอกเหตุผลในการปฏิเสธ");
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -54,6 +101,7 @@ const AdminQuestBoard = () => {
           {/* Quest List */}
           <div className="quest-list">
             <h2>Quest List</h2>
+            {error && <p className="error-message">{error}</p>}
             <ul className="quest-items">
               {NameQuests.map((detailquest) => (
                 <li
@@ -97,10 +145,16 @@ const AdminQuestBoard = () => {
               <p>กรุณาเลือกเควสจากรายการด้านซ้าย</p>
             )}
             <div className="action-buttons">
-              <button className="cancel-quest">ไม่อนุมัติ</button>
-              <button className="approve-quest">อนุมัติ</button>
+              <button className="cancel-quest" onClick={handleReject}>ไม่อนุมัติ</button>
+              <button className="approve-quest" onClick={handleApprove}>อนุมัติ</button>
             </div>
-            <input type="text" className="reason-input" placeholder="เหตุผล" />
+            <input
+              type="text"
+              className="reason-input"
+              placeholder="เหตุผล"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+            />
           </div>
           
         </div>
