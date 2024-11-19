@@ -24,8 +24,7 @@ function Myroom() {
       <div className="game-screen">
         {/* Character */}
         <div className="character">
-          <div className="character-eye"></div>
-          <div className="character-eye"></div>
+          
         </div>
         
         {/* Thought Bubble 1 */}
