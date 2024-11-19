@@ -16,7 +16,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Redundant, but safe to keep for internal container control */
+  overflow: hidden;
 }
 
 .character {
@@ -28,74 +28,237 @@ html, body {
 }
 
 .avatar-image {
-  width: 450px;
+  width: 350px;
   height: auto;
 }
 
-.diary-image-container {
-  position: absolute;
-  top: 30%;
-  right: 20%;
-  cursor: pointer;
-}
-
-.diary-image {
-  width: 150px;
-  height: auto;
-  transition: transform 0.2s ease-in-out;
-}
-
-.diary-image:hover {
-  transform: scale(1.1); /* Slight zoom on hover */
-}
-
-
+/* Common Thought Bubble Styles */
 .thought-bubble {
   position: absolute;
-  width: 150px;
-  height: 100px;
-  background: white;
-  border-radius: 50px;
-  border: 2px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 320px; /* Same width for both bubbles */
+  height: 120px; /* Same height for both bubbles */
+  text-align: center;
+  background: #fff; /* Default white background */
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 14px;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  transition: background 0.3s ease-in-out;
 }
 
+/* Hover Effect: Image background with 10% transparency */
+.thought-bubble:hover {
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), /* 10% transparent overlay */
+    url('/src/images/myroom_bg.png') no-repeat center center;
+  background-size: cover;
+  color: white; /* Optional: change text color for visibility */
+}
+
+/* Align both bubbles on the left */
 .thought-bubble-left {
-  top: 30%;
-  left: 20%;
+  top: 15%; /* Adjusted for spacing */
+  left: 10%;
 }
 
 .thought-bubble-right {
-  top: 30%;
-  right: 20%;
+  top: 35%; /* Align directly below the left bubble */
+  left: 10%; /* Same horizontal position as the left bubble */
 }
 
 .bubble-icon {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
+  width: 80px;
+  height: auto;
   margin-bottom: 5px;
+  transition: transform 0.3s ease-in-out;
 }
 
+.bubble-icon:hover {
+  transform: scale(1.1); /* Zoom-in effect */
+}
+
+.thought-bubble p {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+/* Wardrobe Button */
 .wardrobe-button {
   position: absolute;
   bottom: 30%;
   right: 10%;
-  padding: 10px 20px;
+  padding: 12px 24px;
   background: #4b3e34;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
 }
 
 .wardrobe-button:hover {
   background: #6e564a;
+}
+
+.wardrobe-icon {
+  transform: scaleX(-1); /* Keep the flipped state */
+  position: absolute;
+  bottom: 15%; /* Adjust to fine-tune vertical position */
+  right: -50px;  /* Adjust to fine-tune horizontal position */
+  width: 700px;  /* Set the size of the icon */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.wardrobe-icon:hover {
+  transform: scaleX(-1) scale(1.1); /* Keep the flip and apply zoom */
+}
+
+/* Questlog Page Styles */
+
+.questlog-list {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 30%;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  overflow-y: auto;
+  max-height: 60%;
+}
+
+.questlog-list h2 {
+  font-size: 20px;
+  color: #4b3e34;
+  margin: 0 0 10px;
+}
+
+.questlog-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.questlog-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f5f5f5;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.questlog-item:hover {
+  background: #e0e0e0;
+}
+
+.questlog-item span {
+  font-size: 16px;
+  color: #333;
+}
+
+.status.success {
+  color: green;
+  font-weight: bold;
+}
+
+.questlog-details {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: 40%;
+  background: url(/src/images/paper.png), #D9D9D9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  max-height: 75%;
+  overflow-y: auto;
+}
+
+.questlog-detail {
+  margin-bottom: 20px;
+}
+
+.questlog-detail h3 {
+  font-size: 18px;
+  color: #4b3e34;
+}
+
+.questlog-detail p {
+  font-size: 16px;
+  color: #555;
+}
+
+.questlog-image {
+  width: 250px;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.questlog-button {
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  padding: 12px 24px;
+  background: #4b3e34;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.questlog-button:hover {
+  background: #6e564a;
+}
+.questlog-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.difficulty-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  padding: 10px 15px;
+  background: #f0e4d7;
+  border: 1px solid #d4c3a3;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.tab-button.active {
+  background: #d4a373;
+  color: white;
+  font-weight: bold;
+}
+
+.tab-button:hover {
+  background: #e0c4a8;
 }

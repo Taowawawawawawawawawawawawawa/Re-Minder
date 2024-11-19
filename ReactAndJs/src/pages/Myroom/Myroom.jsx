@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import SlimeGif from '../../images/Slime.GIF';
 import Diary from '../../images/Diary.png';
 import Questlog from '../../images/Questlog.png';
+import wardrobe from '../../images/wardrobe.png';
 
 function Myroom() {
   const navigate = useNavigate();
@@ -48,6 +49,12 @@ function Myroom() {
         <button className="wardrobe-button" onClick={handleWardrobeClick} >
           ตู้เสื้อผ้า
         </button>
+        <img 
+          src={wardrobe} 
+          alt="Wardrobe" 
+          className="wardrobe-icon" 
+          onClick={handleWardrobeClick} 
+        />
       </div>
       <Footer /></>
   };
