@@ -177,6 +177,14 @@ body, html {
   background: #987654; /* Active tab background */
   color: #fff;
 }
+.avatar-image {
+  position: fixed; /* Ensure it's positioned relative to the viewport */
+  bottom: -20px; /* Adjust to your preference */
+  right: 30%; /* Adjust to your preference */
+  width: 350px;
+  height: auto;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
