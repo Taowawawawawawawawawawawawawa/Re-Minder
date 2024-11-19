@@ -6,10 +6,10 @@
   }
   
   body, html {
+    background: url('/src/images/quest_bg.jpg') no-repeat center center fixed;
     width: 100%;
     height: 100vh;
     font-family: Arial, sans-serif;
-    color: #000; /* Set all text to black */
     overflow-x: hidden; /* Prevent horizontal scrolling */
   }
   
@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #1e1e1e;
+    background: url('/src/images/quest_bg.jpg') no-repeat center center fixed;
     padding: 0; /* Remove padding to make it fit perfectly */
   }
   
@@ -29,7 +29,7 @@
     max-width: 1600px; /* Increased max-width to make the layout wider */
     height: 100%; /* Make sure it takes full available height */
     padding: 40px;
-    background-color: #2a2a2a;
+    
     border-radius: 10px;
     margin: auto;
     overflow: auto;
@@ -48,7 +48,7 @@
   .quest-detail {
     flex: 1;
     padding: 20px;
-    background-color: #fff;
+    background: url(/src/images/paper.png), no-repeat center center;
     color: #000; /* Set text inside containers to black */
     border-radius: 8px;
     max-height: 60vh;
@@ -90,7 +90,7 @@
     display: flex;
     justify-content: space-between;
     padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid 
   }
   
   .quest-item .reward,
@@ -126,25 +126,15 @@
   }
   
   .send-button {
-    background-color: #4caf50;
+    background: url(/src/images/BGwood.png), #D9D9D9;
     color: white;
   }
   
   .cancel-button {
-    background-color: #f44336;
+    background: url(/src/images/BGwood.png), #D9D9D9;
     color: white;
   }
   
-  .contact-admin {
-    margin-top: 10px;
-    padding: 12px 20px;
-    background-color: #b5651d;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-  }
   
   /* Responsive Design */
   @media (max-width: 1024px) {
