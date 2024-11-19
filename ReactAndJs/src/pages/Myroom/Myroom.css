@@ -32,6 +32,24 @@ html, body {
   height: auto;
 }
 
+.diary-image-container {
+  position: absolute;
+  top: 30%;
+  right: 20%;
+  cursor: pointer;
+}
+
+.diary-image {
+  width: 150px;
+  height: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.diary-image:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
 .thought-bubble {
   position: absolute;
   width: 150px;

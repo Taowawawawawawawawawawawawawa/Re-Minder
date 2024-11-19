@@ -29,7 +29,7 @@
   }
   
   /* Sections */
-  .section {
+  .asection {
     display: flex;
     flex-direction: column;
     justify-content: center;
