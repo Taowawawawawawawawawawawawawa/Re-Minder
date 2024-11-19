@@ -4,9 +4,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 
 const AdminQuestBoard = () => {
-
   const [NameQuests, setNameQuests] = useState([]); // Quests pending approval
-  const [DetailQuest, setDetailQuest] = useState([]); // All quest details
   const [selectedQuest, setSelectedQuest] = useState(null); // State to track selected quest
   const [error, setError] = useState(null);
 
@@ -17,22 +15,21 @@ const AdminQuestBoard = () => {
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
       }
-      const data = await response.json();
-      setNameQuests(data);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+      const questLogs = await response.json();
 
-  // Fetch all quest details
-  const fetchDetailQuest = async () => {
-    try {
-      const response = await fetch('http://localhost:8202/quests/all');
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-      const data = await response.json();
-      setDetailQuest(data);
+      // Fetch user data for each quest log
+      const usersData = await Promise.all(
+        questLogs.map(async (quest) => {
+          const userResponse = await fetch(`http://localhost:8200/users/${quest.userId}`);
+          if (!userResponse.ok) {
+            throw new Error(`Failed to fetch user data for userId: ${quest.userId}`);
+          }
+          const user = await userResponse.json();
+          return { ...quest, senderName: user.name }; // Combine quest log with user name
+        })
+      );
+
+      setNameQuests(usersData);
     } catch (err) {
       setError(err.message);
     }
@@ -40,7 +37,6 @@ const AdminQuestBoard = () => {
 
   // Fetch data on component mount
   useEffect(() => {
-    fetchDetailQuest();
     fetchNameQuests();
   }, []);
 
@@ -77,11 +73,23 @@ const AdminQuestBoard = () => {
             <h2>Detail</h2>
             {selectedQuest ? (
               <>
-              
                 <p className="quest-title">{selectedQuest.questName}</p>
                 <div className="quest-info">
                   <p>ชื่อผู้ส่ง: {selectedQuest.senderName || "ไม่มีข้อมูล"}</p>
-                  <p>สิ่งที่ส่ง: {selectedQuest.deliveryMethod || "ไม่มีข้อมูล"}</p>
+                  <p>
+                    สิ่งที่ส่ง:{" "}
+                    {selectedQuest.imageUrl ? (
+                      <img
+                        src={selectedQuest.imageUrl}
+                        alt="Submitted Content"
+                        style={{ maxWidth: "100%", height: "auto" }}
+                      />
+                    ) : selectedQuest.submitText ? (
+                      selectedQuest.submitText
+                    ) : (
+                      "ไม่มีข้อมูล"
+                    )}
+                  </p>
                   <p>ระดับความยาก: {selectedQuest.difficulty || "ไม่มีข้อมูล"}</p>
                 </div>
               </>
