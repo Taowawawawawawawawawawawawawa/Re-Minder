@@ -6,7 +6,15 @@ public class ThemesDTO {
     private String backGround;
     private String bgm;
     private int price;
+    private String themeName;
 
+    public String getThemeName() {
+        return themeName;
+    }
+
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
+    }
     public ThemesDTO() {}
 
     public ThemesDTO(Long themeId, String frameSpriteArts, String backGround, String bgm, int price) {

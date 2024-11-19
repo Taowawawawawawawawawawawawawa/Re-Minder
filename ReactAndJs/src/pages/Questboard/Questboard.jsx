@@ -21,7 +21,7 @@ function Questboard() {
     const fetchQuests = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`/api/quests?difficulty=${selectedDifficulty}`);
+        const response = await fetch(`http://localhost:8202/quests/all`);
         if (!response.ok) {
           throw new Error("Failed to fetch quests");
         }
@@ -46,32 +46,33 @@ function Questboard() {
   // Handle file submission
   const handleFileSubmit = async () => {
     if (!selectedFile) {
-      alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
-      return;
+        alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
+        return;
     }
 
     const formData = new FormData();
     formData.append("file", selectedFile);
+    formData.append("questId", selectedQuestId); // เพิ่ม questId
 
     try {
-      setUploadStatus("กำลังตรวจสอบ...");
-      const response = await fetch("http://localhost:8203/questlogs/submit-image", {
-        method: "POST",
-        body: formData,
-      });
+        setUploadStatus("กำลังตรวจสอบ...");
+        const response = await fetch("http://localhost:8203/questlogs/submit-image", {
+            method: "POST",
+            body: formData,
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log("Error Response:", errorData);
-        throw new Error(errorData.message || "การตรวจสอบรูปภาพล้มเหลว");
-      }
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.log("Error Response:", errorData);
+            throw new Error(errorData.message || "การตรวจสอบรูปภาพล้มเหลว");
+        }
 
-      const result = await response.json();
-      setUploadStatus(result.isValid ? "รูปภาพถูกต้อง ✅" : "รูปภาพไม่ถูกต้อง ❌");
+        const result = await response.json();
+        setUploadStatus(result.isValid ? "รูปภาพถูกต้อง ✅" : "รูปภาพไม่ถูกต้อง ❌");
     } catch (err) {
-      setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
+        setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
     }
-  };
+};
 
   return (
     <>
@@ -101,7 +102,7 @@ function Questboard() {
               ) : quests.length > 0 ? (
                 <ul className="quest-items">
                   {quests.map((quest) => (
-                    <li key={quest.id} className="quest-item">
+                    <li key={quest.id} className="quest-item"> {/* เพิ่ม key ที่นี่ */}
                       <p>{quest.name}</p>
                       <div className="reward">{quest.reward}</div>
                     </li>

@@ -18,6 +18,17 @@ public class Quest {
     private int pointReward;
     private String questSubmitMethod;
 
+    private String targetObject; // ชื่อ object ที่ต้องการให้ตรวจจับ เช่น "dog"
+
+    // Getter และ Setter
+    public String getTargetObject() {
+        return targetObject;
+    }
+
+    public void setTargetObject(String targetObject) {
+        this.targetObject = targetObject;
+    }
+
     @ElementCollection
     @CollectionTable(name = "Quest_suitableMBTI", joinColumns = @JoinColumn(name = "Quest_questId"))
     @Column(name = "suitableMBTI")

@@ -44,9 +44,7 @@ public class QuestLog {
     public void setSubmissionDate(LocalDateTime submissionDate) {
         this.submissionDate = submissionDate;
     }
-    public String getImageUrl() {
-        return imageUrl;
-    }
+
     public String getSubmitText() {
         return submitText;
     }
@@ -66,9 +64,6 @@ public class QuestLog {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl; // เพิ่ม setter นี้
-    }
 
     public Long getQuestId() {
         return questId;

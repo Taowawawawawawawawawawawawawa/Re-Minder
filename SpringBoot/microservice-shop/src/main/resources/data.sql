@@ -1,7 +1,7 @@
 -- Mock data for Costumes
 INSERT INTO costume (costumeId, costumeType, costumeName, costumeDescription, costumeFiles, price) VALUES
-(10001, 'HAT', 'Wizard Hat', 'A magical hat for spellcasters.', '/images/costumes/wizard_hat.png', 200),
-(10002, 'DRESS', 'Princess Dress', 'An elegant dress for royal occasions.', '/images/costumes/princess_dress.png', 300);
+(10001, 'HAT', 'Wizard Hat', 'A magical hat for spellcasters.', 'https://i.ibb.co/sgmB3Cd/Wizard.png', 200),
+(10002, 'DRESS', 'Princess Dress', 'An elegant dress for royal occasions.', 'https://i.ibb.co/4m998XT/princess.png', 300);
 
 -- Mock data for Themes
 INSERT INTO themes (themeId, frameSpriteArts, backGround, bgm, price) VALUES

@@ -61,4 +61,10 @@
   .offer-card p {
     margin: 5px 0;
   }
+  button {
+    visibility: visible; /* ต้องไม่ถูกซ่อน */
+    opacity: 1; /* ต้องไม่โปร่งใส */
+    z-index: 1; /* ถ้ามีการใช้ z-index เพื่อให้ปุ่มอยู่ข้างบน */
+  }
+  
   

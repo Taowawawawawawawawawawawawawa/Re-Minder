@@ -4,7 +4,6 @@ import "./App.css";
 import Loading from './components/Loading/Loading'; // A loading component for Suspense fallback
 
 import Navbar from './components/Navbar/Navbar';
-import NavbarWithoutUser from "./components/Header/NavbarWithoutUser";
 
 // Lazy load components
 const Setting = lazy(() => import("./pages/Setting/Setting"));

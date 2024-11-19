@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Shop.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
+import SlimeGif from '../../images/Slime.GIF';
 
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
@@ -48,6 +49,9 @@ const Shop = () => {
   return (
     <>
       <Navbar />
+      <div className="shop-avatar">
+        <img src={SlimeGif} alt="Avatar" className="avatar-image" />
+      </div>
       <div className="shop-container">
         <div className="shop-tabs">
           <button

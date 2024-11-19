@@ -3,12 +3,13 @@ package reminder.dto;
 import java.time.LocalDateTime;
 
 public class QuestLogDTO {
+    
+
 
     private Long userId;
     private Long questId;
     private String status;
-    private String imageUrl;
-    private String questName;
+
     private String questDescription;
     private Integer berylReward;
 
@@ -36,7 +37,8 @@ public class QuestLogDTO {
 
     // Getters and Setters
     public Long getId() {
-        return id;
+        return userId;
+    }
     private String questName;
     private String imageUrl;
 
@@ -80,12 +82,44 @@ public class QuestLogDTO {
         this.submissionDate = submissionDate;
     }
     public String setDetail() {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'setDetail'");
     }
     public void getDetail(String detail2) {
-        // TODO Auto-generated method stub
+ 
         throw new UnsupportedOperationException("Unimplemented method 'getDetail'");
+    }
+    public String getQuestDescription() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'getQuestDescription'");
+    }
+    public Integer getBerylReward() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'getBerylReward'");
+    }
+    public Integer getDifficulty() {
+  
+        throw new UnsupportedOperationException("Unimplemented method 'getDifficulty'");
+    }
+    public Integer getPointReward() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'getPointReward'");
+    }
+    public void setQuestDescription(String questDescription2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setQuestDescription'");
+    }
+    public void setBerylReward(Integer berylReward2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setBerylReward'");
+    }
+    public void setDifficulty(Integer difficulty2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setDifficulty'");
+    }
+    public void setPointReward(Integer pointReward2) {
+
+        throw new UnsupportedOperationException("Unimplemented method 'setPointReward'");
     }
 
     // Getter, Setter, Constructor

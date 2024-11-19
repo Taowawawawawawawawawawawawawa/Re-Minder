@@ -1,24 +1,37 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the body takes full viewport height */
+  margin: 0; /* Removes default margin from the body */
+}
+
 .footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    background-color: #2e2e2e; /* สีพื้นหลังเข้ม */
-    padding: 15px 20px;
-    border-top: 2px solid #1a1a1a; /* เส้นขอบด้านบน */
-  }
-  
-  .contact-button {
-    padding: 10px 20px;
-    background-color: #5c4033; /* สีน้ำตาลสำหรับปุ่ม */
-    border: none;
-    border-radius: 20px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .contact-button:hover {
-    background-color: #7a5a44; /* สีเมื่อลากเมาส์ผ่าน */
-  }
-  
+  background: url(/src/images/BGwood.png), #D9D9D9;
+  display: flex;
+  justify-content: flex-end;
+  height: 50px;
+  align-items: center;
+
+  padding: 15px 20px;
+
+  position: fixed; /* Sticks the footer to the bottom */
+  bottom: 0; /* Aligns to the bottom of the viewport */
+  left: 0;
+  width: 100%; /* Ensures the footer spans the full width of the viewport */
+  z-index: 1000; /* Keeps it on top of other content if necessary */
+}
+
+.contact-button {
+  padding: 10px 20px;
+  background-color: #5c4033; /* Brown for button */
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact-button:hover {
+  background-color: #7a5a44; /* Hover color */
+}
