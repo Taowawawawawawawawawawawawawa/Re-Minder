@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import icon from '../../images/IconSlime.PNG';
 import Beryle from '../../images/Beryle.PNG';
 import Point from '../../images/Point.PNG';
+import setting_icon from '../../images/setting.png';
 
 
 function Navbar() {
@@ -62,7 +63,7 @@ function Navbar() {
         
 
         <button className="settings-button" onClick={handlesettingsClick}>
-          <img src="settings-icon.png" alt="settings" />
+          <img src={setting_icon} alt="settings" />
         </button>
       </div>
     </div>
