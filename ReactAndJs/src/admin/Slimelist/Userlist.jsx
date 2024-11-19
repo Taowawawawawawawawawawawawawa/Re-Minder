@@ -43,15 +43,21 @@ const Userlist = () => {
     const fetchItemDetails = async (inventory) => {
         try {
             const [costumes, rewards, themes] = await Promise.all([
-                Promise.all(inventory.costumeList.map((id) =>
-                    fetch(`http://localhost:8204/costumes/${id}`).then((res) => res.json())
-                )),
-                Promise.all(inventory.rewardList.map((id) =>
-                    fetch(`http://localhost:8204/rewards/${id}`).then((res) => res.json())
-                )),
-                Promise.all(inventory.themeList.map((id) =>
-                    fetch(`http://localhost:8204/themes/${id}`).then((res) => res.json())
-                )),
+                Promise.all(
+                    inventory.costumeList.map((id) =>
+                        fetch(`http://localhost:8204/costumes/${id}`).then((res) => res.json())
+                    )
+                ),
+                Promise.all(
+                    inventory.rewardList.map((id) =>
+                        fetch(`http://localhost:8204/rewards/${id}`).then((res) => res.json())
+                    )
+                ),
+                Promise.all(
+                    inventory.themeList.map((id) =>
+                        fetch(`http://localhost:8204/themes/${id}`).then((res) => res.json())
+                    )
+                ),
             ]);
             setItems({ costumes, rewards, themes });
         } catch (err) {
@@ -81,9 +87,14 @@ const Userlist = () => {
     };
 
     const getFullImageUrl = (path) => {
-        return path.startsWith("http")
-            ? path
-            : `http://localhost:8204${path}`;
+        if (path.startsWith("https://drive.google.com/file/d/")) {
+            // Extract the file ID and convert to a direct download link
+            const fileId = path.split("/d/")[1].split("/view")[0];
+            return `https://drive.google.com/uc?id=${fileId}`;
+        } else if (path.startsWith("http")) {
+            return path; // If it's already a valid URL
+        }
+        return `http://localhost:8204${path}`; // Default case for local paths
     };
 
     return (
@@ -99,9 +110,12 @@ const Userlist = () => {
 
                 <ul className="user-items">
                     {users.map((user) => (
-                        <li key={user.userId} className="user-item" onClick={() => toggleUserDetails(user.userId)}>
+                        <li key={user.userId} className="user-item">
                             {/* User Summary */}
-                            <div className="user-summary">
+                            <div
+                                className="user-summary"
+                                onClick={() => toggleUserDetails(user.userId)}
+                            >
                                 <span className="user-name">{user.name}</span>
                                 <div className="action-buttons">
                                     <button>แก้ไข</button>
@@ -122,7 +136,7 @@ const Userlist = () => {
                                     <div className="item">
                                         <h3>Items</h3>
                                         <div className="item-icons">
-                                            {/* <h4>Costumes</h4> */}
+                                            {/* Costumes */}
                                             {items.costumes.map((costume) => (
                                                 <img
                                                     key={costume.costumeId}
@@ -130,11 +144,12 @@ const Userlist = () => {
                                                     alt={costume.costumeName}
                                                     className="item-icon"
                                                     onError={(e) => {
-                                                        e.target.src = "https://via.placeholder.com/150"; // Placeholder
+                                                        e.target.src =
+                                                            "https://via.placeholder.com/150"; // Placeholder
                                                     }}
                                                 />
                                             ))}
-                                            {/* <h4>Rewards</h4> */}
+                                            {/* Rewards */}
                                             {items.rewards.map((reward) => (
                                                 <img
                                                     key={reward.rewardId}
@@ -142,11 +157,12 @@ const Userlist = () => {
                                                     alt={reward.rewardName}
                                                     className="item-icon"
                                                     onError={(e) => {
-                                                        e.target.src = "https://via.placeholder.com/150"; // Placeholder
+                                                        e.target.src =
+                                                            "https://via.placeholder.com/150"; // Placeholder
                                                     }}
                                                 />
                                             ))}
-                                            {/* <h4>Themes</h4> */}
+                                            {/* Themes */}
                                             {items.themes.map((theme) => (
                                                 <img
                                                     key={theme.themeId}
@@ -154,7 +170,8 @@ const Userlist = () => {
                                                     alt={`Theme ${theme.themeId}`}
                                                     className="item-icon"
                                                     onError={(e) => {
-                                                        e.target.src = "https://via.placeholder.com/150"; // Placeholder
+                                                        e.target.src =
+                                                            "https://via.placeholder.com/150"; // Placeholder
                                                     }}
                                                 />
                                             ))}
