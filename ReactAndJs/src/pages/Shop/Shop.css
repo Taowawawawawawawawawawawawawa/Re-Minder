@@ -10,21 +10,19 @@ body {
 .shop-avatar {
   position: absolute;
   left: 20px;
-  top: 50%; /* Middle of the page */
+  top: 80%; /* Middle of the page */
   transform: translateY(-50%); /* Centers the avatar vertically */
 }
 
 .avatar-image {
-  width: 120px;
+  width: 500px;
   height: auto;
-  border-radius: 50%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Other shop-container styles */
 .shop-container {
   font-family: 'Arial', sans-serif;
-  background-color: rgba(244, 225, 193, 0.9); /* Semi-transparent for contrast */
+  background: url(/src/images/BGwood.png), #D9D9D9;
   border: 2px solid #8b5a2b;
   border-radius: 10px;
   padding: 20px;
