@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 import SlimeGif from '../../images/Slime.GIF';
 
+
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
   const [costumes, setCostumes] = useState([]);
@@ -53,6 +54,7 @@ const Shop = () => {
         <img src={SlimeGif} alt="Avatar" className="avatar-image" />
       </div>
       <div className="shop-container">
+        
         <div className="shop-tabs">
           <button
             className={selectedSection === 'costume' ? 'active' : ''}

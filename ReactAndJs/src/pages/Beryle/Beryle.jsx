@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/footer";
 import { Link } from "react-router-dom";
 
+
 const Beryle = () => {
   const [beryle, setberyle] = useState([]);
   const [error, setError] = useState(null); // For error handling
