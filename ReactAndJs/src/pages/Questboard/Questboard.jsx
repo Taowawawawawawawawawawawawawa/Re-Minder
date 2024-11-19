@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./Questboard.css";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/footer";
+import SlimeGif from '../../images/Slime.GIF';
 
 function Questboard() {
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
   const [selectedDifficulty, setSelectedDifficulty] = useState("ง่าย");
   const [quests, setQuests] = useState([]);
   const [selectedQuestId, setSelectedQuestId] = useState(null);
@@ -59,16 +61,16 @@ function Questboard() {
       alert("กรุณาเลือกภารกิจก่อนจัดส่ง");
       return;
     }
-  
+
     if (!selectedFile) {
       alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("questId", selectedQuestId);
-  
+
     try {
       setUploadStatus("กำลังตรวจสอบ...");
       const response = await fetch(
@@ -78,10 +80,10 @@ function Questboard() {
           body: formData,
         }
       );
-  
+
       const result = await response.json();
       console.log("Backend Result:", result);
-  
+
       if (result.status === "success") {
         if (result.questStatus === "completed") {
           // result.message || 
@@ -101,7 +103,7 @@ function Questboard() {
       setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
     }
   };
-  
+
 
 
   return (
@@ -211,6 +213,9 @@ function Questboard() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="character">
+        <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
       </div>
       <Footer />
     </>
