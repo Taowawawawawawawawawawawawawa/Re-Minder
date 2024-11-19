@@ -1,28 +1,51 @@
 package reminder.domain;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "quest_log") // Use lowercase table name to match the SQL
 public class QuestLog {
     @Id
     private Long id;
 
+    @Column(name = "image_url")
     private String imageUrl; // เพิ่มฟิลด์นี้
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    
+    private String submitText;
     private Long questId;
     private Long userId;
     private String status;
+
     private String questName;
     private String questDescription;
     private Integer berylReward;
     private Integer difficulty;
     private Integer pointReward;
+
+    private LocalDateTime submissionDate;
+
+
+    public LocalDateTime getSubmissionDate() {
+        return submissionDate;
+    }
+    public void setSubmissionDate(LocalDateTime submissionDate) {
+        this.submissionDate = submissionDate;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public String getSubmitText() {
+        return submitText;
+    }
+    public void setSubmitText(String submitText) {
+        this.submitText = submitText;
+    }
 
     public Long getId() {
         return id;
