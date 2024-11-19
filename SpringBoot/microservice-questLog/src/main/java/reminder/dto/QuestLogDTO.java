@@ -15,6 +15,14 @@ public class QuestLogDTO {
     private Integer difficulty;
     private Integer pointReward;
     private LocalDateTime submissionDate;
+    public String getSubmitText() {
+        return submitText;
+    }
+    public void setSubmitText(String submitText) {
+        this.submitText = submitText;
+    }
+    private String submitText;
+
 
     // Getters and Setters
     public Long getId() {

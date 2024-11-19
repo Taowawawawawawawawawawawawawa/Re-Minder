@@ -20,6 +20,8 @@ public class QuestLogMapper {
         questLog.setBerylReward(dto.getBerylReward());
         questLog.setDifficulty(dto.getDifficulty());
         questLog.setPointReward(dto.getPointReward());
+        questLog.setSubmitText(dto.getSubmitText());
+        questLog.setSubmissionDate(dto.getSubmissionDate());
         return questLog;
     }
 
@@ -35,5 +37,7 @@ public class QuestLogMapper {
         dto.setBerylReward(entity.getBerylReward());
         dto.setDifficulty(entity.getDifficulty());
         dto.setPointReward(entity.getPointReward());
+        dto.setSubmitText(entity.getSubmitText());
+        dto.setSubmissionDate(entity.getSubmissionDate());
     }
 }

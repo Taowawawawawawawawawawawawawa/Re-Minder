@@ -73,7 +73,7 @@ public class QuestLogController {
         Optional<QuestLog> questLog = questLogRepository.findById(id);
         if (questLog.isPresent()) {
             QuestLog updatedLog = questLog.get();
-            updatedLog.setStatus(status);  // Update status of the QuestLog
+            updatedLog.setStatus(status); // Update status of the QuestLog
             questLogRepository.save(updatedLog);
             return new ResponseEntity<>("QuestLog status updated successfully!", HttpStatus.OK);
         } else {
@@ -88,7 +88,23 @@ public class QuestLogController {
             questLogRepository.deleteById(id);
             return new ResponseEntity<>("QuestLog deleted successfully.", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to delete QuestLog: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to delete QuestLog: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // Get QuestLogs with "PENDING" status
+    @GetMapping("/pending")
+    public ResponseEntity<List<QuestLogDTO>> getPendingQuestLogs() {
+        List<QuestLog> pendingLogs = questLogRepository.findByStatus("PENDING"); // Use the repository method
+        List<QuestLogDTO> pendingLogDTOs = pendingLogs.stream()
+                .map(questLog -> {
+                    QuestLogDTO dto = new QuestLogDTO();
+                    questLogMapper.updateQuestLogFromEntity(questLog, dto);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(pendingLogDTOs, HttpStatus.OK);
+    }
+
 }
