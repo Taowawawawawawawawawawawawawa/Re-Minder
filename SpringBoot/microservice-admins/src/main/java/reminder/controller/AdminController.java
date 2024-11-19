@@ -103,7 +103,8 @@ public class AdminController {
 
     // New endpoint: Add an item to a user's inventory
     @PostMapping("/user/{userId}/inventory/add")
-    public ResponseEntity<String> adminAddItemToInventory(@PathVariable Long userId, @RequestBody Object inventoryUpdateRequest) {
+    public ResponseEntity<String> adminAddItemToInventory(@PathVariable Long userId,
+            @RequestBody Object inventoryUpdateRequest) {
         try {
             String url = inventoryServiceUrl + "/inventory/admin/" + userId + "/add";
             ResponseEntity<String> response = restTemplate.postForEntity(url, inventoryUpdateRequest, String.class);
@@ -135,7 +136,8 @@ public class AdminController {
 
     // New endpoint: Remove an item from a user's inventory
     @PostMapping("/user/{userId}/inventory/remove")
-    public ResponseEntity<String> adminRemoveItemFromInventory(@PathVariable Long userId, @RequestBody Object inventoryUpdateRequest) {
+    public ResponseEntity<String> adminRemoveItemFromInventory(@PathVariable Long userId,
+            @RequestBody Object inventoryUpdateRequest) {
         try {
             String url = inventoryServiceUrl + "/inventory/admin/" + userId + "/remove";
             ResponseEntity<String> response = restTemplate.postForEntity(url, inventoryUpdateRequest, String.class);
@@ -146,64 +148,81 @@ public class AdminController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        Optional<Admins> admin = Optional.of(adminRepository.findByAdminEmail(loginRequest.getEmail()));
+        if (admin.isPresent()) {
+            if (admin.get().getPassword().equals(loginRequest.getPassword())) {
+                return ResponseEntity.ok("Login successful");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No admin account found with this email");
+        }
+    }
+    
 }
 
 /*
-
-* สรุป URL และฟังก์ชันการทำงานใน AdminController
-1. ดึงข้อมูลแอดมินตาม ID
-URL: GET http://localhost:8201/admins/{id}
-คำอธิบาย: ดึงข้อมูลของแอดมินตาม id
-HTTP Status:
-200 OK หากพบแอดมิน
-404 Not Found หากไม่พบแอดมิน
-
-2. ดึงข้อมูลแอดมินทั้งหมด
-URL: GET http://localhost:8201/admins/all
-คำอธิบาย: ดึงข้อมูลของแอดมินทั้งหมดในระบบ
-HTTP Status:
-200 OK
-
-3. สร้างแอดมินใหม่
-URL: POST http://localhost:8201/admins/create
-คำอธิบาย: เพิ่มแอดมินใหม่ในระบบ
-HTTP Status:
-201 Created หากสร้างสำเร็จ
-400 Bad Request หากอีเมลซ้ำหรือข้อมูลไม่ถูกต้อง
-500 Internal Server Error หากเกิดข้อผิดพลาด
-
-4. แอดมินอัปเดตข้อมูลผู้ใช้ผ่าน UsersService
-URL: PUT http://localhost:8201/admins/user/{userId}/update
-คำอธิบาย: อัปเดตข้อมูลผู้ใช้ผ่าน API ของ UsersService โดยส่งคำขอไปยัง UsersService
-HTTP Status:
-200 OK หากอัปเดตสำเร็จ
-500 Internal Server Error หากเกิดข้อผิดพลาด
-
-5. แอดมินลบคลังเก็บของผู้ใช้ผ่าน InventoryService
-URL: DELETE http://localhost:8201/admins/user/{userId}/inventory/delete
-คำอธิบาย: ลบคลังเก็บของผู้ใช้ผ่าน API ของ InventoryService
-HTTP Status:
-200 OK หากลบสำเร็จ
-500 Internal Server Error หากเกิดข้อผิดพลาด
-
-6. แอดมินเพิ่มไอเทมในคลังเก็บของผู้ใช้
-URL: POST http://localhost:8201/admins/user/{userId}/inventory/add
-คำอธิบาย: เพิ่มไอเทมเข้าไปในคลังเก็บของผู้ใช้ผ่าน API ของ InventoryService
-HTTP Status:
-200 OK หากเพิ่มสำเร็จ
-500 Internal Server Error หากเกิดข้อผิดพลาด
-
-7. แอดมินลบผู้ใช้
-URL: DELETE http://localhost:8201/admins/user/{userId}/delete
-คำอธิบาย: ลบผู้ใช้ (รวมถึงคลังเก็บของผู้ใช้) โดยลบผ่าน API ของ InventoryService และ UsersService
-HTTP Status:
-200 OK หากลบสำเร็จ
-500 Internal Server Error หากเกิดข้อผิดพลาด
-
-8. แอดมินลบไอเทมจากคลังเก็บของผู้ใช้
-URL: POST http://localhost:8201/admins/user/{userId}/inventory/remove
-คำอธิบาย: ลบไอเทมจากคลังเก็บของผู้ใช้ผ่าน API ของ InventoryService
-HTTP Status:
-200 OK หากลบสำเร็จ
-500 Internal Server Error หากเกิดข้อผิดพลาด
+ * 
+ * สรุป URL และฟังก์ชันการทำงานใน AdminController
+ * 1. ดึงข้อมูลแอดมินตาม ID
+ * URL: GET http://localhost:8201/admins/{id}
+ * คำอธิบาย: ดึงข้อมูลของแอดมินตาม id
+ * HTTP Status:
+ * 200 OK หากพบแอดมิน
+ * 404 Not Found หากไม่พบแอดมิน
+ * 
+ * 2. ดึงข้อมูลแอดมินทั้งหมด
+ * URL: GET http://localhost:8201/admins/all
+ * คำอธิบาย: ดึงข้อมูลของแอดมินทั้งหมดในระบบ
+ * HTTP Status:
+ * 200 OK
+ * 
+ * 3. สร้างแอดมินใหม่
+ * URL: POST http://localhost:8201/admins/create
+ * คำอธิบาย: เพิ่มแอดมินใหม่ในระบบ
+ * HTTP Status:
+ * 201 Created หากสร้างสำเร็จ
+ * 400 Bad Request หากอีเมลซ้ำหรือข้อมูลไม่ถูกต้อง
+ * 500 Internal Server Error หากเกิดข้อผิดพลาด
+ * 
+ * 4. แอดมินอัปเดตข้อมูลผู้ใช้ผ่าน UsersService
+ * URL: PUT http://localhost:8201/admins/user/{userId}/update
+ * คำอธิบาย: อัปเดตข้อมูลผู้ใช้ผ่าน API ของ UsersService โดยส่งคำขอไปยัง
+ * UsersService
+ * HTTP Status:
+ * 200 OK หากอัปเดตสำเร็จ
+ * 500 Internal Server Error หากเกิดข้อผิดพลาด
+ * 
+ * 5. แอดมินลบคลังเก็บของผู้ใช้ผ่าน InventoryService
+ * URL: DELETE http://localhost:8201/admins/user/{userId}/inventory/delete
+ * คำอธิบาย: ลบคลังเก็บของผู้ใช้ผ่าน API ของ InventoryService
+ * HTTP Status:
+ * 200 OK หากลบสำเร็จ
+ * 500 Internal Server Error หากเกิดข้อผิดพลาด
+ * 
+ * 6. แอดมินเพิ่มไอเทมในคลังเก็บของผู้ใช้
+ * URL: POST http://localhost:8201/admins/user/{userId}/inventory/add
+ * คำอธิบาย: เพิ่มไอเทมเข้าไปในคลังเก็บของผู้ใช้ผ่าน API ของ InventoryService
+ * HTTP Status:
+ * 200 OK หากเพิ่มสำเร็จ
+ * 500 Internal Server Error หากเกิดข้อผิดพลาด
+ * 
+ * 7. แอดมินลบผู้ใช้
+ * URL: DELETE http://localhost:8201/admins/user/{userId}/delete
+ * คำอธิบาย: ลบผู้ใช้ (รวมถึงคลังเก็บของผู้ใช้) โดยลบผ่าน API ของ
+ * InventoryService และ UsersService
+ * HTTP Status:
+ * 200 OK หากลบสำเร็จ
+ * 500 Internal Server Error หากเกิดข้อผิดพลาด
+ * 
+ * 8. แอดมินลบไอเทมจากคลังเก็บของผู้ใช้
+ * URL: POST http://localhost:8201/admins/user/{userId}/inventory/remove
+ * คำอธิบาย: ลบไอเทมจากคลังเก็บของผู้ใช้ผ่าน API ของ InventoryService
+ * HTTP Status:
+ * 200 OK หากลบสำเร็จ
+ * 500 Internal Server Error หากเกิดข้อผิดพลาด
  */

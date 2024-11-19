@@ -9,6 +9,16 @@ public class Themes {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long themeId;
 
+    private String themeName;
+
+    public String getThemeName() {
+        return themeName;
+    }
+
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
+    }
+
     private String frameSpriteArts; // Path to the UI frame image(s) file(s)
 
     private String backGround; // Path to the background image file

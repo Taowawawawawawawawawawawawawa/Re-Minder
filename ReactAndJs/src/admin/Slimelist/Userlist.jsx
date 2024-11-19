@@ -10,6 +10,7 @@ const Userlist = () => {
     const [items, setItems] = useState({ costumes: [], rewards: [], themes: [] });
     const [error, setError] = useState(null);
 
+    // Fetch all users
     const fetchUsers = async () => {
         try {
             const response = await fetch("http://localhost:8200/users/all");
@@ -23,6 +24,7 @@ const Userlist = () => {
         }
     };
 
+    // Fetch user inventory
     const fetchUserInventory = async (userId) => {
         try {
             const response = await fetch(`http://localhost:8208/inventory/user/${userId}`);
@@ -40,6 +42,7 @@ const Userlist = () => {
         }
     };
 
+    // Fetch item details from the shop microservice
     const fetchItemDetails = async (inventory) => {
         try {
             const [costumes, rewards, themes] = await Promise.all([
@@ -66,16 +69,19 @@ const Userlist = () => {
         }
     };
 
+    // Use effect to fetch users on initial render
     useEffect(() => {
         fetchUsers();
     }, []);
 
+    // Use effect to fetch inventory when a user is expanded
     useEffect(() => {
         if (expandedUserId !== null) {
-            fetchUserInventory(expandedUserId); // Fetch inventory when a user is expanded
+            fetchUserInventory(expandedUserId);
         }
     }, [expandedUserId]);
 
+    // Handle toggling user details
     const toggleUserDetails = (userId) => {
         if (expandedUserId === userId) {
             setExpandedUserId(null); // Collapse the details
@@ -86,15 +92,9 @@ const Userlist = () => {
         }
     };
 
+    // Get the full image URL (handles imgbb links)
     const getFullImageUrl = (path) => {
-        if (path.startsWith("https://drive.google.com/file/d/")) {
-            // Extract the file ID and convert to a direct download link
-            const fileId = path.split("/d/")[1].split("/view")[0];
-            return `https://drive.google.com/uc?id=${fileId}`;
-        } else if (path.startsWith("http")) {
-            return path; // If it's already a valid URL
-        }
-        return `http://localhost:8204${path}`; // Default case for local paths
+        return path.trim(); // Ensure whitespace is removed
     };
 
     return (
@@ -110,12 +110,9 @@ const Userlist = () => {
 
                 <ul className="user-items">
                     {users.map((user) => (
-                        <li key={user.userId} className="user-item">
+                        <li key={user.userId} className="user-item" onClick={() => toggleUserDetails(user.userId)}>
                             {/* User Summary */}
-                            <div
-                                className="user-summary"
-                                onClick={() => toggleUserDetails(user.userId)}
-                            >
+                            <div className="user-summary">
                                 <span className="user-name">{user.name}</span>
                                 <div className="action-buttons">
                                     <button>แก้ไข</button>
@@ -138,42 +135,47 @@ const Userlist = () => {
                                         <div className="item-icons">
                                             {/* Costumes */}
                                             {items.costumes.map((costume) => (
-                                                <img
-                                                    key={costume.costumeId}
-                                                    src={getFullImageUrl(costume.costumeFiles)}
-                                                    alt={costume.costumeName}
-                                                    className="item-icon"
-                                                    onError={(e) => {
-                                                        e.target.src =
-                                                            "https://via.placeholder.com/150"; // Placeholder
-                                                    }}
-                                                />
+                                                <div key={costume.costumeId} className="item-container">
+                                                    <img
+                                                        src={getFullImageUrl(costume.costumeFiles)}
+                                                        alt={costume.costumeName}
+                                                        className="item-icon"
+                                                        onError={(e) => {
+                                                            e.target.src = "https://via.placeholder.com/150"; // Fallback image
+                                                        }}
+                                                    />
+                                                    <p>{costume.costumeName}</p>
+                                                </div>
                                             ))}
+
                                             {/* Rewards */}
                                             {items.rewards.map((reward) => (
-                                                <img
-                                                    key={reward.rewardId}
-                                                    src={getFullImageUrl(reward.rewardSpriteArts)}
-                                                    alt={reward.rewardName}
-                                                    className="item-icon"
-                                                    onError={(e) => {
-                                                        e.target.src =
-                                                            "https://via.placeholder.com/150"; // Placeholder
-                                                    }}
-                                                />
+                                                <div key={reward.rewardId} className="item-container">
+                                                    <img
+                                                        src={getFullImageUrl(reward.rewardSpriteArts)}
+                                                        alt={reward.rewardName}
+                                                        className="item-icon"
+                                                        onError={(e) => {
+                                                            e.target.src = "https://via.placeholder.com/150"; // Fallback image
+                                                        }}
+                                                    />
+                                                    <p>{reward.rewardName}</p>
+                                                </div>
                                             ))}
+
                                             {/* Themes */}
                                             {items.themes.map((theme) => (
-                                                <img
-                                                    key={theme.themeId}
-                                                    src={getFullImageUrl(theme.frameSpriteArts)}
-                                                    alt={`Theme ${theme.themeId}`}
-                                                    className="item-icon"
-                                                    onError={(e) => {
-                                                        e.target.src =
-                                                            "https://via.placeholder.com/150"; // Placeholder
-                                                    }}
-                                                />
+                                                <div key={theme.themeId} className="item-container">
+                                                    <img
+                                                        src={getFullImageUrl(theme.frameSpriteArts)}
+                                                        alt={`Theme ${theme.themeId}`}
+                                                        className="item-icon"
+                                                        onError={(e) => {
+                                                            e.target.src = "https://via.placeholder.com/150"; // Fallback image
+                                                        }}
+                                                    />
+                                                    <p>Theme</p>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>
