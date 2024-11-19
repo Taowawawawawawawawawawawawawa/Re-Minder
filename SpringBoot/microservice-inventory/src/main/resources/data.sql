@@ -2,7 +2,9 @@
 INSERT INTO inventory (inventoryId, userId) VALUES
 (40001, 10001),
 (40002, 10002),
-(40003, 10003);
+(40003, 10003),
+(40004, 10004),
+(40005, 10005);
 
 -- Mock data for costumeList (relation to costumes)
 INSERT INTO inventory_costumeList (inventory_inventoryId, costumeList) VALUES
