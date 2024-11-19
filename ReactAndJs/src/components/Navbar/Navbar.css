@@ -1,13 +1,14 @@
 .navbar {
+  background: url(/src/images/BGwood.png), #D9D9D9;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2e2e2e; /* สีพื้นหลังเข้ม */
-  padding: 10px 20px;
-  border-radius: 10px;
   font-family: Arial, sans-serif;
   color: #fff;
 }
+
+
 
 .navbar-left {
   display: flex;
@@ -15,48 +16,74 @@
 }
 
 .profile-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 3000%;
+  margin-right: -10px;
 }
 
 .navbar-title {
   font-size: 18px;
-  background-color: #f5deb3; /* สีพื้นหลังสำหรับชื่อเรื่อง */
+  background-color: #f5deb3;
+  /* สีพื้นหลังสำหรับชื่อเรื่อง */
   padding: 8px 15px;
   border-radius: 20px;
 }
 
 .navbar-right {
   display: flex;
-  align-items: center;
+  gap: 10px;
+  padding: 10px;
 }
 
 .currency {
   display: flex;
   align-items: center;
-  background-color: #f5deb3; /* สีพื้นหลังของแต่ละสกุลเงิน */
+  background-color: #deb887;
+
+  border-radius: 20px;
   padding: 5px 10px;
-  border-radius: 15px;
-  margin-right: 10px;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+  gap: 5px;
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #4a2f27;
+  /* Dark brown border */
+
+  padding: -25px;
+}
+
+.currency-amount {
+  font-size: 1rem;
+  color: #4a2f27;
+  /* Dark brown color for text */
+  font-weight: bold;
 }
 
 .add-button {
-  margin-left: 5px;
-  background: none;
+  background-color: #4a2f27;
+  /* Dark brown color for button */
+  color: white;
+  font-size: 1.2rem;
   border: none;
-  color: #fff;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 16px;
-  padding: 0;
 }
+
+.add-button:hover {
+  background-color: #6b4a3e;
+  /* Slightly lighter brown on hover */
+}
+
 
 .settings-button {
   background: none;
@@ -67,4 +94,68 @@
 .settings-button img {
   width: 40px;
   height: 40px;
+}
+
+/* Counter container */
+.counter-container {
+  display: flex;
+  align-items: center;
+  background-color: #d3c3a3; /* Light wood color */
+  border-radius: 50px;
+  padding: 10px 20px;
+  width: 200px; /* Adjust to fit your design */
+  background-image: linear-gradient(to right, #d3c3a3, #d3c3a3);
+  border: 5px solid #5a3d2f; /* Dark wood border */
+  position: relative;
+}
+
+/* Gem Icon */
+.gem-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #5a3d2f; /* Dark wood color for the border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.gem-icon img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Counter Display */
+.counter-display {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.counter-text {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  color: #5a3d2f; /* Dark text color */
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #FFFFFF; /* Light border effect for text */
+}
+
+/* Plus Icon */
+.plus-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #5a3d2f; /* Dark wood color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+}
+
+.plus-icon span {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
 }
