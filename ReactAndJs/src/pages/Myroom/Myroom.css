@@ -170,6 +170,7 @@ html, body {
   margin: 0 0 10px;
 }
 
+
 .questlog-list ul {
   list-style: none;
   padding: 0;
@@ -408,7 +409,7 @@ html, body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   padding: 15px;
   overflow-y: auto;
-  height: 700px;
+  height: 650px;
 }
 
 .diary-entry-button {
@@ -416,12 +417,23 @@ html, body {
   border: 1px solid #8b5a2b;
   border-radius: 5px;
   padding: 8px;
+  margin-right: auto;
+  gap: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .diary-entry-button:hover {
   background-color: #f9e4c9;
+}
+
+.diary h2 {
+  position: absolute;
+  left: 40%;
+  top: 5%;
+  font-size: 50px;
+  color: #5a5042;
+  
 }
 
 .diary-main {
@@ -434,7 +446,7 @@ html, body {
   border: 5px solid #8b5e3c;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   padding: 15px;
-  max-height: 75%;
+  max-height: 70%;
   overflow-y: auto;
 }
 
