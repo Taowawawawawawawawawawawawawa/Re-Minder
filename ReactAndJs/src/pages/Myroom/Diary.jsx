@@ -3,6 +3,7 @@ import './Myroom.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer'; 
 import { useNavigate } from 'react-router-dom';
+import SlimeGif from '../../images/Slime.GIF';
 
 const Diary = () => {
   const [entries, setEntries] = useState([
@@ -14,7 +15,7 @@ const Diary = () => {
     date: '30/2/24',
     content: 'ถึงไดอารี่ของผม: วันนี้...',
   });
-
+  const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
   const navigate = useNavigate();
 
   const handleBackToRoom = () => {
@@ -29,6 +30,9 @@ const Diary = () => {
     <>
       <Navbar />
       <div className="game-screen">
+      <div className="character">
+        <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
+        </div>
         <div className="diary">
           <h2>My Diary</h2>
           <div className="diary-sidebar">

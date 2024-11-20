@@ -1,70 +1,179 @@
+body {
+  background: url('/src/images/shop_bg.png') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrolling */
+  font-family: "Arial", sans-serif;
+}
+
 .beryl-shop {
-    font-family: "Arial", sans-serif;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background: url("") center/cover no-repeat;
-    color: #fff;
-  }
   
+  display: flex;
+  flex-direction: column; /* Stack sections vertically */
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #fff;
+}
+
+.free-section {
+  text-align: center;
+  background-color: #8b0000; /* Dark red background */
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 100%; /* Full width for alignment */
+  max-width: 600px; /* Restrict max width for better appearance */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+}
+
+.free-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.free-section .free-beryl img {
+  width: 80px;
+  height: auto;
+}
+
+.free-section button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #228b22; /* Green button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease; /* Add hover animation */
+}
+
+.free-section button:hover {
+  background-color: #1e7b1e; /* Slightly darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.offers-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
+  gap: 20px; /* Add spacing between cards */
+  width: 100%; /* Full width for alignment */
+  max-width: 800px; /* Restrict max width for better layout */
+}
+
+.offer-card {
+  text-align: center;
+  background: #2e2e2e; /* Dark gray background */
+  border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Add hover animation */
+}
+
+.offer-card:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); /* Glow effect on hover */
+}
+
+.offer-card img {
+  width: 50px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.offer-card.promo {
+  border-color: gold; /* Highlight promo offers */
+}
+
+.offer-card p {
+  margin: 5px 0;
+  color: #fff;
+}
+
+.offer-card button {
+  padding: 8px 16px;
+  background-color: #228b22; /* Green button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease; /* Add hover animation */
+}
+
+.offer-card button:hover {
+  background-color: #1e7b1e; /* Slightly darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+button {
+  visibility: visible; /* Ensure buttons are visible */
+  opacity: 1; /* Fully opaque */
+  z-index: 1; /* Ensure buttons are above other elements */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .free-section {
-    text-align: center;
-    background-color: #8b0000;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 15px;
   }
-  
-  .free-section h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .free-section .free-beryl img {
-    width: 80px;
-    height: auto;
-  }
-  
-  .free-section button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #228b22;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+
   .offers-section {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
-  
+
   .offer-card {
-    text-align: center;
-    background: #2e2e2e;
-    border: 2px solid #fff;
-    border-radius: 10px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .free-section {
     padding: 10px;
-    position: relative;
   }
-  
-  .offer-card img {
-    width: 50px;
-    height: auto;
+
+  .offer-card button {
+    padding: 6px 12px;
   }
-  
-  .offer-card.promo {
-    border-color: gold;
-  }
-  
-  .offer-card p {
-    margin: 5px 0;
-  }
-  button {
-    visibility: visible; /* ต้องไม่ถูกซ่อน */
-    opacity: 1; /* ต้องไม่โปร่งใส */
-    z-index: 1; /* ถ้ามีการใช้ z-index เพื่อให้ปุ่มอยู่ข้างบน */
-  }
-  
-  
+}
+
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.confirmation-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.confirmation-buttons {
+  margin-top: 15px;
+}
+
+.confirmation-buttons button {
+  background-color: #8b5a2b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.confirmation-buttons button:hover {
+  background-color: #a5673f;
+}
+
