@@ -14,7 +14,7 @@ function AdminHome() {
           <h1>เควสต์</h1>
           <p>Quest</p>
         </div>
-        <div className="section shop-section" onClick={() => navigate('/AdminShop')}>
+        <div className="section shopadmin-section" onClick={() => navigate('/AdminShop')}>
           <h1>เพิ่มของเข้าร้านค้า</h1>
           <p>Add to Shop</p>
         </div>

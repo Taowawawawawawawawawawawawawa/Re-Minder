@@ -1,125 +1,156 @@
 /* General Layout */
 .admin-home-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: calc(100vh - 140px); /* Adjust height to fit Navbar and Footer */
-    background-color: #2a2a2a;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Main Content Grid */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 140px); /* Adjust height to fit Navbar and Footer */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Main Content Grid */
+.admin-main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  width: 90%;
+  max-width: 1200px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Sections */
+.asection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Quest Section - Span the entire width of the grid */
+.quest-section {
+  border-radius: 10%;
+  width: 100%;
+  grid-column: 1 / 3; /* Span across both columns */
+  grid-row: 1 / 2;
+  height: 100%; /* Ensure it takes up the full height */
+}
+
+/* Shop Section */
+/* Shop Admin Section */
+.shopadmin-section {
+  border-radius: 10%;
+  background: url('/src/images/shop_bg.png'), #D9D9D9;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  height: 100%; /* Ensure it fills the height of the container */
+  position: relative; /* Needed for the overlay */
+}
+
+.shopadmin-section::before {
+  border-radius: 10%;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
+  z-index: 1; /* Ensure it sits above the background but below the content */
+}
+
+/* Contact Section */
+.contact-section {
+  border-radius: 10%;
+  background: url('/src/images/letter_bg.png'), #D9D9D9;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  height: 100%; /* Ensure it fills the height of the container */
+  position: relative; /* Needed for the overlay */
+}
+
+.contact-section::before {
+  border-radius: 10%;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
+  z-index: 1; /* Ensure it sits above the background but below the content */
+}
+
+
+/* Central Slime List */
+.slime-list {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #2a2a2a;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 10; /* Ensure it's above the other sections */
+  border: 4px solid rgba(0, 0, 0, 0.2); /* Optional border for clarity */
+}
+
+/* Fonts and Text */
+h1 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+p {
+  font-size: 14px;
+  color: #2a2a2a;
+}
+
+/* Hover Effects */
+.section:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: translateY(-5px);
+  transition: 0.3s ease;
+}
+
+.slime-list:hover {
+  background-color: #c0c0c0;
+  transition: 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .admin-main-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 20px;
-    width: 90%;
-    max-width: 1200px;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    position: relative;
-    overflow: hidden;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Sections */
-  .asection {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  
-  .quest-section {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-  }
-  
-  .shop-section {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-  }
-  
-  .contact-section {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-  }
-  
-  /* Central Slime List */
-  .slime-list {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #2a2a2a;
-    background-color: #d9d9d9;
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-    z-index: 10; /* Ensure it's above the other sections */
-    border: 4px solid rgba(0, 0, 0, 0.2); /* Optional border for clarity */
-  }
-  
-  /* Fonts and Text */
-  h1 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #2a2a2a;
-  }
-  
-  p {
-    font-size: 14px;
-    color: #2a2a2a;
-  }
-  
-  /* Hover Effects */
-  .section:hover {
-    background-color: rgba(255, 255, 255, 1);
-    transform: translateY(-5px);
-    transition: 0.3s ease;
-  }
-  
-  .slime-list:hover {
-    background-color: #c0c0c0;
-    transform: scale(1.1);
-    transition: 0.3s ease;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .admin-main-content {
       grid-template-columns: 1fr;
       grid-template-rows: auto auto auto auto;
       gap: 15px;
-    }
-  
-    .slime-list {
-      width: 120px;
-      height: 120px;
-      font-size: 20px;
-    }
-  
-    .section {
-      padding: 15px;
-    }
   }
-  
+
+  .section {
+      padding: 15px;
+  }
+}

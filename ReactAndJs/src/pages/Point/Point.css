@@ -1,63 +1,131 @@
+.point {
+  background: url('/src/images/shop_bg.png') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Arial", sans-serif;
+}
+
 .point-exchange {
-    font-family: "Arial", sans-serif;
-    background: url("") center/cover no-repeat;
-    padding: 20px;
-    color: #fff;
-    border-radius: 10px;
-    width: 90%;
-    margin: 0 auto;
-  }
-  
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .header h2 {
-    font-size: 24px;
-    background-color: #2e2e2e;
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: #ffd700;
-  }
-  
-  .exchange-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    justify-items: center;
-  }
-  
-  .exchange-card {
-    background-color: #4b2e2e;
-    border: 2px solid #fff;
-    border-radius: 10px;
-    padding: 10px;
-    width: 100px;
-    text-align: center;
-    position: relative;
-  }
-  
-  .exchange-card .exchange-icon {
-    width: 50px;
-    height: auto;
-    margin-bottom: 5px;
-  }
-  
-  .exchange-card .exchange-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .exchange-card .points {
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  .exchange-card .reward-icon {
-    width: 30px;
-    height: auto;
-  }
-  
+  font-family: "Arial", sans-serif;
+  background-color: #2e2e2e;
+  padding: 30px;
+  color: #fff;
+  border-radius: 15px;
+  width: 90%;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 24px;
+  background-color: #2e2e2e;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #ffd700;
+}
+
+.exchange-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns layout */
+  gap: 10px;
+  justify-items: center;
+  padding: 10px;
+}
+
+.exchange-card {
+  background: url("/src/images/BGwood.png") center/cover repeat; /* Wood texture background that repeats */
+  border: 2px solid #2e2e2e;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100px; /* Adjusted for smaller card size */
+  height: 120px; /* Adjusted height to fit image and price */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.exchange-icon {
+  width: 50px; /* Centered icon size */
+  height: 50px;
+  margin-top: 5px; /* Adjusted for spacing */
+}
+
+.exchange-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: #362d2b;
+  padding: 5px 10px;
+  border-radius: 15px;
+  margin-top: auto; /* Ensures it stays at the bottom */
+}
+
+.points {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffd700; /* Gold color */
+}
+
+.reward-icon {
+  width: 36px; /* Adjusted size for the gem icon */
+  height: 18px;
+}
+
+/* Optional Hover Effect */
+.exchange-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
+
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.confirmation-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.confirmation-buttons {
+  margin-top: 15px;
+}
+
+.confirmation-buttons button {
+  background-color: #8b5a2b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.confirmation-buttons button:hover {
+  background-color: #a5673f;
+}
