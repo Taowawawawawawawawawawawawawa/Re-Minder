@@ -12,6 +12,7 @@ function Questboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [textResponse, setTextResponse] = useState(""); // For text submission
   const [uploadStatus, setUploadStatus] = useState(null);
 
   // Handle difficulty selection
@@ -56,55 +57,94 @@ function Questboard() {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleFileSubmit = async () => {
+  const handleTextResponseChange = (event) => {
+    setTextResponse(event.target.value);
+  };
+
+  const handleSubmission = async () => {
     if (!selectedQuestId) {
       alert("กรุณาเลือกภารกิจก่อนจัดส่ง");
       return;
     }
 
-    if (!selectedFile) {
-      alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("questId", selectedQuestId);
-
-    try {
-      setUploadStatus("กำลังตรวจสอบ...");
-      const response = await fetch(
-        "http://localhost:8203/questlogs/submit-image",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const result = await response.json();
-      console.log("Backend Result:", result);
-
-      if (result.status === "success") {
-        if (result.questStatus === "completed") {
-          // result.message || 
-          setUploadStatus("เควสสำเร็จ ✅");
-        } else if (result.questStatus === "not_completed") {
-          // result.message || 
-          setUploadStatus("วัตถุที่พบไม่ตรงกับเป้าหมาย ❌");
-        } else {
-          setUploadStatus("ไม่พบวัตถุในภาพ ❌");
-        }
-      } else {
-        // result.message || 
-        setUploadStatus("รูปภาพไม่ถูกต้อง ❌");
+    if (selectedQuest.questSubmitMethod === "image") {
+      if (!selectedFile) {
+        alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
+        return;
       }
-    } catch (err) {
-      console.error("Upload error:", err);
-      setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      formData.append("questId", selectedQuestId);
+      formData.append("userId", 1); // Pass a dummy user ID (replace with actual user ID)
+
+      try {
+        setUploadStatus("กำลังตรวจสอบ...");
+        const response = await fetch(
+          "http://localhost:8203/questlogs/submit-image",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const result = await response.json();
+        console.log("Backend Result:", result);
+
+        if (result.status === "success") {
+          if (result.questStatus === "SUCCESS") {
+            setUploadStatus("เควสสำเร็จ ✅");
+          } else if (result.questStatus === "FAILED") {
+            setUploadStatus("วัตถุที่พบไม่ตรงกับเป้าหมาย ❌");
+          } else if (result.questStatus === "PENDING") {
+            setUploadStatus("รอการตรวจสอบโดยผู้ดูแลระบบ");
+          } else {
+            setUploadStatus("สถานะไม่ทราบ ❌");
+          }
+        } else {
+          setUploadStatus(result.message || "รูปภาพไม่ถูกต้อง ❌");
+        }
+      } catch (err) {
+        console.error("Upload error:", err);
+        setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
+      }
+    } else if (selectedQuest.questSubmitMethod === "text") {
+      if (!textResponse.trim()) {
+        alert("กรุณาใส่ข้อความก่อนจัดส่ง");
+        return;
+      }
+
+      const payload = {
+        questId: selectedQuestId,
+        userId: 1, // Pass a dummy user ID (replace with actual user ID)
+        textResponse,
+      };
+
+      try {
+        setUploadStatus("กำลังส่งข้อความ...");
+        const response = await fetch(
+          "http://localhost:8203/questlogs/submit-text",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        const result = await response.json();
+        console.log("Backend Result:", result);
+
+        if (result.status === "success") {
+          setUploadStatus("ส่งข้อความสำเร็จ ✅");
+        } else {
+          setUploadStatus(result.message || "เกิดข้อผิดพลาด ❌");
+        }
+      } catch (err) {
+        console.error("Submission error:", err);
+        setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
+      }
     }
   };
-
-
 
   return (
     <>
@@ -118,8 +158,9 @@ function Questboard() {
                 {["ง่าย", "กลาง", "ยาก"].map((difficulty) => (
                   <button
                     key={difficulty}
-                    className={`tab-button ${selectedDifficulty === difficulty ? "active" : ""
-                      }`}
+                    className={`tab-button ${
+                      selectedDifficulty === difficulty ? "active" : ""
+                    }`}
                     onClick={() => handleTabClick(difficulty)}
                   >
                     {difficulty}
@@ -136,8 +177,9 @@ function Questboard() {
                   {filteredQuests.map((quest) => (
                     <li
                       key={quest.questId}
-                      className={`quest-item ${selectedQuestId === quest.questId ? "selected" : ""
-                        }`}
+                      className={`quest-item ${
+                        selectedQuestId === quest.questId ? "selected" : ""
+                      }`}
                       onClick={() => setSelectedQuestId(quest.questId)}
                     >
                       <p>{quest.questName}</p>
@@ -157,41 +199,39 @@ function Questboard() {
                     <strong>คำอธิบาย:</strong> {selectedQuest.questDescription}
                   </p>
                   <p>
-                    <strong>รางวัล Beryl:</strong> {selectedQuest.berylReward}
-                  </p>
-                  <p>
-                    <strong>รางวัลคะแนน:</strong> {selectedQuest.pointReward}
-                  </p>
-                  <p>
                     <strong>วิธีการส่งภารกิจ:</strong>{" "}
                     {selectedQuest.questSubmitMethod}
                   </p>
-                  <p>
-                    <strong>เวลาที่เหมาะสม:</strong>{" "}
-                    {selectedQuest.availableTime.join(", ")}
-                  </p>
-                  <p>
-                    <strong>MBTI ที่เหมาะสม:</strong>{" "}
-                    {selectedQuest.suitableMBTI.join(", ")}
-                  </p>
-                  <p>
-                    <strong>เป้าหมาย:</strong> {selectedQuest.targetObject}
-                  </p>
 
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="response-input"
-                  />
+                  {selectedQuest.questSubmitMethod === "image" && (
+                    <>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="response-input"
+                      />
+                    </>
+                  )}
+
+                  {selectedQuest.questSubmitMethod === "text" && (
+                    <textarea
+                      placeholder="กรุณาใส่ข้อความตอบกลับของคุณ"
+                      value={textResponse}
+                      onChange={handleTextResponseChange}
+                      className="response-textarea"
+                    />
+                  )}
+
                   <div className="action-buttons">
-                    <button className="send-button" onClick={handleFileSubmit}>
+                    <button className="send-button" onClick={handleSubmission}>
                       จัดส่ง
                     </button>
                     <button
                       className="cancel-button"
                       onClick={() => {
                         setSelectedFile(null);
+                        setTextResponse("");
                         setUploadStatus(null);
                       }}
                     >
@@ -200,8 +240,9 @@ function Questboard() {
                   </div>
                   {uploadStatus && (
                     <p
-                      className={`upload-status ${uploadStatus.includes("❌") ? "error" : "success"
-                        }`}
+                      className={`upload-status ${
+                        uploadStatus.includes("❌") ? "error" : "success"
+                      }`}
                     >
                       {uploadStatus}
                     </p>
