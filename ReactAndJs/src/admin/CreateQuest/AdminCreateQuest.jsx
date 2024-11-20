@@ -11,8 +11,8 @@ const AdminCreateQuest = () => {
   const [pointReward, setPointReward] = useState('');
   const [questSubmitMethod, setQuestSubmitMethod] = useState('');
   const [targetObject, setTargetObject] = useState('');
-  const [searchTerm, setSearchTerm] = useState(''); // State for search
-  const [suitableMBTI, setSuitableMBTI] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [suitableMBTI, setSuitableMBTI] = useState([]);  // เปลี่ยนให้เป็น Array
   const [availableTime, setAvailableTime] = useState('');
 
   const targetOptions = [
@@ -46,7 +46,7 @@ const AdminCreateQuest = () => {
       !pointReward ||
       !questSubmitMethod ||
       !targetObject ||
-      !suitableMBTI ||
+      suitableMBTI.length === 0 ||  // ตรวจสอบว่าได้เลือก MBTI อย่างน้อยหนึ่งค่า
       !availableTime
     ) {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
@@ -61,7 +61,7 @@ const AdminCreateQuest = () => {
       pointReward: parseInt(pointReward),
       questSubmitMethod,
       targetObject,
-      suitableMBTI,
+      suitableMBTI,  // ส่งข้อมูลเป็น Array
       availableTime,
     };
 
@@ -74,6 +74,7 @@ const AdminCreateQuest = () => {
 
       if (response.ok) {
         alert(`Quest "${questName}" created successfully!`);
+        // Reset form fields
         setQuestName('');
         setQuestDescription('');
         setDifficulty('');
@@ -82,7 +83,7 @@ const AdminCreateQuest = () => {
         setQuestSubmitMethod('');
         setTargetObject('');
         setSearchTerm('');
-        setSuitableMBTI('');
+        setSuitableMBTI([]);  // Reset suitableMBTI เป็น Array เปล่า
         setAvailableTime('');
       } else {
         const error = await response.json();
@@ -159,8 +160,12 @@ const AdminCreateQuest = () => {
             </select>
           </div>
           <select
+            multiple  // เพิ่ม attribute multiple เพื่อให้เลือกได้หลายค่า
             value={suitableMBTI}
-            onChange={(e) => setSuitableMBTI(e.target.value)}
+            onChange={(e) => {
+              const selectedValues = Array.from(e.target.selectedOptions, option => option.value);
+              setSuitableMBTI(selectedValues);  // อัพเดตค่าของ suitableMBTI เป็น Array
+            }}
           >
             <option value="">Suitable MBTI</option>
             {mbtiOptions.map((mbti) => (
