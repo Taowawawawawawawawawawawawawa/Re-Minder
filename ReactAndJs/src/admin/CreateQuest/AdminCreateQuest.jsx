@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './AdminCreateQuest.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
+import { useNavigate } from 'react-router-dom';
 
 const AdminCreateQuest = () => {
+  const navigate = useNavigate();
   const [questName, setQuestName] = useState('');
   const [questDescription, setQuestDescription] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -96,6 +98,8 @@ const AdminCreateQuest = () => {
   return (
     <>
       <Navbar />
+      <button className="button2" onClick={() => navigate('/AdminQuestBoard')}>เควสบอร์ด</button>
+
       <div className="admin-create-quest">
         <div className="quest-detail">
           <h2>Quest Detail</h2>
@@ -182,7 +186,9 @@ const AdminCreateQuest = () => {
           </select>
           <button onClick={handleCreateQuest}>สร้างเควส</button>
         </div>
+        
       </div>
+      
       <Footer />
     </>
   );

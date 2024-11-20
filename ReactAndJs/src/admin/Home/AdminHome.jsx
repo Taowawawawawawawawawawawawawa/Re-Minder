@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminHome.css';
-import { Link } from 'react-router-dom'; // Import Link
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 

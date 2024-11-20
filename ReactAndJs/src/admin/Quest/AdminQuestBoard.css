@@ -1,183 +1,198 @@
 /* AdminQuestBoard Page-Specific Styles */
 
 .admin-quest-board {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #f0e4d7;
-    color: #5b4636;
-    min-height: 100vh;
-  }
-  
-  /* Quest Container */
-  .quest-container {
-    display: flex;
-    width: 80%;
-    max-width: 1200px;
-    background-color: #f3ead7;
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-  }
-  
-  /* Quest List Section */
-  .quest-list {
-    flex: 1;
-    padding: 20px;
-    background: #faebd7;
-    border-right: 2px solid #d2b48c;
-  }
-  
-  .quest-list h2 {
-    text-align: center;
-    font-size: 1.8em;
-    margin-bottom: 10px;
-    color: #5b4636;
-  }
-  
-  .difficulty-tabs {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  
-  .tab {
-    padding: 8px 0;
-    border: none;
-    background-color: #b8a08b;
-    color: #fff;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .tab.active {
-    background-color: #f4d19b;
-  }
-  
-  .quest-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .quest-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    margin-bottom: 10px;
-    background-color: #fdeacc;
-    border-radius: 5px;
-    font-size: 1em;
-    color: #5b4636;
-    cursor: pointer;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .quest-status {
-    font-size: 0.9em;
-    color: #5a5a5a;
-  }
-  
-  /* Quest Detail Section */
-  .quest-detail {
-    flex: 1;
-    padding: 20px;
-    background: #faebd7;
-  }
-  
-  .quest-detail h2 {
-    text-align: center;
-    font-size: 1.8em;
-    margin-bottom: 20px;
-    color: #5b4636;
-  }
-  
-  .quest-title {
-    font-weight: bold;
-    font-size: 1.2em;
-    margin-bottom: 10px;
-  }
-  
-  .quest-info p {
-    margin: 5px 0;
-    color: #5a5a5a;
-  }
-  
-  .approval-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-  
-  .approve-button,
-  .reject-button {
-    flex: 1;
-    padding: 10px;
-    font-weight: bold;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 8px;
-  }
-  
-  .approve-button {
-    background-color: #4caf50;
-  }
-  
-  .reject-button {
-    background-color: #f44336;
-  }
-  
-  /* Action Buttons */
-  .action-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .cancel-quest,
-  .approve-quest {
-    flex: 1;
-    padding: 10px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #8b5e3c;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .cancel-quest {
-    background-color: #ff9800;
-  }
-  
-  .approve-quest {
-    background-color: #4caf50;
-  }
-  
-  .reason-input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #d2b48c;
-    color: #5b4636;
-    font-size: 1em;
-  }
-  
-  /* Navbar and Footer */
-  .navbar, .footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    text-align: center;
-  }
-  
-  
+  background: url('/src/images/quest_bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0e4d7;
+  color: #5b4636;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.quest-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  background-color: #f3ead7;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.quest-list {
+  flex: 1;
+  padding: 20px;
+  background: #faebd7;
+  border-right: 2px solid #d2b48c;
+  overflow-y: auto; /* Ensures list is scrollable */
+}
+
+.quest-list h2 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  color: #5b4636;
+}
+
+.difficulty-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 8px 0;
+  border: none;
+  background-color: #b8a08b;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.tab.active {
+  background-color: #f4d19b;
+}
+
+.quest-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quest-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: #fdeacc;
+  border-radius: 5px;
+  font-size: 1em;
+  color: #5b4636;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.quest-item:hover {
+  background-color: #e9d8a6; /* Lighter hover effect */
+}
+
+.quest-status {
+  font-size: 0.9em;
+  color: #5a5a5a;
+}
+
+/* Quest Detail Section */
+.quest-detail {
+  flex: 2;
+  padding: 20px;
+  background: #faebd7;
+  overflow-y: auto; /* Allows content to scroll if it's too long */
+}
+
+.quest-detail h2 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #5b4636;
+}
+
+.quest-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.quest-info p {
+  margin: 5px 0;
+  color: #5a5a5a;
+}
+
+.approval-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.approve-button,
+.reject-button {
+  flex: 1;
+  padding: 10px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.approve-button {
+  background-color: #4caf50;
+}
+
+.reject-button {
+  background-color: #f44336;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cancel-quest,
+.approve-quest {
+  flex: 1;
+  padding: 10px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #8b5e3c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-quest {
+  background-color: #ff9800;
+}
+
+.approve-quest {
+  background-color: #4caf50;
+}
+
+.cancel-quest:hover {
+  background-color: #f57c00;
+}
+
+.approve-quest:hover {
+  background-color: #388e3c;
+}
+
+.reason-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #d2b48c;
+  color: #5b4636;
+  font-size: 1em;
+  margin-bottom: 10px;
+  resize: vertical;
+}
+
+
+
+
