@@ -61,16 +61,17 @@ function Questboard() {
       alert("กรุณาเลือกภารกิจก่อนจัดส่ง");
       return;
     }
-
+  
     if (!selectedFile) {
       alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("questId", selectedQuestId);
-
+    formData.append("userId", 1); // Pass a dummy user ID (replace with actual user ID)
+  
     try {
       setUploadStatus("กำลังตรวจสอบ...");
       const response = await fetch(
@@ -80,30 +81,30 @@ function Questboard() {
           body: formData,
         }
       );
-
+  
       const result = await response.json();
       console.log("Backend Result:", result);
-
+  
       if (result.status === "success") {
-        if (result.questStatus === "completed") {
-          // result.message || 
+        if (result.questStatus === "SUCCESS") {
           setUploadStatus("เควสสำเร็จ ✅");
-        } else if (result.questStatus === "not_completed") {
-          // result.message || 
+        } else if (result.questStatus === "FAILED") {
           setUploadStatus("วัตถุที่พบไม่ตรงกับเป้าหมาย ❌");
+        } else if (result.questStatus === "PENDING") {
+          setUploadStatus("รอการตรวจสอบโดยผู้ดูแลระบบ");
         } else {
-          setUploadStatus("ไม่พบวัตถุในภาพ ❌");
+          setUploadStatus("สถานะไม่ทราบ ❌");
         }
       } else {
-        // result.message || 
-        setUploadStatus("รูปภาพไม่ถูกต้อง ❌");
+        setUploadStatus(result.message || "รูปภาพไม่ถูกต้อง ❌");
       }
     } catch (err) {
       console.error("Upload error:", err);
       setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
     }
   };
-
+  
+  
 
 
   return (

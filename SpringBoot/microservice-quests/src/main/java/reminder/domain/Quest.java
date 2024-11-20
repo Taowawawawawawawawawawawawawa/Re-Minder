@@ -20,15 +20,6 @@ public class Quest {
 
     private String targetObject; // ชื่อ object ที่ต้องการให้ตรวจจับ เช่น "dog"
 
-    // Getter และ Setter
-    public String getTargetObject() {
-        return targetObject;
-    }
-
-    public void setTargetObject(String targetObject) {
-        this.targetObject = targetObject;
-    }
-
     @ElementCollection
     @CollectionTable(name = "Quest_suitableMBTI", joinColumns = @JoinColumn(name = "Quest_questId"))
     @Column(name = "suitableMBTI")
@@ -38,6 +29,15 @@ public class Quest {
     @CollectionTable(name = "Quest_availableTime", joinColumns = @JoinColumn(name = "Quest_questId"))
     @Column(name = "availableTime")
     private List<String> availableTime = new ArrayList<>();
+
+    // Getter และ Setter
+    public String getTargetObject() {
+        return targetObject;
+    }
+
+    public void setTargetObject(String targetObject) {
+        this.targetObject = targetObject;
+    }
 
     // Getter and Setter methods
     public Long getQuestId() {
