@@ -4,14 +4,16 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "quest_log") // Use lowercase table name to match the SQL
 public class QuestLog {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // Auto-generate IDs
     private Long id;
 
     @Column(name = "image_url")
@@ -29,18 +31,31 @@ public class QuestLog {
     private Integer pointReward;
     private String detail;
 
+    private String message; // ตรวจสอบว่ามี field นี้หรือไม่
+
+    // Getter และ Setter
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    private LocalDateTime submissionDate;
+
     public String getDetail() {
         return detail;
     }
+
     public void setDetail(String detail) {
         this.detail = detail;
     }
-    private LocalDateTime submissionDate;
-
 
     public LocalDateTime getSubmissionDate() {
         return submissionDate;
     }
+
     public void setSubmissionDate(LocalDateTime submissionDate) {
         this.submissionDate = submissionDate;
     }
@@ -48,6 +63,7 @@ public class QuestLog {
     public String getSubmitText() {
         return submitText;
     }
+
     public void setSubmitText(String submitText) {
         this.submitText = submitText;
     }
@@ -63,7 +79,6 @@ public class QuestLog {
     public String getImageUrl() {
         return imageUrl;
     }
-
 
     public Long getQuestId() {
         return questId;
@@ -128,7 +143,12 @@ public class QuestLog {
     public void setPointReward(Integer pointReward) {
         this.pointReward = pointReward;
     }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public Object getSubmittedImage() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'getSubmittedImage'");
     }
 }

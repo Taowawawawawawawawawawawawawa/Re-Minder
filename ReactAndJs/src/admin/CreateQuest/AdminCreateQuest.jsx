@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './AdminCreateQuest.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
+import { useNavigate } from 'react-router-dom';
 
 const AdminCreateQuest = () => {
+  const navigate = useNavigate();
   const [questName, setQuestName] = useState('');
   const [questDescription, setQuestDescription] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -11,8 +13,31 @@ const AdminCreateQuest = () => {
   const [pointReward, setPointReward] = useState('');
   const [questSubmitMethod, setQuestSubmitMethod] = useState('');
   const [targetObject, setTargetObject] = useState('');
-  const [suitableMBTI, setSuitableMBTI] = useState([]);
-  const [availableTime, setAvailableTime] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [suitableMBTI, setSuitableMBTI] = useState([]);  // เปลี่ยนให้เป็น Array
+  const [availableTime, setAvailableTime] = useState('');
+
+  const targetOptions = [
+    'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train',
+    'truck', 'boat', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 
+    'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 
+    'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 
+    'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball', 'kite', 
+    'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket', 
+    'bottle', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 
+    'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 
+    'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'dining table', 
+    'toilet', 'tv', 'laptop', 'mouse', 'remote', 'keyboard', 'cell phone', 
+    'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 
+    'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush', 'other'
+  ];
+
+  const mbtiOptions = ['INTJ', 'ENTP', 'INFJ', 'ESFP'];
+  const timeSlots = ['08:00-12:00', '14:00-18:00', '18:00-22:00'];
+
+  const filteredTargets = targetOptions.filter((target) =>
+    target.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleCreateQuest = async () => {
     if (
@@ -23,8 +48,8 @@ const AdminCreateQuest = () => {
       !pointReward ||
       !questSubmitMethod ||
       !targetObject ||
-      suitableMBTI.length === 0 ||
-      availableTime.length === 0
+      suitableMBTI.length === 0 ||  // ตรวจสอบว่าได้เลือก MBTI อย่างน้อยหนึ่งค่า
+      !availableTime
     ) {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
       return;
@@ -38,7 +63,7 @@ const AdminCreateQuest = () => {
       pointReward: parseInt(pointReward),
       questSubmitMethod,
       targetObject,
-      suitableMBTI,
+      suitableMBTI,  // ส่งข้อมูลเป็น Array
       availableTime,
     };
 
@@ -51,6 +76,7 @@ const AdminCreateQuest = () => {
 
       if (response.ok) {
         alert(`Quest "${questName}" created successfully!`);
+        // Reset form fields
         setQuestName('');
         setQuestDescription('');
         setDifficulty('');
@@ -58,8 +84,9 @@ const AdminCreateQuest = () => {
         setPointReward('');
         setQuestSubmitMethod('');
         setTargetObject('');
-        setSuitableMBTI([]);
-        setAvailableTime([]);
+        setSearchTerm('');
+        setSuitableMBTI([]);  // Reset suitableMBTI เป็น Array เปล่า
+        setAvailableTime('');
       } else {
         const error = await response.json();
         alert(`Failed to create quest: ${error.message}`);
@@ -69,29 +96,11 @@ const AdminCreateQuest = () => {
     }
   };
 
-  const handleAddMBTI = (mbti) => {
-    if (!suitableMBTI.includes(mbti)) {
-      setSuitableMBTI([...suitableMBTI, mbti]);
-    }
-  };
-
-  const handleRemoveMBTI = (mbti) => {
-    setSuitableMBTI(suitableMBTI.filter((item) => item !== mbti));
-  };
-
-  const handleAddTimeSlot = (slot) => {
-    if (!availableTime.includes(slot)) {
-      setAvailableTime([...availableTime, slot]);
-    }
-  };
-
-  const handleRemoveTimeSlot = (slot) => {
-    setAvailableTime(availableTime.filter((item) => item !== slot));
-  };
-
   return (
     <>
       <Navbar />
+      <button className="button2" onClick={() => navigate('/AdminQuestBoard')}>เควสบอร์ด</button>
+
       <div className="admin-create-quest">
         <div className="quest-detail">
           <h2>Quest Detail</h2>
@@ -127,51 +136,64 @@ const AdminCreateQuest = () => {
             value={pointReward}
             onChange={(e) => setPointReward(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="วิธีส่งงาน (เช่น upload)"
+          <select
             value={questSubmitMethod}
             onChange={(e) => setQuestSubmitMethod(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="เป้าหมาย (เช่น dog)"
-            value={targetObject}
-            onChange={(e) => setTargetObject(e.target.value)}
-          />
-          <div>
-            <h4>Suitable MBTI</h4>
-            {['INTJ', 'ENTP', 'INFJ', 'ESFP'].map((mbti) => (
-              <button
-                key={mbti}
-                onClick={() =>
-                  suitableMBTI.includes(mbti)
-                    ? handleRemoveMBTI(mbti)
-                    : handleAddMBTI(mbti)
-                }
-              >
-                {mbti} {suitableMBTI.includes(mbti) ? '✓' : ''}
-              </button>
-            ))}
+          >
+            <option value="">เลือกวิธีส่งงาน</option>
+            <option value="image">Image</option>
+            <option value="text">Text</option>
+          </select>
+          <div className="searchable-dropdown">
+            <input
+              type="text"
+              placeholder="ค้นหาเป้าหมาย..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <select
+              value={targetObject}
+              onChange={(e) => setTargetObject(e.target.value)}
+            >
+              <option value="">เลือกเป้าหมาย</option>
+              {filteredTargets.map((target) => (
+                <option key={target} value={target}>
+                  {target}
+                </option>
+              ))}
+            </select>
           </div>
-          <div>
-            <h4>Available Time</h4>
-            {['08:00-12:00', '14:00-18:00', '18:00-22:00'].map((slot) => (
-              <button
-                key={slot}
-                onClick={() =>
-                  availableTime.includes(slot)
-                    ? handleRemoveTimeSlot(slot)
-                    : handleAddTimeSlot(slot)
-                }
-              >
-                {slot} {availableTime.includes(slot) ? '✓' : ''}
-              </button>
+          <select
+            multiple  // เพิ่ม attribute multiple เพื่อให้เลือกได้หลายค่า
+            value={suitableMBTI}
+            onChange={(e) => {
+              const selectedValues = Array.from(e.target.selectedOptions, option => option.value);
+              setSuitableMBTI(selectedValues);  // อัพเดตค่าของ suitableMBTI เป็น Array
+            }}
+          >
+            <option value="">Suitable MBTI</option>
+            {mbtiOptions.map((mbti) => (
+              <option key={mbti} value={mbti}>
+                {mbti}
+              </option>
             ))}
-          </div>
+          </select>
+          <select
+            value={availableTime}
+            onChange={(e) => setAvailableTime(e.target.value)}
+          >
+            <option value="">Available Time</option>
+            {timeSlots.map((slot) => (
+              <option key={slot} value={slot}>
+                {slot}
+              </option>
+            ))}
+          </select>
           <button onClick={handleCreateQuest}>สร้างเควส</button>
         </div>
+        
       </div>
+      
       <Footer />
     </>
   );

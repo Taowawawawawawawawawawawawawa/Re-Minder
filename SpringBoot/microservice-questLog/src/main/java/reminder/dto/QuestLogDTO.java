@@ -3,59 +3,39 @@ package reminder.dto;
 import java.time.LocalDateTime;
 
 public class QuestLogDTO {
-    
 
-
+    private Long id;
     private Long userId;
     private Long questId;
     private String status;
-
     private String questDescription;
     private Integer berylReward;
 
-    
-    public String getDetail() {
-        return detail;
+    private String message; // ตรวจสอบว่ามี field นี้หรือไม่
+
+    // Getter และ Setter
+    public String getMessage() {
+        return message;
     }
-    public void setDetail(String detail) {
-        this.detail = detail;
+
+    public void setMessage(String message) {
+        this.message = message;
     }
+
+
     private Integer difficulty;
     private Integer pointReward;
     private LocalDateTime submissionDate;
     private String detail;
-
-
-    public String getSubmitText() {
-        return submitText;
-    }
-    public void setSubmitText(String submitText) {
-        this.submitText = submitText;
-    }
     private String submitText;
-
-
-    // Getters and Setters
-    public Long getId() {
-        return userId;
-    }
     private String questName;
     private String imageUrl;
-
-
-
-
-    public String getQuestName() {
-        return questName;
+    
+    public Long getId() {
+        return id;
     }
-    public void setQuestName(String questName) {
-        this.questName = questName;
-    }
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setId(Long id) {
+        this.id = id;
     }
     public Long getUserId() {
         return userId;
@@ -75,52 +55,61 @@ public class QuestLogDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+    public String getQuestDescription() {
+        return questDescription;
+    }
+    public void setQuestDescription(String questDescription) {
+        this.questDescription = questDescription;
+    }
+    public Integer getBerylReward() {
+        return berylReward;
+    }
+    public void setBerylReward(Integer berylReward) {
+        this.berylReward = berylReward;
+    }
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
+    public Integer getPointReward() {
+        return pointReward;
+    }
+    public void setPointReward(Integer pointReward) {
+        this.pointReward = pointReward;
+    }
     public LocalDateTime getSubmissionDate() {
         return submissionDate;
     }
     public void setSubmissionDate(LocalDateTime submissionDate) {
         this.submissionDate = submissionDate;
     }
-    public String setDetail() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'setDetail'");
+    public String getDetail() {
+        return detail;
     }
-    public void getDetail(String detail2) {
- 
-        throw new UnsupportedOperationException("Unimplemented method 'getDetail'");
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
-    public String getQuestDescription() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getQuestDescription'");
+    public String getSubmitText() {
+        return submitText;
     }
-    public Integer getBerylReward() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getBerylReward'");
+    public void setSubmitText(String submitText) {
+        this.submitText = submitText;
     }
-    public Integer getDifficulty() {
-  
-        throw new UnsupportedOperationException("Unimplemented method 'getDifficulty'");
+    public String getQuestName() {
+        return questName;
     }
-    public Integer getPointReward() {
-
-        throw new UnsupportedOperationException("Unimplemented method 'getPointReward'");
+    public void setQuestName(String questName) {
+        this.questName = questName;
     }
-    public void setQuestDescription(String questDescription2) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'setQuestDescription'");
+    public String getImageUrl() {
+        return imageUrl;
     }
-    public void setBerylReward(Integer berylReward2) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'setBerylReward'");
-    }
-    public void setDifficulty(Integer difficulty2) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'setDifficulty'");
-    }
-    public void setPointReward(Integer pointReward2) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'setPointReward'");
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    // Getter, Setter, Constructor
+    
+
 }
