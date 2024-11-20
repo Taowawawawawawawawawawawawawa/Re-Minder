@@ -1,18 +1,19 @@
+/* Navbar Styling */
 .navbar {
   background: url(/src/images/BGwood.png), #D9D9D9;
-  width: auto;
-  height: 70px;
-  border-radius: 0px;
+  width: 100%;
+  height: 80px; /* Increased height for better spacing */
+  border-radius: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: Arial, sans-serif;
   color: #fff;
   z-index: 100;
+  padding: 0 20px; /* Add padding for proper spacing */
 }
 
-
-
+/* Left Section (Profile) */
 .navbar-left {
   display: flex;
   align-items: center;
@@ -22,72 +23,73 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70px; /* Adjust size as needed */
+  width: 70px;
   height: 70px;
-  border-radius: 50%; /* Ensures the frame is circular */
-  border: 5px solid #8b5e3c; /* Outer frame border color */
-  background: linear-gradient(145deg, #d2b48c, #c2a17b); /* Decorative gradient */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Adds depth */
-  padding: 5px; /* Spacing between frame and image */
-  margin: 10px 10px 10px 10px;
+  border-radius: 50%;
+  border: 5px solid #8b5e3c;
+  background: linear-gradient(145deg, #d2b48c, #c2a17b);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  margin: 0 10px; /* Adjust margins to make it more balanced */
 }
-
 .profile-icon {
   width: 100px;
   height: 100px;
   border-radius: 100%;
-
-
 }
 
+/* Navbar Title Styling */
 .navbar-title {
   font-size: 18px;
   background-color: #f5deb3;
   padding: 8px 15px;
   border-radius: 20px;
+  text-align: center; /* Center text within the title box */
 }
 
+/* Right Section (Currency and Buttons) */
 .navbar-right {
   display: flex;
-  gap: 10px;
-  padding: 10px;
+  gap: 20px;
+  padding: 0 10px;
 }
 
 .currency {
-  height: 50px; /* Slightly larger for better visibility */
+  height: 50px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensures content spreads evenly */
+  justify-content: space-between;
   background-color: #deb887;
-  border: 5px solid #4a2f27; /* Thinner border for a cleaner look */
+  border: 5px solid #4a2f27;
   border-radius: 20px;
-  padding: 5px 10px; /* More even padding for balanced spacing */
-  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3); /* Keeps the subtle shadow */
-  gap: 8px; /* Space between icon and text */
-  min-width: 120px; /* Ensures enough space for content */
+  padding: 5px 10px;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+  gap: 10px;
+  min-width: 150px; /* Increased minimum width for better spacing */
 }
 
 .icon {
-  width: 40px; /* Reduced size for better alignment */
+  width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 3px solid #4a2f27; /* Thinner border */
-  margin-right: 5px; /* Space adjustment */
+  border: 3px solid #4a2f27;
+  margin-right: 10px; /* Adjusted margin for better alignment */
 }
 
 .currency-amount {
-  font-size: 1.2rem; /* Slightly increased font size for readability */
+  font-size: 1.2rem;
   color: #4a2f27;
   font-weight: bold;
 }
 
+/* Add Button Styling */
 .add-button {
   background-color: #4a2f27;
   color: white;
-  font-size: 1rem; /* Adjusted to match size of container */
+  font-size: 1rem;
   border: none;
   border-radius: 50%;
-  width: 30px; /* Increased width for a larger clickable area */
+  width: 30px;
   height: 30px;
   display: flex;
   align-items: center;
@@ -99,7 +101,7 @@
   background-color: #6b4a3e;
 }
 
-
+/* Settings Button */
 .settings-button {
   background: none;
   border: none;
@@ -111,16 +113,16 @@
   height: 40px;
 }
 
-/* Counter container */
+/* Counter Container Styling */
 .counter-container {
   display: flex;
   align-items: center;
-  background-color: #d3c3a3; /* Light wood color */
+  background-color: #d3c3a3;
   border-radius: 50px;
   padding: 10px 20px;
-  width: 200px; /* Adjust to fit your design */
+  width: 200px;
   background-image: linear-gradient(to right, #d3c3a3, #d3c3a3);
-  border: 5px solid #5a3d2f; /* Dark wood border */
+  border: 5px solid #5a3d2f;
   position: relative;
 }
 
@@ -129,7 +131,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #5a3d2f; /* Dark wood color for the border */
+  background-color: #5a3d2f;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,9 +154,9 @@
 .counter-text {
   font-family: 'Arial', sans-serif;
   font-size: 24px;
-  color: #5a3d2f; /* Dark text color */
+  color: #5a3d2f;
   font-weight: bold;
-  text-shadow: 1px 1px 0 #FFFFFF; /* Light border effect for text */
+  text-shadow: 1px 1px 0 #FFFFFF;
 }
 
 /* Plus Icon */
@@ -162,7 +164,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: #5a3d2f; /* Dark wood color */
+  background-color: #5a3d2f;
   display: flex;
   align-items: center;
   justify-content: center;

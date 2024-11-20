@@ -1,73 +1,171 @@
+/* General Layout */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  font-family: 'Kanit', Arial, sans-serif; /* Font for overall design */
+  background-color: #f4f4f4; /* Light background */
+  color: #333; /* Dark text color */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+  overflow: hidden; /* Prevent scrolling of the whole page */
+  height: 100%; /* Ensure the body takes full viewport height */
+}
+
+/* Make the body take the full height and allow content to scroll within the container */
 .admin-create-quest {
-    display: flex;
-    gap: 20px;
-    font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-height: 100vh; /* Allow container to grow with available space */
+  overflow-y: auto; /* Make the container scrollable */
+  position: relative; /* Ensure it's contained within its section */
+  z-index: 10;
+}
+
+/* Quest Detail Styling */
+.quest-detail {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 2;
+  flex: 1; /* Allow it to take available space */
+  overflow-y: auto; /* Allow scroll within quest detail */
+  max-height: 80vh; /* Limit the height of the quest detail */
+}
+
+/* Background styling */
+body {
+  background: url('/src/images/quest_bg.jpg') no-repeat center center fixed;
+  background-size: cover; /* Ensure the background covers the screen */
+  height: 100vh; /* Full viewport height for body */
+  width: 100%; /* Full viewport width */
+  background-attachment: fixed; /* Ensures background stays fixed */
+}
+
+/* Heading */
+.quest-detail h2 {
+  font-size: 2rem;
+  color: #5d3b1a;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Prevent number spinner in Firefox */
+}
+
+input::placeholder, textarea::placeholder {
+  color: #888;
+}
+
+/* Focus on input fields */
+input:focus, textarea:focus, select:focus {
+  border-color: #8b5a2b;
+  box-shadow: 0 0 5px rgba(139, 90, 43, 0.5);
+}
+
+/* Textarea */
+textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 180px; /* Set a default minimum height */
+  height: auto; /* Allow it to expand naturally with content */
+}
+
+/* Select Dropdown */
+select {
+  background: #fff;
+  color: #333;
+}
+
+/* Button */
+button {
+  background-color: #8b5a2b;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #a5673f;
+}
+
+.button2 {
+  background-color: #8b5a2b;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.button2:hover {
+  background-color: #a5673f;
+}
+
+
+/* Searchable Dropdown */
+.searchable-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.searchable-dropdown input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.searchable-dropdown select {
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .quest-detail {
+    padding: 20px;
   }
-  
-  .quest-detail, .quest-list {
-    background-color: #f4e1c1;
-    border: 2px solid #8b5a2b;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+
+  button {
+    font-size: 1rem;
   }
-  
-  .quest-detail h2, .quest-list h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    color: #5d3b1a;
-  }
-  
-  .quest-detail input, .quest-detail select, .quest-list input {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #c69a6b;
-    border-radius: 5px;
-    font-size: 1em;
-  }
-  
-  .quest-detail button {
-    width: 100%;
-    padding: 10px;
-    background-color: #8b5a2b;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-  }
-  
-  .quest-detail button:hover {
-    background-color: #a5673f;
-  }
-  
-  .quest-list .quest-categories button {
-    background-color: #d9a173;
-    border: none;
-    padding: 5px 10px;
-    margin-right: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .quest-list .quest-items {
-    margin-top: 10px;
-  }
-  
-  .quest-list .quest-item {
-    background-color: #fff;
-    padding: 8px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    border: 1px solid #c69a6b;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .quest-list .quest-item span {
-    color: #a5673f;
-    font-weight: bold;
-  }
-  
+}

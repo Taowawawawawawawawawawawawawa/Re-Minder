@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import './Setting.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import SlimeGif from '../../images/Slime.GIF';
 
 const Settings = () => {
+    const navigate = useNavigate();
     const [showEditModal, setShowEditModal] = useState(false);
 
     const handleEditClick = () => {
         setShowEditModal(true);
     };
-
+    const handleLogout = () => {
+        sessionStorage.clear(); // Clear the session
+        navigate("/Welcome"); // Redirect to login page
+      };
     const handleCancelClick = () => {
         setShowEditModal(false);
     };
@@ -48,7 +52,7 @@ const Settings = () => {
                     <button className="edit-info-button" onClick={handleEditClick}>
                         แก้ไขข้อมูลส่วนตัว
                     </button>
-                    <button className="logout-button">Logout</button>
+                    <button className="logout-button" onClick={handleLogout} >Logout</button>
                 </div>
 
                 {showEditModal && (
