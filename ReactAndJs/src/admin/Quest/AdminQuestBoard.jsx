@@ -12,29 +12,30 @@ const AdminQuestBoard = () => {
   // Fetch pending quests
   const fetchNameQuests = async () => {
     try {
-      const response = await fetch('http://localhost:8203/questlogs/pending');
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-      const questLogs = await response.json();
+        const response = await fetch("http://localhost:8203/questlogs/pending");
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        const questLogs = await response.json();
 
-      // Fetch user data for each quest log
-      const usersData = await Promise.all(
-        questLogs.map(async (quest) => {
-          const userResponse = await fetch(`http://localhost:8200/users/${quest.userId}`);
-          if (!userResponse.ok) {
-            throw new Error(`Failed to fetch user data for userId: ${quest.userId}`);
-          }
-          const user = await userResponse.json();
-          return { ...quest, senderName: user.name }; // Combine quest log with user name
-        })
-      );
+        // Fetch user data for each quest log
+        const enrichedQuests = await Promise.all(
+            questLogs.map(async (quest) => {
+                const userResponse = await fetch(`http://localhost:8200/users/${quest.userId}`);
+                if (!userResponse.ok) {
+                    throw new Error(`Failed to fetch user data for userId: ${quest.userId}`);
+                }
+                const user = await userResponse.json();
+                return { ...quest, senderName: user.name }; // Combine quest log with user name
+            })
+        );
 
-      setNameQuests(usersData);
+        setNameQuests(enrichedQuests);
     } catch (err) {
-      setError(err.message);
+        setError(err.message);
     }
-  };
+};
+
 
   // Fetch data on component mount
   useEffect(() => {

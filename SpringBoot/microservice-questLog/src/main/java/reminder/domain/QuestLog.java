@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class QuestLog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Auto-generate IDs
-    private Long id;
+    private Long id ;
 
 
     @Lob
@@ -153,5 +153,10 @@ public class QuestLog {
     public Object getSubmittedImage() {
 
         throw new UnsupportedOperationException("Unimplemented method 'getSubmittedImage'");
+    }
+
+    public void setRejectionReason(String reason) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setRejectionReason'");
     }
 }

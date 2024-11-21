@@ -27,13 +27,35 @@ function SignIn() {
                 const user = await response.json();
                 sessionStorage.setItem('role', 'user');
                 sessionStorage.setItem('userData', JSON.stringify(user));
-                alert(`Welcome, ${user.name}!`);
+                alert(`ยินดีต้อนรับกลับนะ, ${user.name}!`);
                 navigate('/Home');
                 return;
             }
         }
     
-
+        const bypassAdminLogin = async () => {
+            setError(''); // Clear previous errors
+            
+                // Try user login
+                let response = await fetch('http://localhost:8201/admins/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'admin1@example.com',
+                        password: 'securePassword123'
+                    })
+                });
+                
+    
+                if (response.ok) {
+                    const admin = await response.json();
+                    sessionStorage.setItem('role', 'admin');
+                    sessionStorage.setItem('adminData', JSON.stringify(admin));
+                    alert(`ยินดีต้อนรับกลับนะ ${admin.adminName}!`);
+                    navigate('/AdminHome');
+                    return;
+                }
+            }
 
     const handleSignIn = async () => {
         setError(''); // Clear previous errors
@@ -126,6 +148,7 @@ function SignIn() {
                 <button className="signin-button" onClick={handleSignIn}>จริงสิ (Login)</button>
                 <button className="signin-button" onClick={() => navigate('/')}>ย้อนกลับ</button>
                 <button className="signin-button" onClick={bypassLogin}>Bypass</button>
+                <button className="signin-button" onClick={bypassAdminLogin}>BypassAdmin</button>
 
             </div>
         </div>

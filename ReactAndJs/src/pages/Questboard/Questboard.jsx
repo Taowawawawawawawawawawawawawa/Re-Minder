@@ -158,7 +158,9 @@ function Questboard() {
                 {["ง่าย", "กลาง", "ยาก"].map((difficulty) => (
                   <button
                     key={difficulty}
-                    className={`tab-button ${selectedDifficulty === difficulty ? "active" : ""}`}
+                    className={`tab-button ${
+                      selectedDifficulty === difficulty ? "active" : ""
+                    }`}
                     onClick={() => handleTabClick(difficulty)}
                   >
                     {difficulty}
@@ -175,7 +177,9 @@ function Questboard() {
                   {filteredQuests.map((quest) => (
                     <li
                       key={quest.questId}
-                      className={`quest-item ${selectedQuestId === quest.questId ? "selected" : ""}`}
+                      className={`quest-item ${
+                        selectedQuestId === quest.questId ? "selected" : ""
+                      }`}
                       onClick={() => setSelectedQuestId(quest.questId)}
                     >
                       <p>{quest.questName}</p>
@@ -195,7 +199,8 @@ function Questboard() {
                     <strong>คำอธิบาย:</strong> {selectedQuest.questDescription}
                   </p>
                   <p>
-                    <strong>วิธีการส่งภารกิจ:</strong> {selectedQuest.questSubmitMethod}
+                    <strong>วิธีการส่งภารกิจ:</strong>{" "}
+                    {selectedQuest.questSubmitMethod}
                   </p>
 
                   {selectedQuest.questSubmitMethod === "image" && (
@@ -235,7 +240,9 @@ function Questboard() {
                   </div>
                   {uploadStatus && (
                     <p
-                      className={`upload-status ${uploadStatus.includes("❌") ? "error" : "success"}`}
+                      className={`upload-status ${
+                        uploadStatus.includes("❌") ? "error" : "success"
+                      }`}
                     >
                       {uploadStatus}
                     </p>

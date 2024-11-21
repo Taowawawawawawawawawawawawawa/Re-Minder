@@ -3,11 +3,6 @@ INSERT INTO costume (costumeId, costumeType, costumeName, costumeDescription, co
 (10001, 'HAT', 'Wizard Hat', 'A magical hat for spellcasters.', 'https://i.ibb.co/sgmB3Cd/Wizard.png', 200),
 (10002, 'DRESS', 'Princess Dress', 'An elegant dress for royal occasions.', 'https://i.ibb.co/4m998XT/princess.png', 300);
 
--- Mock data for Themes
-INSERT INTO themes (themeId, frameSpriteArts, backGround, bgm, price) VALUES
-(20001, '/themes/frames/forest_frame.png', '/themes/backgrounds/forest_background.png', '/themes/bgm/forest_theme.mp3', 150),
-(20002, '/themes/frames/space_frame.png', '/themes/backgrounds/space_background.png', '/themes/bgm/space_theme.mp3', 250);
-
 -- Mock data for Rewards
 INSERT INTO rewards (rewardId, rewardSpriteArts, rewardName, rewardDescription, rewardPrice) VALUES
 (30001, '/rewards/sprites/coupon_sprite.png', 'Discount Coupon', 'Redeem for 10% off your next purchase.', 100),

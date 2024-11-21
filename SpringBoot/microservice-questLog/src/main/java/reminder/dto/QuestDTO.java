@@ -3,6 +3,7 @@ package reminder.dto;
 import java.util.List;
 
 public class QuestDTO {
+    private Long id;
     private Long questId;
     private String questName;
     private String questDescription;
@@ -93,5 +94,13 @@ public class QuestDTO {
 
     public void setAvailableTime(List<String> availableTime) {
         this.availableTime = availableTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

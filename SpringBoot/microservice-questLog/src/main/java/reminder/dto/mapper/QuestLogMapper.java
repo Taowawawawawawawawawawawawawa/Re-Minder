@@ -11,6 +11,7 @@ public class QuestLogMapper {
     public QuestLog toEntity(QuestLogDTO dto) {
         QuestLog questLog = new QuestLog();
         questLog.setId(dto.getId());
+        questLog.setId(dto.getId());
         questLog.setUserId(dto.getUserId());
         questLog.setQuestId(dto.getQuestId());
         questLog.setStatus(dto.getStatus());
@@ -28,6 +29,7 @@ public class QuestLogMapper {
 
     // Update existing QuestLog entity from DTO
     public void updateQuestLogFromEntity(QuestLog entity, QuestLogDTO dto) {
+        dto.setId(entity.getId());
         dto.setUserId(entity.getUserId());
         dto.setQuestId(entity.getQuestId());
         dto.setStatus(entity.getStatus());
