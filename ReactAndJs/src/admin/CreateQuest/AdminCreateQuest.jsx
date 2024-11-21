@@ -14,8 +14,8 @@ const AdminCreateQuest = () => {
   const [questSubmitMethod, setQuestSubmitMethod] = useState('');
   const [targetObject, setTargetObject] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [suitableMBTI, setSuitableMBTI] = useState([]);  // เปลี่ยนให้เป็น Array
-  const [availableTime, setAvailableTime] = useState('');
+  const [suitableMBTI, setSuitableMBTI] = useState([]);
+  const [availableTime, setAvailableTime] = useState([]);
 
   const targetOptions = [
     'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train',
@@ -48,8 +48,8 @@ const AdminCreateQuest = () => {
       !pointReward ||
       !questSubmitMethod ||
       !targetObject ||
-      suitableMBTI.length === 0 ||  // ตรวจสอบว่าได้เลือก MBTI อย่างน้อยหนึ่งค่า
-      !availableTime
+      !suitableMBTI.length ||
+      !availableTime.length
     ) {
       alert('กรุณากรอกข้อมูลให้ครบถ้วน');
       return;
@@ -63,7 +63,7 @@ const AdminCreateQuest = () => {
       pointReward: parseInt(pointReward),
       questSubmitMethod,
       targetObject,
-      suitableMBTI,  // ส่งข้อมูลเป็น Array
+      suitableMBTI,
       availableTime,
     };
 
@@ -76,7 +76,6 @@ const AdminCreateQuest = () => {
 
       if (response.ok) {
         alert(`Quest "${questName}" created successfully!`);
-        // Reset form fields
         setQuestName('');
         setQuestDescription('');
         setDifficulty('');
@@ -85,8 +84,8 @@ const AdminCreateQuest = () => {
         setQuestSubmitMethod('');
         setTargetObject('');
         setSearchTerm('');
-        setSuitableMBTI([]);  // Reset suitableMBTI เป็น Array เปล่า
-        setAvailableTime('');
+        setSuitableMBTI([]);
+        setAvailableTime([]);
       } else {
         const error = await response.json();
         alert(`Failed to create quest: ${error.message}`);
@@ -164,11 +163,11 @@ const AdminCreateQuest = () => {
             </select>
           </div>
           <select
-            multiple  // เพิ่ม attribute multiple เพื่อให้เลือกได้หลายค่า
+            multiple
             value={suitableMBTI}
             onChange={(e) => {
               const selectedValues = Array.from(e.target.selectedOptions, option => option.value);
-              setSuitableMBTI(selectedValues);  // อัพเดตค่าของ suitableMBTI เป็น Array
+              setSuitableMBTI(selectedValues);
             }}
           >
             <option value="">Suitable MBTI</option>
@@ -179,8 +178,12 @@ const AdminCreateQuest = () => {
             ))}
           </select>
           <select
+            multiple
             value={availableTime}
-            onChange={(e) => setAvailableTime(e.target.value)}
+            onChange={(e) => {
+              const selectedValues = Array.from(e.target.selectedOptions, option => option.value);
+              setAvailableTime(selectedValues);
+            }}
           >
             <option value="">Available Time</option>
             {timeSlots.map((slot) => (
@@ -191,9 +194,8 @@ const AdminCreateQuest = () => {
           </select>
           <button onClick={handleCreateQuest}>สร้างเควส</button>
         </div>
-        
       </div>
-      
+
       <Footer />
     </>
   );

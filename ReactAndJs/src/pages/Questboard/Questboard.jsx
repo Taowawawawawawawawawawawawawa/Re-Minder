@@ -25,7 +25,7 @@ function Questboard() {
     const fetchQuests = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:8202/quests/all`);
+        const response = await fetch(`http://localhost:8202/quests/randoms`);
         if (!response.ok) {
           throw new Error("Failed to fetch quests");
         }
