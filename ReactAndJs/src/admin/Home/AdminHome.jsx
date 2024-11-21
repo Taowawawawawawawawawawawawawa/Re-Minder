@@ -9,20 +9,20 @@ function AdminHome() {
     return <><Navbar />
     <div className="admin-home-container">
       <main className="admin-main-content">
-        <div className="section quest-section" onClick={() => navigate('/AdminCreateQuest')}> 
-          <h1>เควสต์</h1>
-          <p>Quest</p>
+        <div className="section admin-quest-section" onClick={() => navigate('/AdminCreateQuest')}> 
+          <admin-h1>เควสต์</admin-h1>
+          <admin-p>Quest</admin-p>
         </div>
         <div className="section shopadmin-section" onClick={() => navigate('/AdminShop')}>
-          <h1>เพิ่มของเข้าร้านค้า</h1>
-          <p>Add to Shop</p>
+          <admin-h1>เพิ่มของเข้าร้านค้า</admin-h1>
+          <admin-p>Add to Shop</admin-p>
         </div>
         <div className="slime-list" onClick={() => navigate('/Userlist')}>
           SLIME LIST
         </div>
-        <div className="section contact-section" onClick={() => navigate('/Admincontact')}>
-          <h1>จดหมายถึงแอดมิน</h1>
-          <p>Contact Admin</p>
+        <div className="section admin-contact-section" onClick={() => navigate('/Admincontact')}>
+          <admin-h1>จดหมายถึงแอดมิน</admin-h1>
+          <admin-p>Contact Admin</admin-p>
         </div>
       </main>
     </div>

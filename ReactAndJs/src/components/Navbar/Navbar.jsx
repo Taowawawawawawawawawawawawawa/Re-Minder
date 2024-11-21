@@ -14,7 +14,8 @@ function Navbar() {
 
   const [userData, setUserData] = useState(null);
   const [role, setRole] = useState("");
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true); // Loading state
+  const [isPlaying, setIsPlaying] = useState(false); // Audio play state
 
   useEffect(() => {
     // Simulate fetching user data
@@ -30,10 +31,7 @@ function Navbar() {
     setLoading(false); // Set loading to false after data is fetched
   }, []);
 
-  const handleLogout = () => {
-    sessionStorage.clear(); // Clear the session
-    navigate("/SignIn"); // Redirect to login page
-  };
+
 
   // Play audio function
   const playAudio = () => {
@@ -41,7 +39,13 @@ function Navbar() {
       sharedAudio = new Audio("/audio/GoodEnd.m4a");
       sharedAudio.loop = true;
     }
-    sharedAudio.play().catch((err) => console.error("Error playing audio:", err));
+
+    if (isPlaying) {
+      sharedAudio.pause();
+    } else {
+      sharedAudio.play().catch((err) => console.error("Error playing audio:", err));
+    }
+    setIsPlaying(!isPlaying); // Toggle play state
   };
 
   const navbarStyle = {
@@ -215,22 +219,23 @@ function Navbar() {
           style={{
             ...addButtonStyle,
             backgroundColor: "#4a2f27",
-            padding: '8px',
+            padding: '10px',
             width: '40px',
             height: '40px',
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+            ...(isPlaying && { backgroundColor: '#e0e0e0' }), // Change background when playing
+            position: 'relative', // Set position to relative for flexibility
+            top: '8px', // Moves the button 10px down from its original position
           }}
-          title="Play Song"
+          title={isPlaying ? "Stop Song" : "Play Song"}
         >
           🎵
         </button>
 
-        <button
-          style={settingsButtonStyle}
-          onClick={() => navigate("/setting")}
-          title="Settings"
-        >
-          <img src={setting_icon} alt="Settings" style={settingsButtonImageStyle} />
+
+        {/* Settings Button */}
+        <button onClick={() => navigate("/setting")} style={{ background: 'none', border: 'none' }}>
+          <img src={setting_icon} alt="Settings" style={{ width: '40px', height: '40px' }} />
         </button>
       </div>
     </div>

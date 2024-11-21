@@ -184,12 +184,12 @@ const Shop = () => {
   const avatarStyle = {
     position: 'absolute',
     left: '20px',
-    top: '75%',
+    top: '80%',
     transform: 'translateY(-50%)',
   };
 
   const avatarImageStyle = {
-    width: '450px',
+    width: '500px',
     height: 'auto',
   };
 

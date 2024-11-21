@@ -34,11 +34,13 @@ body, html {
   color: #2a2a2a;
   text-align: center;
   position: relative;
+  cursor: pointer; /* Indicates interactivity */
 }
 
+/* Hover Effects */
 .quest-section, .shop-section, .room-section {
   position: relative;
-  overflow: hidden; /* Ensures the overlay does not exceed the section */
+  overflow: hidden;
 }
 
 .quest-section::before, .shop-section::before, .room-section::before {
@@ -57,6 +59,7 @@ body, html {
   opacity: 1; /* Show overlay on hover */
 }
 
+/* Section Backgrounds on Hover */
 .quest-section:hover {
   background: url('/src/images/Quest_sec.png') center/cover, #D9D9D9;
 }
@@ -69,16 +72,53 @@ body, html {
   background: url('/src/images/Myroom_sec.png') center/cover, #D9D9D9;
 }
 
+/* Text Styling */
+.section h1 {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 80px;
+  font-weight: bold;
+  color: #313131;
+}
 
-
-.section h1, .section h2 {
-  font-size: 24px;
-  margin-bottom: 5px;
+.section h2 {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 50px;
+  font-weight: bold;
+  color: #313131;
 }
 
 .section p {
-  font-size: 14px;
+  position: absolute;
+  top: 110px;
+  left: 25px;
+  font-size: 50px;
+  font-weight: bold;
+  color: #777;
+}
+
+.section p1 {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #777;
+}
+
+.refresh-timer {
+  position: absolute;
+  font-size: 30px;
   color: black;
+  margin-top: 5px;
+  bottom: 50px;
+  left: 20px;
+  font-weight: bold;
+  color: #392e2d;
+  margin: 0;
 }
 
 /* Quest Section Styling */
@@ -87,12 +127,6 @@ body, html {
   width: 100%;
   flex: 2;
   padding: 30px;
-}
-
-.refresh-timer {
-  font-size: 12px;
-  color: black;
-  margin-top: 5px;
 }
 
 /* Shop and Room Container Styling */
@@ -123,22 +157,4 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-/* Responsiveness */
-@media (max-width: 768px) {
-  .shop-room-container {
-      flex-direction: column;
-      gap: 15px;
-  }
-
-  .shop-section, .room-section {
-      width: 100%;
-      height: auto;
-  }
-}
-
-/* Link Styling */
-.quest-link {
-  color: inherit;
-  text-decoration: none;
 }
