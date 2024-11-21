@@ -12,17 +12,20 @@ import reminder.domain.Quest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/quests")
 public class QuestController {
+
     @Autowired
     private QuestService questService;
 
     @Autowired
     private QuestRepository questRepository;
 
-    @Autowired QuestMapper questMapper;
+    @Autowired
+    private QuestMapper questMapper;
 
     @PostMapping("/create")
     public ResponseEntity<String> createQuest(@RequestBody QuestDTO questDTO) {
@@ -39,14 +42,35 @@ public class QuestController {
         return questService.getAllQuests();
     }
 
-    @GetMapping("/{questid}")
-    public ResponseEntity<QuestDTO> getUserByquestId(@PathVariable Long questid) {
-        Optional<Quest> quest = questRepository.findById(questid);
+    @GetMapping("/{questId}")
+    public ResponseEntity<QuestDTO> getQuestById(@PathVariable Long questId) {
+        Optional<Quest> quest = questRepository.findById(questId);
         if (quest.isPresent()) {
-            QuestDTO userDTO = questMapper.toDTO(quest.get());
-            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+            QuestDTO questDTO = questMapper.toDTO(quest.get());
+            return new ResponseEntity<>(questDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // ฟังก์ชันใหม่: ดึงเควสแบบสุ่ม
+    @GetMapping("/random")
+    public ResponseEntity<QuestDTO> getRandomQuest() {
+        try {
+            List<Quest> quests = questRepository.findAll();
+            if (quests.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // หากไม่มีเควสในระบบ
+            }
+
+            // เลือกเควสแบบสุ่ม
+            Random random = new Random();
+            Quest randomQuest = quests.get(random.nextInt(quests.size()));
+
+            // แปลง Quest เป็น QuestDTO
+            QuestDTO randomQuestDTO = questMapper.toDTO(randomQuest);
+            return new ResponseEntity<>(randomQuestDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

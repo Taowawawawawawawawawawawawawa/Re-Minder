@@ -17,6 +17,8 @@ public class QuestService {
     @Autowired
     private QuestMapper questMapper;
 
+    
+
     public void createQuest(QuestDTO questDTO) {
         Quest quest = new Quest();
         quest.setQuestName(questDTO.getQuestName());
