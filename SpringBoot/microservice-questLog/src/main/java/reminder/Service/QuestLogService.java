@@ -1,31 +1,40 @@
-// package reminder.Service;
+package reminder.Service;
 
-// import java.util.List;
-// import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 
-// import reminder.domain.QuestLog;
-// import reminder.dto.QuestLogDTO;
-// import reminder.repository.QuestLogRepository;
+@Service
+public class QuestLogService {
 
-// // @Service
-// // public class QuestLogService {
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
-// //     @Autowired
-// //     private QuestLogRepository questLogRepository; // Repository สำหรับดึงข้อมูลจากฐานข้อมูล
+    public String storeFileAsBase64(MultipartFile file) throws IOException {
+        // สร้างโฟลเดอร์หากยังไม่มี
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);  // สร้างโฟลเดอร์ใหม่ถ้ายังไม่มี
+        }
 
-// //     public List<QuestLogDTO> getAllQuestLogs() {
-// //         List<QuestLog> questLogs = questLogRepository.findAll(); // ดึงข้อมูลทั้งหมด
-// //         return questLogs.stream()
-// //                 .map(log -> new QuestLogDTO(
-// //                         log.getId(),
-// //                         log.getQuestName(),
-// //                         log.getStatus(),
-// //                         log.getSubmittedImage(),
-// //                         log.getMessage()
-// //                 ))
-// //                 .collect(Collectors.toList());
-// //     }
-// }
+        // ชื่อไฟล์ที่ต้องการบันทึก
+        String fileName = file.getOriginalFilename();
+        Path filePath = uploadPath.resolve(fileName + ".txt"); // เก็บเป็นไฟล์ .txt เพื่อเก็บ Base64
+
+        // แปลงไฟล์เป็น Base64
+        byte[] fileBytes = file.getBytes();
+        String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
+
+        // เขียน Base64 ลงในไฟล์
+        Files.write(filePath, base64Encoded.getBytes());
+
+        return filePath.getFileName().toString();  // ส่งคืนชื่อไฟล์ที่เก็บ Base64
+    }
+}

@@ -58,9 +58,6 @@ public class QuestController {
     public ResponseEntity<QuestDTO> getRandomQuest() {
         try {
             List<Quest> quests = questRepository.findAll();
-            if (quests.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // หากไม่มีเควสในระบบ
-            }
 
             // เลือกเควสแบบสุ่ม
             Random random = new Random();
