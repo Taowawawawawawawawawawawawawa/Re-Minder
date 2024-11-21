@@ -34,19 +34,19 @@ body, html {
 
 /* Quest Detail Styling */
 .quest-detail {
-  background: #fff;
+  background: #b1b1b1;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(113, 109, 109, 0.1);
   width: 100%;
-  max-width: 600px;
+  max-width: 1500px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   z-index: 2;
   flex: 1; /* Allow it to take available space */
   overflow-y: auto; /* Allow scroll within quest detail */
-  max-height: 80vh; /* Limit the height of the quest detail */
+  max-height: 750px; /* Limit the height of the quest detail */
 }
 
 /* Background styling */
@@ -123,6 +123,9 @@ button:hover {
 }
 
 .button2 {
+  position: absolute;
+  right: 50%;
+  
   background-color: #8b5a2b;
   color: white;
   padding: 12px;
@@ -139,25 +142,7 @@ button:hover {
 }
 
 
-/* Searchable Dropdown */
-.searchable-dropdown {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
-.searchable-dropdown input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.searchable-dropdown select {
-  margin-top: 10px;
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
