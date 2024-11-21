@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Shop.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 import SlimeGif from '../../images/Slime.GIF';
@@ -76,43 +75,211 @@ const Shop = () => {
     setShowConfirmation(false); // Close the modal without purchasing
   };
 
+  const pageStyle = {
+    background: 'url(/src/images/shop_bg.png) no-repeat center center fixed',
+    backgroundSize: 'cover',
+    margin: 0,
+    padding: 0,
+    overflow: 'hidden',
+  };
+
+  const avatarStyle = {
+    position: 'absolute',
+    left: '20px',
+    top: '75%',
+    transform: 'translateY(-50%)',
+  };
+
+  const avatarImageStyle = {
+    width: '450px',
+    height: 'auto',
+  };
+
+  const shopContainerStyle = {
+    fontFamily: 'Arial, sans-serif',
+    background: 'url(/src/images/BGwood.png), #D9D9D9',
+    border: '2px solid #8b5a2b',
+    borderRadius: '10px',
+    padding: '20px',
+    boxShadow: '3px 3px 10px rgba(0, 0, 0, 0.2)',
+    maxWidth: '600px',
+    margin: '50px auto',
+  };
+
+  const shopTabsStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '15px',
+  };
+
+  const shopTabButtonStyle = {
+    backgroundColor: '#8b5a2b',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    margin: '0 5px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '1em',
+    transition: 'background-color 0.3s ease',
+  };
+
+  const activeTabButtonStyle = {
+    backgroundColor: '#a5673f',
+  };
+
+  const shopShelfStyle = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '15px',
+    justifyContent: 'center',
+  };
+
+  const shopItemStyle = {
+    backgroundColor: '#fff',
+    border: '1px solid #c69a6b',
+    borderRadius: '10px',
+    padding: '10px',
+    width: '120px',
+    textAlign: 'center',
+    cursor: 'pointer',
+    boxShadow: '2px 2px 8px rgba(0, 0, 0, 0.1)',
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+  };
+
+  const shopItemHoverStyle = {
+    transform: 'scale(1.05)',
+    boxShadow: '4px 4px 12px rgba(0, 0, 0, 0.2)',
+  };
+
+  const shopItemImageStyle = {
+    width: '100px',
+    height: 'auto',
+    marginBottom: '5px',
+  };
+
+  const itemNameStyle = {
+    fontSize: '0.9em',
+    marginBottom: '5px',
+    color: '#333',
+  };
+
+  const itemPriceStyle = {
+    fontSize: '0.8em',
+    color: '#5d3b1a',
+  };
+
+  const currencyIconStyle = {
+    marginLeft: '3px',
+  };
+
+  const shopButtonsStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '20px',
+  };
+
+  const cancelButtonStyle = {
+    backgroundColor: '#8b5a2b',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '1em',
+    transition: 'background-color 0.3s ease',
+  };
+
+  const purchaseButtonStyle = {
+    backgroundColor: '#8b5a2b',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '1em',
+    transition: 'background-color 0.3s ease',
+  };
+
+  const errorStyle = {
+    color: 'red',
+    fontSize: '0.9em',
+    marginBottom: '15px',
+    textAlign: 'center',
+  };
+
+  const confirmationModalStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+  };
+
+  const confirmationContainerStyle = {
+    backgroundColor: 'white',
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+    textAlign: 'center',
+  };
+
+  const confirmationButtonsStyle = {
+    marginTop: '15px',
+  };
+
+  const confirmationButtonStyle = {
+    backgroundColor: '#8b5a2b',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    margin: '0 5px',
+  };
+
   return (
     <>
       <Navbar />
-      <div className="shop-avatar">
-        <img src={selectedAvatar} alt="Avatar" className="avatar-image" />
+      <div style={avatarStyle}>
+        <img src={selectedAvatar} alt="Avatar" style={avatarImageStyle} />
       </div>
-      <div className="shop-container">
-        <div className="shop-tabs">
+      <div style={shopContainerStyle}>
+        <div style={shopTabsStyle}>
           <button
-            className={selectedSection === 'costume' ? 'active' : ''}
+            style={{ ...shopTabButtonStyle, ...(selectedSection === 'costume' ? activeTabButtonStyle : {}) }}
             onClick={() => setSelectedSection('costume')}
           >
             Costume
           </button>
           <button
-            className={selectedSection === 'theme' ? 'active' : ''}
+            style={{ ...shopTabButtonStyle, ...(selectedSection === 'theme' ? activeTabButtonStyle : {}) }}
             onClick={() => setSelectedSection('theme')}
           >
             Theme
           </button>
         </div>
 
-        {error && <div className="error">Error: {error}</div>}
+        {error && <div style={errorStyle}>Error: {error}</div>}
 
-        <div className="shop-shelf">
+        <div style={shopShelfStyle}>
           {/* Render costumes if the selected section is costume */}
           {selectedSection === 'costume' &&
             costumes.map((costume) => (
               <div
                 key={costume.costumeId}
-                className="shop-item"
+                style={shopItemStyle}
                 onClick={() => handleItemClick(costume)}
               >
-                <img src={costume.costumeFiles} alt={costume.costumeName} />
-                <div className="item-name">{costume.costumeName}</div>
-                <div className="item-price">
-                  {costume.price} <span className="currency-icon">💎</span>
+                <img src={costume.costumeFiles} alt={costume.costumeName} style={shopItemImageStyle} />
+                <div style={itemNameStyle}>{costume.costumeName}</div>
+                <div style={itemPriceStyle}>
+                  {costume.price} <span style={currencyIconStyle}>💎</span>
                 </div>
               </div>
             ))}
@@ -122,39 +289,38 @@ const Shop = () => {
             themes.map((theme) => (
               <div
                 key={theme.themeId}
-                className="shop-item"
+                style={shopItemStyle}
                 onClick={() => handleItemClick(theme)}
               >
-                <img src={theme.frameSpriteArts} alt="Theme Frame" />
-                <div className="item-name">{theme.themeName}</div>
-                <div className="item-price">
-                  {theme.price} <span className="currency-icon">💎</span>
+                <img src={theme.frameSpriteArts} alt="Theme Frame" style={shopItemImageStyle} />
+                <div style={itemNameStyle}>{theme.themeName}</div>
+                <div style={itemPriceStyle}>
+                  {theme.price} <span style={currencyIconStyle}>💎</span>
                 </div>
               </div>
             ))}
         </div>
 
-
-        <div className="shop-buttons">
+        <div style={shopButtonsStyle}>
           {/* Show Purchase button only when the avatar is changed */}
           {selectedAvatar !== SlimeGif && (
-            <button className="purchase-btn" onClick={handlePurchaseClick}>
+            <button style={purchaseButtonStyle} onClick={handlePurchaseClick}>
               Purchase
             </button>
           )}
 
           {/* Always show Cancel button */}
-          <button className="cancel-btn" onClick={handleCancel}>Cancel</button>
+          <button style={cancelButtonStyle} onClick={handleCancel}>Cancel</button>
         </div>
 
         {/* Confirmation Modal */}
         {showConfirmation && (
-          <div className="confirmation-modal">
-            <div className="confirmation-container">
+          <div style={confirmationModalStyle}>
+            <div style={confirmationContainerStyle}>
               <p>Are you sure you want to purchase this item?</p>
-              <div className="confirmation-buttons">
-                <button onClick={handleConfirmPurchase}>Yes</button>
-                <button onClick={handleCancelPurchase}>No</button>
+              <div style={confirmationButtonsStyle}>
+                <button style={confirmationButtonStyle} onClick={handleConfirmPurchase}>Yes</button>
+                <button style={confirmationButtonStyle} onClick={handleCancelPurchase}>No</button>
               </div>
             </div>
           </div>

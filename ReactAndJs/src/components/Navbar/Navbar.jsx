@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import icon from "../../images/IconSlime.PNG";
 import Beryle from "../../images/Beryle.PNG";
 import Point from "../../images/Point.PNG";
 import setting_icon from "../../images/setting.png";
+import BG from "../../images/BGwood.png";
 
 function Navbar() {
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState(null);
   const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(true); // Added loading state
 
   useEffect(() => {
-    // Fetch user or admin data from sessionStorage
+    // Simulate fetching user data
     const storedRole = sessionStorage.getItem("role");
     const storedUserData =
       storedRole === "user"
@@ -22,6 +23,8 @@ function Navbar() {
 
     setRole(storedRole);
     setUserData(storedUserData);
+
+    setLoading(false); // Set loading to false after data is fetched
   }, []);
 
   const handleLogout = () => {
@@ -29,31 +32,149 @@ function Navbar() {
     navigate("/SignIn"); // Redirect to login page
   };
 
+  const navbarStyle = {
+    background: `url(${BG}), #D9D9D9`,
+    width: '100%',
+    height: '80px',
+    borderRadius: '0',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    fontFamily: 'Arial, sans-serif',
+    color: '#fff',
+    zIndex: 100,
+    padding: '0 20px',
+  };
+
+  const navbarLeftStyle = {
+    display: 'flex',
+    alignItems: 'center',
+  };
+
+  const profileIconWrapperStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '70px',
+    height: '70px',
+    borderRadius: '50%',
+    border: '5px solid #8b5e3c',
+    background: 'linear-gradient(145deg, #d2b48c, #c2a17b)',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.3)',
+    padding: '5px',
+    margin: '0 10px',
+  };
+
+  const profileIconStyle = {
+    width: '100px',
+    height: '100px',
+    borderRadius: '100%',
+  };
+
+  const navbarTitleStyle = {
+    fontSize: '18px',
+    backgroundColor: '#f5deb3',
+    padding: '8px 15px',
+    borderRadius: '20px',
+    textAlign: 'center',
+  };
+
+  const navbarRightStyle = {
+    display: 'flex',
+    gap: '20px',
+    padding: '0 10px',
+  };
+
+  const currencyStyle = {
+    height: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#deb887',
+    border: '5px solid #4a2f27',
+    borderRadius: '20px',
+    padding: '5px 10px',
+    boxShadow: 'inset 0px 0px 5px rgba(0, 0, 0, 0.3)',
+    gap: '10px',
+    minWidth: '150px',
+  };
+
+  const iconStyle = {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    border: '3px solid #4a2f27',
+    marginRight: '10px',
+  };
+
+  const currencyAmountStyle = {
+    fontSize: '1.2rem',
+    color: '#4a2f27',
+    fontWeight: 'bold',
+  };
+
+  const addButtonStyle = {
+    backgroundColor: '#4a2f27',
+    color: 'white',
+    fontSize: '1rem',
+    border: 'none',
+    borderRadius: '50%',
+    width: '30px',
+    height: '30px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  };
+
+  const addButtonHoverStyle = {
+    backgroundColor: '#6b4a3e',
+  };
+
+  const settingsButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+  };
+
+  const settingsButtonImageStyle = {
+    width: '40px',
+    height: '40px',
+  };
+
+  if (loading) {
+    // Display loading state while data is being fetched
+    return (
+      <div style={navbarStyle}>
+        <div>Loading...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="navbar">
-      <div className="navbar-left">
-        <div className="profile-icon-wrapper">
+    <div style={navbarStyle}>
+      <div style={navbarLeftStyle}>
+        <div style={profileIconWrapperStyle}>
           <img
             src={icon}
             alt="Profile Icon"
-            className="profile-icon"
+            style={profileIconStyle}
             onClick={() => navigate("/home")}
           />
         </div>
-        <span className="navbar-title">
+        <span style={navbarTitleStyle}>
           {userData
             ? `Welcome, ${role === "user" ? userData.name : userData.adminName}`
             : "บทสนทนาแบบสุ่ม"}
         </span>
       </div>
-      <div className="navbar-right">
-        {/* Display Points for Users */}
+      <div style={navbarRightStyle}>
         {role === "user" && userData && (
-          <div className="currency">
-            <img src={Point} alt="Point Icon" className="icon" />
-            <span className="currency-amount">{userData.points} p</span>
+          <div style={currencyStyle}>
+            <img src={Point} alt="Point Icon" style={iconStyle} />
+            <span style={currencyAmountStyle}>{userData.points} p</span>
             <button
-              className="add-button"
+              style={addButtonStyle}
               onClick={() => navigate("/Point")}
               title="Add Points"
             >
@@ -62,13 +183,12 @@ function Navbar() {
           </div>
         )}
 
-        {/* Display Beryl for Users */}
         {role === "user" && userData && (
-          <div className="currency">
-            <img src={Beryle} alt="Beryle Icon" className="icon" />
-            <span className="currency-amount">{userData.beryl}</span>
+          <div style={currencyStyle}>
+            <img src={Beryle} alt="Beryle Icon" style={iconStyle} />
+            <span style={currencyAmountStyle}>{userData.beryl}</span>
             <button
-              className="add-button"
+              style={addButtonStyle}
               onClick={() => navigate("/Beryle")}
               title="Add Beryl"
             >
@@ -77,11 +197,10 @@ function Navbar() {
           </div>
         )}
 
-        {/* Admin Controls */}
         {role === "admin" && (
-          <div className="admin-controls">
+          <div style={navbarRightStyle}>
             <button
-              className="admin-button"
+              style={addButtonStyle}
               onClick={() => navigate("/AdminDashboard")}
             >
               Dashboard
@@ -89,19 +208,14 @@ function Navbar() {
           </div>
         )}
 
-        {/* Settings */}
         <button
-          className="settings-button"
+          style={settingsButtonStyle}
           onClick={() => navigate("/setting")}
           title="Settings"
         >
-          <img src={setting_icon} alt="Settings" />
+          <img src={setting_icon} alt="Settings" style={settingsButtonImageStyle} />
         </button>
 
-        {/* Logout
-        <button className="logout-button" onClick={handleLogout} title="Logout">
-          Logout
-        </button> */}
       </div>
     </div>
   );

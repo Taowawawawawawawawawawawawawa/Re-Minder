@@ -125,7 +125,7 @@ button:hover {
 .button2 {
   position: absolute;
   right: 50%;
-  
+  bottom: 80%;
   background-color: #8b5a2b;
   color: white;
   padding: 12px;
