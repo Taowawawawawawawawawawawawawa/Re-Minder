@@ -146,11 +146,7 @@ const Settings = () => {
                     <img src={SlimeGif} alt="Avatar" style={avatarStyle} />
                 </div>
                 <div style={settingsContainerStyle}>
-                    <div style={soundControlStyle}>
-                        <label htmlFor="sound">Sound</label>
-                        <button style={soundButtonStyle}>🔊</button>
-                        <input type="range" id="sound" name="sound" />
-                    </div>
+                    
                     <div className="dropdown-control" style={{ marginBottom: '20px' }}>
                         <label>Theme</label>
                         <select style={{ width: '100%', padding: '10px', fontSize: '18px', border: '2px solid #6D4C41', borderRadius: '8px' }}>
