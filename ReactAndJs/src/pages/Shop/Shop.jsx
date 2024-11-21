@@ -67,10 +67,103 @@ const Shop = () => {
     setShowConfirmation(true); // Show confirmation modal when purchase button is clicked
   };
 
-  const handleConfirmPurchase = () => {
-    setShowConfirmation(false); // Close the modal
-    alert('Purchase successful'); // Show purchase success alert
+  const handleConfirmPurchase = async () => {
+    if (!selectedAvatar || !costumes.length) {
+      alert("Please select a costume to purchase.");
+      return;
+    }
+
+    const user = JSON.parse(sessionStorage.getItem("userData")); // Retrieve the user's data from sessionStorage
+    const userId = user.userId;
+
+    // Extract the filename and derive a keyword from it
+    const selectedAvatarFilename = selectedAvatar.split('/').pop().toLowerCase();
+    const keyword = selectedAvatarFilename.split('-')[1]?.split('.')[0]; // Extract "wizard" or "princess"
+
+    console.log("Selected Avatar Filename:", selectedAvatarFilename);
+    console.log("Derived Keyword:", keyword);
+
+    // Find the matching costume based on keyword
+    const selectedCostume = costumes.find((costume) => {
+      const costumeFilename = costume.costumeFiles.split('/').pop().toLowerCase();
+      const costumeNameKeyword = costume.costumeName.toLowerCase();
+      return (
+        costumeFilename.includes(keyword) || // Match keyword in filename
+        costumeNameKeyword.includes(keyword) // Match keyword in costumeName
+      );
+    });
+
+    if (!selectedCostume) {
+      alert("Selected costume is invalid. Please ensure the costume data matches correctly.");
+      return;
+    }
+
+    try {
+      // Check if the user already owns this costume
+      const ownsCostumeResponse = await fetch(
+        `http://localhost:8208/inventory/${userId}/ownsItem/costume/${selectedCostume.costumeId}`
+      );
+      if (!ownsCostumeResponse.ok) {
+        console.error("Failed to verify if the user owns this costume:", await ownsCostumeResponse.text());
+        throw new Error("Failed to verify if the user owns this costume");
+      }
+      const alreadyOwns = await ownsCostumeResponse.json();
+      if (alreadyOwns) {
+        alert("You already own this costume.");
+        return;
+      }
+
+      // Check user's Beryl balance
+      const userBerylResponse = await fetch(`http://localhost:8200/users/${userId}/beryl`);
+      if (!userBerylResponse.ok) {
+        throw new Error("Failed to fetch user's Beryl balance");
+      }
+      const userBeryl = await userBerylResponse.json();
+      if (userBeryl < selectedCostume.price) {
+        alert("You do not have enough Beryl to purchase this item.");
+        return;
+      }
+
+      // Deduct Beryl from user's account
+      const deductBerylResponse = await fetch(
+        `http://localhost:8200/users/${userId}/deductBeryl?amount=${selectedCostume.price}`,
+        { method: "PUT" }
+      );
+      if (!deductBerylResponse.ok) {
+        throw new Error("Failed to deduct Beryl from user's account");
+      }
+
+      // Call the shop service to confirm the purchase
+      const purchaseResponse = await fetch(
+        `http://localhost:8204/costumes/purchase/${selectedCostume.costumeId}?userId=${userId}`,
+        { method: "POST" }
+      );
+      if (!purchaseResponse.ok) {
+        throw new Error(await purchaseResponse.text());
+      }
+
+      // Add the costume to the user's inventory
+      const inventoryResponse = await fetch(
+        `http://localhost:8208/inventory/${userId}/addItem/costume`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ costumeId: selectedCostume.costumeId }), // Send as an object with key-value
+        }
+      );
+      if (!inventoryResponse.ok) {
+        throw new Error(await inventoryResponse.text());
+      }
+
+
+      setShowConfirmation(false); // Close the confirmation modal
+      alert("Purchase successful and added to your inventory!");
+    } catch (error) {
+      console.error("Error during purchase:", error);
+      alert(`Failed to complete the purchase: ${error.message}`);
+    }
   };
+
 
   const handleCancelPurchase = () => {
     setShowConfirmation(false); // Close the modal without purchasing
