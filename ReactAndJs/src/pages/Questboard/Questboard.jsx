@@ -63,88 +63,50 @@ function Questboard() {
 
   const handleSubmission = async () => {
     if (!selectedQuestId) {
-      alert("กรุณาเลือกภารกิจก่อนจัดส่ง");
-      return;
+        alert("กรุณาเลือกภารกิจก่อนจัดส่ง");
+        return;
     }
 
-    if (selectedQuest.questSubmitMethod === "image") {
-      if (!selectedFile) {
-        alert("กรุณาเลือกรูปภาพก่อนจัดส่ง");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-      formData.append("questId", selectedQuestId);
-      formData.append("userId", 1); // Pass a dummy user ID (replace with actual user ID)
-
-      try {
-        setUploadStatus("กำลังตรวจสอบ...");
-        const response = await fetch(
-          "http://localhost:8203/questlogs/submit-image",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        const result = await response.json();
-        console.log("Backend Result:", result);
-
-        if (result.status === "success") {
-          if (result.questStatus === "SUCCESS") {
-            setUploadStatus("เควสสำเร็จ ✅");
-          } else if (result.questStatus === "FAILED") {
-            setUploadStatus("วัตถุที่พบไม่ตรงกับเป้าหมาย ❌");
-          } else if (result.questStatus === "PENDING") {
-            setUploadStatus("รอการตรวจสอบโดยผู้ดูแลระบบ");
-          } else {
-            setUploadStatus("สถานะไม่ทราบ ❌");
-          }
-        } else {
-          setUploadStatus(result.message || "รูปภาพไม่ถูกต้อง ❌");
+    if (selectedQuest.questSubmitMethod === "text") {
+        if (!textResponse.trim()) {
+            alert("กรุณาใส่ข้อความก่อนจัดส่ง");
+            return;
         }
-      } catch (err) {
-        console.error("Upload error:", err);
-        setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
-      }
-    } else if (selectedQuest.questSubmitMethod === "text") {
-      if (!textResponse.trim()) {
-        alert("กรุณาใส่ข้อความก่อนจัดส่ง");
-        return;
-      }
 
-      const payload = {
-        questId: selectedQuestId,
-        userId: 1, // Pass a dummy user ID (replace with actual user ID)
-        textResponse,
-      };
+        const payload = new URLSearchParams({
+            questId: selectedQuestId.toString(),
+            userId: "1", // Replace with the actual user ID
+            text: textResponse,
+        });
 
-      try {
-        setUploadStatus("กำลังส่งข้อความ...");
-        const response = await fetch(
-          "http://localhost:8203/questlogs/submit-text",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          }
-        );
+        try {
+            setUploadStatus("กำลังส่งข้อความ...");
+            const response = await fetch(
+                "http://localhost:8203/questlogs/submit-text",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: payload.toString(),
+                }
+            );
 
-        const result = await response.json();
-        console.log("Backend Result:", result);
+            const result = await response.json();
+            console.log("Backend Result:", result);
 
-        if (result.status === "success") {
-          setUploadStatus("ส่งข้อความสำเร็จ ✅");
-        } else {
-          setUploadStatus(result.message || "เกิดข้อผิดพลาด ❌");
+            if (result.status === "success") {
+                setUploadStatus("ส่งข้อความสำเร็จ ✅");
+            } else {
+                setUploadStatus(result.message || "เกิดข้อผิดพลาด ❌");
+            }
+        } catch (err) {
+            console.error("Submission error:", err);
+            setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
         }
-      } catch (err) {
-        console.error("Submission error:", err);
-        setUploadStatus(`เกิดข้อผิดพลาด: ${err.message}`);
-      }
     }
-  };
+};
+
 
   return (
     <>

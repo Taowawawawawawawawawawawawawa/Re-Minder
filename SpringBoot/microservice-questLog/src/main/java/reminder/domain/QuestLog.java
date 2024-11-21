@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class QuestLog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Auto-generate IDs
-    private Long id;
+    private Long id ;
 
     @Column(name = "image_url")
     private String imageUrl; // เพิ่มฟิลด์นี้
