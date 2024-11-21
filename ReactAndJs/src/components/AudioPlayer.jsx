@@ -1,46 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-let sharedAudio = null; // Stores the shared audio instance
+// Shared audio player to avoid multiple instances
+let sharedAudio = null;
 
 const AudioPlayer = () => {
-  const location = useLocation(); // Track the current URL path
-  const [currentTrack, setCurrentTrack] = useState(null); // Keep track of the currently playing audio
+  const location = useLocation(); // Get the current route
+  const [currentTrack, setCurrentTrack] = useState(null);
 
   useEffect(() => {
-    const group1 = ["/simustar/1", "/simulast"]; // Group 1 paths
-    const group2 = ["/Learn", "/final-self"]; // Group 2 paths
+    // Routes where audio should play
+    const audioRoutes = [
+      "/simustar/1", "/simulast", // Add routes that will play the audio
+      "/Learn", "/final-self",    // Additional routes for the same audio
+    ];
 
     let newAudioSource = null;
 
-    // Define audio sources for different paths
-    if (group1.includes(location.pathname)) {
-      newAudioSource = "/audio/GoodEnd.mp3"; // Path for GoodEnd.mp3 in the public folder
-    } else if (group2.includes(location.pathname)) {
-      newAudioSource = "/audio/GoodEnd.m4a"; // Path for GoodEnd.m4a in the public folder
+    // Check if current route is one of the defined audio routes
+    if (audioRoutes.includes(location.pathname)) {
+      newAudioSource = "/audio/GoodEnd.m4a"; // Audio file in public folder
     }
 
-    // Check if the audio source has changed and update accordingly
+    // If a new audio source is found, update the audio player
     if (newAudioSource && newAudioSource !== currentTrack) {
-      // Pause and reset the previous audio if it exists
+      // Stop the previous audio if any
       if (sharedAudio) {
         sharedAudio.pause();
-        sharedAudio.currentTime = 0;
+        sharedAudio.currentTime = 0; // Reset to start
       }
 
-      // Create a new audio instance and start playing
+      // Create a new audio instance and play
       sharedAudio = new Audio(newAudioSource);
       sharedAudio.loop = true; // Loop the audio
+
+      // Debugging: Check if the audio is being created properly
+      console.log(`Playing audio from: ${newAudioSource}`);
+      
       sharedAudio
         .play()
-        .then(() => setCurrentTrack(newAudioSource)) // Update the current track once it's playing
-        .catch((err) => console.error("Error playing audio:", err));
+        .then(() => {
+          setCurrentTrack(newAudioSource); // Successfully started playing
+          console.log("Audio started playing!");
+        })
+        .catch((err) => {
+          console.error("Error playing audio:", err);
+        });
     }
 
-    // Cleanup function to stop audio when the component is unmounted or if the path changes
+    // Cleanup when component unmounts or route changes
     return () => {
-      if (!group1.includes(location.pathname) && !group2.includes(location.pathname)) {
-        // Stop audio if leaving the groups
+      if (!audioRoutes.includes(location.pathname)) {
+        // Stop the audio if no longer on the specified routes
         if (sharedAudio) {
           sharedAudio.pause();
           sharedAudio.currentTime = 0;
@@ -48,9 +59,9 @@ const AudioPlayer = () => {
         }
       }
     };
-  }, [location.pathname, currentTrack]); // Update when location or currentTrack changes
+  }, [location.pathname, currentTrack]); // Re-run effect when the route changes
 
-  return null; // No need to render anything for this component
+  return null; // No UI is needed for the audio player
 };
 
 export default AudioPlayer;

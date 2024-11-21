@@ -4,6 +4,8 @@ import Footer from '../../components/Footer/footer';
 import SlimeGif from '../../images/Slime.GIF';
 import SlimeWizard from '../../images/Slime-Wizard.PNG'; // Add the image for wizard
 import SlimePrincess from '../../images/Slime-princess.PNG'; // Add the image for princess
+import shop_bg from '../../images/shop_bg.png';
+import BG2 from '../../images/BGwood.png'; // Import background image
 
 const Shop = () => {
   const [selectedSection, setSelectedSection] = useState('costume'); // Switch between costume and theme
@@ -13,6 +15,7 @@ const Shop = () => {
   const [selectedAvatar, setSelectedAvatar] = useState(SlimeGif); // Default avatar image
   const [showConfirmation, setShowConfirmation] = useState(false); // To toggle the purchase confirmation modal
 
+  // Fetch costumes from API
   const fetchCostumes = async () => {
     try {
       const response = await fetch('http://localhost:8204/costumes/all');
@@ -22,10 +25,11 @@ const Shop = () => {
       const data = await response.json();
       setCostumes(data);
     } catch (err) {
-      setError(err.message);
+      setError('Failed to load costumes. Please try again later.');
     }
   };
 
+  // Fetch themes from API
   const fetchThemes = async () => {
     try {
       const response = await fetch('http://localhost:8204/themes/all');
@@ -35,7 +39,7 @@ const Shop = () => {
       const data = await response.json();
       setThemes(data);
     } catch (err) {
-      setError(err.message);
+      setError('Failed to load themes. Please try again later.');
     }
   };
 
@@ -76,8 +80,9 @@ const Shop = () => {
   };
 
   const pageStyle = {
-    background: 'url(/src/images/shop_bg.png) no-repeat center center fixed',
-    backgroundSize: 'cover',
+    background: `url(${shop_bg}) no-repeat center center fixed`, // Ensure it is centered
+    backgroundSize: 'cover', // Ensure the image covers the entire page
+    minHeight: '100vh', // Set minimum height to ensure it covers the viewport height
     margin: 0,
     padding: 0,
     overflow: 'hidden',
@@ -97,7 +102,7 @@ const Shop = () => {
 
   const shopContainerStyle = {
     fontFamily: 'Arial, sans-serif',
-    background: 'url(/src/images/BGwood.png), #D9D9D9',
+    background : `url(${BG2}), #D9D9D9`,
     border: '2px solid #8b5a2b',
     borderRadius: '10px',
     padding: '20px',
@@ -244,6 +249,7 @@ const Shop = () => {
   };
 
   return (
+    <div style={pageStyle}> {/* Apply the background to the root div */}
     <>
       <Navbar />
       <div style={avatarStyle}>
@@ -265,7 +271,7 @@ const Shop = () => {
           </button>
         </div>
 
-        {error && <div style={errorStyle}>Error: {error}</div>}
+        {error && <div style={errorStyle}>{error}</div>}
 
         <div style={shopShelfStyle}>
           {/* Render costumes if the selected section is costume */}
@@ -326,8 +332,10 @@ const Shop = () => {
           </div>
         )}
       </div>
+      
       <Footer />
     </>
+    </div>
   );
 };
 

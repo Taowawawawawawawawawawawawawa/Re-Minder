@@ -174,7 +174,6 @@ public class QuestLogController {
                 response.put("message", "Text cannot be empty");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-<<<<<<< HEAD
             if (questId == null || userId == null) {
                 response.put("status", "error");
                 response.put("message", "Quest ID or User ID is missing");
@@ -192,28 +191,6 @@ public class QuestLogController {
 
             QuestDTO currentQuest = currentQuestResponse.getBody();
 
-=======
-    
-            // Fetch the quest details from the Quest microservice
-            String currentQuestUrl = "http://localhost:8202/quests/" + questId; // เพิ่ม / ให้ URL ถูกต้อง
-            ResponseEntity<QuestDTO> currentQuestResponse;
-            try {
-                currentQuestResponse = restTemplate.getForEntity(currentQuestUrl, QuestDTO.class);
-            } catch (Exception ex) {
-                response.put("status", "error");
-                response.put("message", "Unable to fetch quest details: " + ex.getMessage());
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }
-    
-            if (currentQuestResponse.getStatusCode() != HttpStatus.OK || currentQuestResponse.getBody() == null) {
-                response.put("status", "error");
-                response.put("message", "Quest details not found");
-                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-            }
-    
-            QuestDTO currentQuest = currentQuestResponse.getBody();
-    
->>>>>>> 1bbd826fd86624910adc362db1eab78ab3c46b30
             // Initialize the QuestLog entity
             QuestLog questLog = new QuestLog();
             questLog.setQuestId(questId);
@@ -226,7 +203,6 @@ public class QuestLogController {
             questLog.setSubmissionDate(java.time.LocalDateTime.now());
             questLog.setStatus("PENDING"); // Default status awaiting admin review
             questLog.setSubmitText(text); // Save the submitted text
-<<<<<<< HEAD
 
             // Save the QuestLog to the database
             questLogRepository.save(questLog);
@@ -235,22 +211,10 @@ public class QuestLogController {
             response.put("message", "Quest submission is pending admin review");
             response.put("questStatus", "PENDING");
 
-=======
-    
-            // Save the QuestLog to the database
-            questLogRepository.save(questLog);
-    
-            response.put("status", "success");
-            response.put("message", "Quest submission is pending admin review");
-            response.put("questStatus", "PENDING");
-    
->>>>>>> 1bbd826fd86624910adc362db1eab78ab3c46b30
         } catch (Exception e) {
             response.put("status", "error");
             response.put("message", "An error occurred: " + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-<<<<<<< HEAD
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -258,16 +222,6 @@ public class QuestLogController {
     @GetMapping("/pending")
     public ResponseEntity<List<QuestLogDTO>> getPendingQuests() {
         try {
-            // Fetch only quests with "PENDING" status
-            List<QuestLog> pendingQuests = questLogRepository.findByStatus("PENDING");
-            List<QuestLogDTO> pendingQuestDTOs = pendingQuests.stream()
-                    .map(quest -> {
-                        QuestLogDTO dto = new QuestLogDTO();
-                        questLogsMapper.updateQuestLogFromEntity(quest, dto);
-                        return dto;
-                    })
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(pendingQuestDTOs, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -309,9 +263,4 @@ public class QuestLogController {
         return ResponseEntity.ok("Quest rejected successfully");
     }
 
-=======
-    
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
->>>>>>> 1bbd826fd86624910adc362db1eab78ab3c46b30
 }

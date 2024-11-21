@@ -6,6 +6,9 @@ import Point from "../../images/Point.PNG";
 import setting_icon from "../../images/setting.png";
 import BG from "../../images/BGwood.png";
 
+// Function to play audio
+let sharedAudio = null;
+
 function Navbar() {
   const navigate = useNavigate();
 
@@ -30,6 +33,15 @@ function Navbar() {
   const handleLogout = () => {
     sessionStorage.clear(); // Clear the session
     navigate("/SignIn"); // Redirect to login page
+  };
+
+  // Play audio function
+  const playAudio = () => {
+    if (!sharedAudio) {
+      sharedAudio = new Audio("/audio/GoodEnd.m4a");
+      sharedAudio.loop = true;
+    }
+    sharedAudio.play().catch((err) => console.error("Error playing audio:", err));
   };
 
   const navbarStyle = {
@@ -142,8 +154,8 @@ function Navbar() {
     height: '40px',
   };
 
+  // Loading state
   if (loading) {
-    // Display loading state while data is being fetched
     return (
       <div style={navbarStyle}>
         <div>Loading...</div>
@@ -197,16 +209,21 @@ function Navbar() {
           </div>
         )}
 
-        {role === "admin" && (
-          <div style={navbarRightStyle}>
-            <button
-              style={addButtonStyle}
-              onClick={() => navigate("/AdminDashboard")}
-            >
-              Dashboard
-            </button>
-          </div>
-        )}
+        {/* Play Audio Button */}
+        <button
+          onClick={playAudio}
+          style={{
+            ...addButtonStyle,
+            backgroundColor: "#4a2f27",
+            padding: '8px',
+            width: '40px',
+            height: '40px',
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+          }}
+          title="Play Song"
+        >
+          🎵
+        </button>
 
         <button
           style={settingsButtonStyle}
@@ -215,7 +232,6 @@ function Navbar() {
         >
           <img src={setting_icon} alt="Settings" style={settingsButtonImageStyle} />
         </button>
-
       </div>
     </div>
   );
