@@ -21,14 +21,14 @@ html, body {
 
 .character {
   position: absolute;
-  bottom: 5%;
+  bottom: -5%;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
 }
 
 .avatar-image {
-  width: 350px;
+  width: 800px;
   height: auto;
 }
 
