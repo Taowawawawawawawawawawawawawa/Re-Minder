@@ -89,7 +89,7 @@ function Navbar() {
 
   const navbarTitleStyle = {
     fontSize: '18px',
-    backgroundColor: '#f5deb3',
+    backgroundColor: 'black',
     padding: '8px 15px',
     borderRadius: '20px',
     textAlign: 'center',
