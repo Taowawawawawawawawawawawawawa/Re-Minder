@@ -62,13 +62,15 @@ public class CostumeController {
     public ResponseEntity<String> purchaseCostume(
         @PathVariable Long costumeId, @RequestParam Long userId) {
         try {
+            System.out.println("Purchasing costume with ID: " + costumeId + " for user ID: " + userId);
             String message = costumeService.purchaseCostume(costumeId, userId);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
+            System.err.println("Error purchasing costume: " + e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-}
+}    
 
 /*
  * สรุป URL และฟังก์ชันการทำงานใน CostumeController
