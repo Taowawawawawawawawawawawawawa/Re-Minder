@@ -9,11 +9,12 @@ const Userlist = () => {
     const [userInventory, setUserInventory] = useState([]);
     const [items, setItems] = useState({ costumes: [], rewards: [], themes: [] });
     const [error, setError] = useState(null);
-    const [searchText, setSearchText] = useState(""); // State for search text
-    const [editingEmail, setEditingEmail] = useState(null); // State for the user being edited
-    const [editedEmail, setEditedEmail] = useState(""); // State for new email
+    const [searchText, setSearchText] = useState("");
+    const [editingEmail, setEditingEmail] = useState(null);
+    const [editedEmail, setEditedEmail] = useState("");
+    const [selectedItem, setSelectedItem] = useState(null); // State for the selected item
 
-    // Function to fetch users data
+    // ฟังก์ชันดึงข้อมูล
     const fetchUsers = async () => {
         try {
             const response = await fetch("http://localhost:8200/users/all");
@@ -68,7 +69,6 @@ const Userlist = () => {
         }
     };
 
-    // Function to update user email
     const updateUserEmail = async (userId, newEmail) => {
         try {
             const response = await fetch(`http://localhost:8201/admins/user/${userId}/update`, {
@@ -96,16 +96,6 @@ const Userlist = () => {
         }
     };
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    useEffect(() => {
-        if (expandedUserId !== null) {
-            fetchUserInventory(expandedUserId);
-        }
-    }, [expandedUserId]);
-
     const toggleUserDetails = (userId) => {
         if (expandedUserId === userId) {
             setExpandedUserId(null);
@@ -119,6 +109,24 @@ const Userlist = () => {
     const getFullImageUrl = (path) => {
         return path.trim();
     };
+
+    const showItemDetails = (item) => {
+        setSelectedItem(item); // Set item to show in popup
+    };
+
+    const closeItemDetails = () => {
+        setSelectedItem(null); // Close popup
+    };
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    useEffect(() => {
+        if (expandedUserId !== null) {
+            fetchUserInventory(expandedUserId);
+        }
+    }, [expandedUserId]);
 
     const filteredUsers = users
         .filter((user) =>
@@ -142,6 +150,8 @@ const Userlist = () => {
             return aPriority - bPriority;
         });
 
+    
+
     return (
         <>
             <Navbar />
@@ -159,7 +169,7 @@ const Userlist = () => {
                 </header>
 
                 <ul className="user-items">
-                    {filteredUsers.map((user) => (
+                {filteredUsers.map((user) => (
                         <li key={user.userId} className="user-item">
                             <div className="user-summary" onClick={() => toggleUserDetails(user.userId)}>
                                 <span className="user-name">{user.name}</span>
@@ -175,10 +185,10 @@ const Userlist = () => {
                                         แก้ไข
                                     </button>
                                     <button>ลบ</button>
-                                    <button>ระงับ</button>
+                                    
                                 </div>
                             </div>
-                            {expandedUserId === user.userId && !editingEmail && (
+                            {expandedUserId === user.userId && (
                                 <div className="user-detail">
                                     <div className="information">
                                         <h3>Information</h3>
@@ -190,7 +200,11 @@ const Userlist = () => {
                                         <h3>Items</h3>
                                         <div className="item-icons">
                                             {items.costumes.map((costume) => (
-                                                <div key={costume.costumeId} className="item-container">
+                                                <div
+                                                    key={costume.costumeId}
+                                                    className="item-container"
+                                                    onClick={() => showItemDetails(costume)}
+                                                >
                                                     <img
                                                         src={getFullImageUrl(costume.costumeFiles)}
                                                         alt={costume.costumeName}
@@ -239,6 +253,22 @@ const Userlist = () => {
                         </li>
                     ))}
                 </ul>
+                {selectedItem && (
+                    <div className="item-popup">
+                        <div className="popup-content">
+                            <button className="close-popup" onClick={closeItemDetails}>
+                                ✖
+                            </button>
+                            <h3>{selectedItem.costumeName || selectedItem.rewardName || `Theme ${theme.themeId}`}</h3>
+                            <img
+                                src={getFullImageUrl(selectedItem.costumeFiles || selectedItem.rewardSpriteArts || selectedItem.frameSpriteArts)}
+                                alt="Item Image"
+                                className="item-icon"
+                            />
+                            <p>{selectedItem.description || "No description available."}</p>
+                        </div>
+                    </div>
+                )}
                 {error && <p className="error-message">Error: {error}</p>}
             </div>
             <Footer />
