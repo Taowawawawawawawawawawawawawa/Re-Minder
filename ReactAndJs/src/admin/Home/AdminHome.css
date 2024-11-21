@@ -42,15 +42,15 @@
 
 /* Quest Section - Span the entire width of the grid */
 .admin-quest-section {
-  background: url('/src/images/quest_bg.jpg'), #D9D9D9;
   border-radius: 10%;
+  background: url('/src/images/quest_bg.jpg'), #D9D9D9;
   width: 100%;
   grid-column: 1 / 3; /* Span across both columns */
   grid-row: 1 / 2;
   height: 100%; /* Ensure it takes up the full height */
 }
 .admin-quest-section::before {
-
+  border-radius: 10%;
   content: '';
   position: absolute;
   top: 0;
@@ -74,7 +74,7 @@
 }
 
 .shopadmin-section::before {
-
+  border-radius: 10%;
   content: '';
   position: absolute;
   top: 0;
@@ -96,7 +96,7 @@
 }
 
 .admin-contact-section::before {
-
+  border-radius: 10%;
   content: '';
   position: absolute;
   top: 0;

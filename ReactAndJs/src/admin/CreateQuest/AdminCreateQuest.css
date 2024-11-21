@@ -124,8 +124,8 @@ button:hover {
 
 .button2 {
   position: absolute;
-  right: 50%;
-  bottom: 80%;
+  right: 2%;
+  bottom: 8%;
   background-color: #8b5a2b;
   color: white;
   padding: 12px;
@@ -135,6 +135,7 @@ button:hover {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 20px;
+  z-index: 500;
 }
 
 .button2:hover {
