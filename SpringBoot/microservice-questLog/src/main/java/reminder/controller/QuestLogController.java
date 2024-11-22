@@ -172,14 +172,16 @@ public class QuestLogController {
     }
 
     @PostMapping("/submit-text")
-    public ResponseEntity<Map<String, Object>> submitQuestText(
-            @RequestParam("questId") Long questId,
-            @RequestParam("userId") Long userId,
-            @RequestParam("text") String text) {
+    public ResponseEntity<Map<String, Object>> submitQuestText(@RequestBody Map<String, Object> payload) {
         Map<String, Object> response = new HashMap<>();
         try {
+            // Extract data from the payload
+            Long questId = ((Number) payload.get("questId")).longValue();
+            Long userId = ((Number) payload.get("userId")).longValue();
+            String text = (String) payload.get("textResponse");
+    
             // Validate input
-            if (text == null || text.isEmpty()) {
+            if (text == null || text.trim().isEmpty()) {
                 response.put("status", "error");
                 response.put("message", "Text cannot be empty");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -189,7 +191,7 @@ public class QuestLogController {
                 response.put("message", "Quest ID or User ID is missing");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-
+    
             // Fetch the quest details from the Quest microservice
             String currentQuestUrl = "http://localhost:8202/quests/" + questId;
             ResponseEntity<QuestDTO> currentQuestResponse = restTemplate.getForEntity(currentQuestUrl, QuestDTO.class);
@@ -198,12 +200,12 @@ public class QuestLogController {
                 response.put("message", "Unable to fetch quest details");
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-
+    
             QuestDTO currentQuest = currentQuestResponse.getBody();
-
-            // Initialize the QuestLog entity
+    
+            // Initialize the QuestLog entity with details from QuestDTO
             QuestLog questLog = new QuestLog();
-            questLog.setQuestId(questId);
+            questLog.setQuestId(questId); // Use the questId provided in the request
             questLog.setUserId(userId);
             questLog.setQuestName(currentQuest.getQuestName());
             questLog.setQuestDescription(currentQuest.getQuestDescription());
@@ -213,31 +215,41 @@ public class QuestLogController {
             questLog.setSubmissionDate(java.time.LocalDateTime.now());
             questLog.setStatus("PENDING"); // Default status awaiting admin review
             questLog.setSubmitText(text); // Save the submitted text
-
+    
             // Save the QuestLog to the database
             questLogRepository.save(questLog);
-
+    
             response.put("status", "success");
             response.put("message", "Quest submission is pending admin review");
             response.put("questStatus", "PENDING");
-
+    
         } catch (Exception e) {
             response.put("status", "error");
             response.put("message", "An error occurred: " + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<>(response, HttpStatus.OK); // ปิดบล็อกและคืนค่า
+    
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    
     @GetMapping("/pending")
     public ResponseEntity<List<QuestLogDTO>> getPendingQuests() {
         try {
-            // Retrieve pending quests logic (not implemented yet)
+            List<QuestLog> pendingQuests = questLogRepository.findByStatus("PENDING");
+            if (pendingQuests.isEmpty()) {
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+            }
+
+            List<QuestLogDTO> pendingQuestDTOs = pendingQuests.stream().map(questLog -> {
+                QuestLogDTO dto = new QuestLogDTO();
+                questLogsMapper.updateQuestLogFromEntity(questLog, dto);
+                return dto;
+            }).collect(Collectors.toList());
+
+            return new ResponseEntity<>(pendingQuestDTOs, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(null, HttpStatus.OK); // ใส่การตอบกลับที่เหมาะสม
     }
 
     @PatchMapping("/{questId}/approve")

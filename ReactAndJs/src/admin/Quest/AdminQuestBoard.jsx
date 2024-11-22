@@ -18,6 +18,11 @@ const AdminQuestBoard = () => {
         }
         const questLogs = await response.json();
 
+        // Ensure questLogs is an array
+        if (!Array.isArray(questLogs)) {
+            throw new Error("Invalid response format from API");
+        }
+
         // Fetch user data for each quest log
         const enrichedQuests = await Promise.all(
             questLogs.map(async (quest) => {
@@ -32,9 +37,11 @@ const AdminQuestBoard = () => {
 
         setNameQuests(enrichedQuests);
     } catch (err) {
+        console.error("Error fetching quests:", err);
         setError(err.message);
     }
 };
+
 
 
   // Fetch data on component mount

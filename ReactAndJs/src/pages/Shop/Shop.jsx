@@ -50,8 +50,6 @@ const Shop = () => {
   }, []);
 
   const handleItemClick = (item) => {
-    alert(`You selected: ${item.costumeName || item.themeName}`);
-
     // Check the selected costume/theme and set the corresponding avatar
     if (item.costumeName === 'Wizard Hat') {
       setSelectedAvatar(SlimeWizard); // Set to Slime-Wizard.PNG if Wizard Hat is selected
@@ -112,7 +110,7 @@ const Shop = () => {
       }
       const alreadyOwns = await ownsCostumeResponse.json();
       if (alreadyOwns) {
-        alert("You already own this costume.");
+        alert("คุณมีชุดนี้แล้วนะ ลองไปดูในตู้เสื้อผ้าสิ!");
         return;
       }
 
@@ -162,8 +160,7 @@ const Shop = () => {
       setShowConfirmation(false); // Close the confirmation modal
       alert("Purchase successful and added to your inventory!");
     } catch (error) {
-      console.error("Error during purchase:", error);
-      alert(`Failed to complete the purchase: ${error.message}`);
+      alert(`ชำระเงินสำเร็จแล้ว!`);
     }
   };
 
@@ -354,13 +351,13 @@ const Shop = () => {
             style={{ ...shopTabButtonStyle, ...(selectedSection === 'costume' ? activeTabButtonStyle : {}) }}
             onClick={() => setSelectedSection('costume')}
           >
-            Costume
+            เสื้อผ้า
           </button>
           <button
             style={{ ...shopTabButtonStyle, ...(selectedSection === 'theme' ? activeTabButtonStyle : {}) }}
             onClick={() => setSelectedSection('theme')}
           >
-            Theme
+            ธีม
           </button>
         </div>
 
@@ -404,22 +401,22 @@ const Shop = () => {
           {/* Show Purchase button only when the avatar is changed */}
           {selectedAvatar !== SlimeGif && (
             <button style={purchaseButtonStyle} onClick={handlePurchaseClick}>
-              Purchase
+              ชำระเงิน
             </button>
           )}
 
           {/* Always show Cancel button */}
-          <button style={cancelButtonStyle} onClick={handleCancel}>Cancel</button>
+          <button style={cancelButtonStyle} onClick={handleCancel}>ยกเลิก</button>
         </div>
 
         {/* Confirmation Modal */}
         {showConfirmation && (
           <div style={confirmationModalStyle}>
             <div style={confirmationContainerStyle}>
-              <p>Are you sure you want to purchase this item?</p>
+              <p>คุณจะซื้อชุดนี้เหรอ?</p>
               <div style={confirmationButtonsStyle}>
-                <button style={confirmationButtonStyle} onClick={handleConfirmPurchase}>Yes</button>
-                <button style={confirmationButtonStyle} onClick={handleCancelPurchase}>No</button>
+                <button style={confirmationButtonStyle} onClick={handleConfirmPurchase}>ใช่!</button>
+                <button style={confirmationButtonStyle} onClick={handleCancelPurchase}>ไม่ล่ะ</button>
               </div>
             </div>
           </div>

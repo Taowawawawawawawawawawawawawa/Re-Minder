@@ -180,7 +180,7 @@ function Navbar() {
         </div>
         <span style={navbarTitleStyle}>
           {userData
-            ? `Welcome, ${role === "user" ? userData.name : userData.adminName}`
+            ? `ยินดีต้อนรับกลับมานะ ${role === "user" ? userData.name : userData.adminName}!`
             : "บทสนทนาแบบสุ่ม"}
         </span>
       </div>

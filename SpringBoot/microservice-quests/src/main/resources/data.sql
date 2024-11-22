@@ -13,7 +13,7 @@ INSERT INTO Quest_suitableMBTI (Quest_questId, suitableMBTI) VALUES
 
 INSERT INTO Quest (questId, questName, questDescription, difficulty, berylReward, pointReward, questSubmitMethod, targetObject) 
 VALUES 
-(10002, 'Take a photo of sunrise', 'Wake up early and take a photo of the most beautiful sunrise you can see.', 1, 2, 1, 'picture','other');
+(10002, 'Take a photo of sunrise', 'Wake up early and take a photo of the most beautiful sunrise you can see.', 1, 2, 1, 'image','other');
 
 INSERT INTO Quest_availableTime (Quest_questId, availableTime) VALUES
 (10002, '1');
@@ -35,7 +35,7 @@ INSERT INTO Quest_suitableMBTI (Quest_questId, suitableMBTI) VALUES
 
 INSERT INTO Quest (questId, questName, questDescription, difficulty, berylReward, pointReward, questSubmitMethod, targetObject) 
 VALUES 
-(10004, 'Cook a meal', 'Prepare your favorite meal and take a picture of it.', 2, 5, 1, 'picture','other');
+(10004, 'Cook a meal', 'Prepare your favorite meal and take a image of it.', 2, 5, 1, 'image','other');
 
 INSERT INTO Quest_availableTime (Quest_questId, availableTime) VALUES
 (10004, '1'),
@@ -59,7 +59,7 @@ INSERT INTO Quest_suitableMBTI (Quest_questId, suitableMBTI) VALUES
 
 INSERT INTO Quest (questId, questName, questDescription, difficulty, berylReward, pointReward, questSubmitMethod, targetObject) 
 VALUES 
-(10006, 'Climb a mountain', 'Go mountain climbing and share the photos you took.', 3, 10, 1, 'picture','other');
+(10006, 'Climb a mountain', 'Go mountain climbing and share the photos you took.', 3, 10, 1, 'image','other');
 
 INSERT INTO Quest_availableTime (Quest_questId, availableTime) VALUES
 (10006, '1');

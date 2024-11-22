@@ -73,7 +73,7 @@ function SignIn() {
                 const user = await response.json();
                 sessionStorage.setItem('role', 'user');
                 sessionStorage.setItem('userData', JSON.stringify(user));
-                alert(`Welcome, ${user.name}!`);
+                alert(`ยินดีต้อนรับกลับนะ, ${user.name}!`);
                 navigate('/Home');
                 return;
             }
@@ -95,7 +95,7 @@ function SignIn() {
                     const admin = await response.json();
                     sessionStorage.setItem('role', 'admin');
                     sessionStorage.setItem('adminData', JSON.stringify(admin));
-                    alert(`Welcome, ${admin.name}!`);
+                    alert(`ยินดีต้อนรับกลับนะ, ${admin.name}!`);
                     navigate('/AdminDashboard');
                     return;
                 }

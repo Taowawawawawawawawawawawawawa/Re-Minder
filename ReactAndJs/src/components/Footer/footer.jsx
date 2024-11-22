@@ -11,7 +11,7 @@ function Footer() {
   };
   return (
     <div className="footer">
-      <button className="contact-button" onClick={handleAdminClick} >Contact Admin</button>
+      <button className="contact-button" onClick={handleAdminClick} >Bypass Admin</button>
     </div>
   );
 };
